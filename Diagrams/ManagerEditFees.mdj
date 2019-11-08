@@ -926,9 +926,9 @@
 												"$ref": "AAAAAAFuPsBRD4+RoX0="
 											},
 											"font": "Arial;13;0",
-											"left": 753,
+											"left": 752,
 											"top": 287,
-											"width": 138.00439453125,
+											"width": 140.92431640625,
 											"height": 13,
 											"alpha": -1.3734017284836622,
 											"distance": 10.198039027185569,
@@ -936,7 +936,7 @@
 												"$ref": "AAAAAAFuPsBRD4+SdE8="
 											},
 											"edgePosition": 1,
-											"text": "4 : Error failed message"
+											"text": "4 : Login failed message"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1150,9 +1150,9 @@
 												"$ref": "AAAAAAFuPqj1KNo0zIU="
 											},
 											"font": "Arial;13;0",
-											"left": 353,
+											"left": 344,
 											"top": 424,
-											"width": 78.04443359375,
+											"width": 97.55712890625,
 											"height": 13,
 											"alpha": 1.5707963267948966,
 											"distance": 10,
@@ -1160,7 +1160,7 @@
 												"$ref": "AAAAAAFuPqj1KNo1w7w="
 											},
 											"edgePosition": 1,
-											"text": "6 : Edit Fees"
+											"text": "6 : Manage Fees"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1404,7 +1404,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFuPqM8rNjnQn0="
 							},
-							"name": "Error failed message",
+							"name": "Login failed message",
 							"source": {
 								"$ref": "AAAAAAFuPr8fe48ShO0="
 							},
@@ -1434,7 +1434,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFuPqM8rNjnQn0="
 							},
-							"name": "Edit Fees",
+							"name": "Manage Fees",
 							"source": {
 								"$ref": "AAAAAAFuPqN/Vdj7D5g="
 							},
@@ -1563,7 +1563,8 @@
 					"_parent": {
 						"$ref": "AAAAAAFuPqM8rNjmKhw="
 					},
-					"name": "Role2"
+					"name": "Role2",
+					"type": ""
 				},
 				{
 					"_type": "UMLAttribute",
