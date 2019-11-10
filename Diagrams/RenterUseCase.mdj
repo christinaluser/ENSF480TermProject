@@ -224,7 +224,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFuOl4C5dBDTo0="
 									},
-									"name": "SequenceDiagram1",
+									"name": "Login",
 									"ownedViews": [
 										{
 											"_type": "UMLFrameView",
@@ -243,11 +243,11 @@
 														"$ref": "AAAAAAFuOl4C5dBFpbg="
 													},
 													"font": "Arial;13;0",
-													"left": 70.97900390625,
-													"top": 5,
-													"width": 115.9052734375,
+													"left": 110.97900390625,
+													"top": 13,
+													"width": 32.80810546875,
 													"height": 13,
-													"text": "SequenceDiagram1"
+													"text": "Login"
 												},
 												{
 													"_type": "LabelView",
@@ -256,16 +256,18 @@
 														"$ref": "AAAAAAFuOl4C5dBFpbg="
 													},
 													"font": "Arial;13;1",
-													"left": 5,
-													"top": 5,
+													"left": 45,
+													"top": 13,
 													"width": 60.97900390625,
 													"height": 13,
 													"text": "interaction"
 												}
 											],
 											"font": "Arial;13;0",
-											"width": 1009,
-											"height": 481,
+											"left": 40,
+											"top": 8,
+											"width": 985,
+											"height": 433,
 											"nameLabel": {
 												"$ref": "AAAAAAFuOl4C5dBGJLA="
 											},
@@ -1557,7 +1559,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFuOl4C5dBCcaU="
 							},
-							"name": "Role1"
+							"name": "Role1",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -1576,7 +1579,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFuOl4C5dBCcaU="
 							},
-							"name": "Role3"
+							"name": "Role3",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -1584,7 +1588,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFuOl4C5dBCcaU="
 							},
-							"name": "Role4"
+							"name": "Role4",
+							"type": ""
 						}
 					]
 				},
@@ -2708,7 +2713,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFuOm49ctN/ak4="
 							},
-							"name": "Role3"
+							"name": "Role3",
+							"type": ""
 						}
 					]
 				}
