@@ -1,3 +1,5 @@
+package PresentationLayer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class UserGUI extends JFrame {
     public static final long serialVersionUID = 1L;
-    private Listener listener;
+    // private Listener listener;
     private JPanel northPanel;
     private JPanel centerPanel;
     private JPanel southPanel;
@@ -25,9 +27,9 @@ public class UserGUI extends JFrame {
         setVisible(true);
       }
     
-      public void setListener(Listener listener) {
-        this.listener = listener;
-      }
+      // public void setListener(Listener listener) {
+      //   this.listener = listener;
+      // }
     
       public void initSouthPanel() {
         southPanel = new JPanel();
