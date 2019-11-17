@@ -1,3 +1,5 @@
+package Domain;
+
 import java.util.ArrayList;
 
 public class PropertyListing implements subject{

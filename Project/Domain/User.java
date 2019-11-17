@@ -1,3 +1,5 @@
+package Domain;
+
 public abstract class User implements Observer{
     public String name;
     public String email;

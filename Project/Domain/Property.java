@@ -1,3 +1,5 @@
+package Domain;
+
 public class Property {
     public String type;
     public int noBedrooms;

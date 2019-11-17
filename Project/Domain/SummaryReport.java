@@ -1,3 +1,5 @@
+package Domain;
+
 public class SummaryReport {
     public Date startDate;
     public Date endDate;

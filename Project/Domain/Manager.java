@@ -1,3 +1,5 @@
+package Domain;
+
 //Does this implement Observer??
 public class Manager extends User{
     public void accessInformation() {
