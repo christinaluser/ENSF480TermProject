@@ -17,10 +17,11 @@ public class Manager extends User{
         
     }
 
-    @Override
-    public void update(ArrayList<Property> p) {
-        properties = p;
-        System.out.println("Notification to Manager properties: Changed");
-    }
+//    i dont think manager should be an observer ?
+//    @Override
+//    public void update(ArrayList<Property> p) {
+//        properties = p;
+//        System.out.println("Notification to Manager properties: Changed");
+//    }
 
 }
