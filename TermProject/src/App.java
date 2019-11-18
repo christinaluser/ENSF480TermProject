@@ -1,3 +1,6 @@
+import PresentationLayer.*;
+import Controller.*;
+
 import javax.swing.UIManager;
 import PresentationLayer.*;
 
@@ -6,6 +9,8 @@ public class App {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ignored) {}
-        UserGUI gui = new UserGUI();
+        Client client = new Client("10.13.99.23", 5000);
+        UserGui gui = new UserGUI();
+        gui.setListener(new Listener(client));
     }
 }
