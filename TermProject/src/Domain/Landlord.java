@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.ArrayList;
 
-public class Landlord extends User {
+public class Landlord {
     public ArrayList<Property> ownedProperties;
     public ArrayList<PropertyListing> listings;
 
@@ -22,9 +22,9 @@ public class Landlord extends User {
 
     }
 
-    @Override
-    public void update(ArrayList<Property> p) {
-        properties = p;
-        System.out.println("Notification to Landlord properties: Changed");
-    }
+//    @Override
+//    public void update(ArrayList<Property> p) {
+//        properties = p;
+//        System.out.println("Notification to Landlord properties: Changed");
+//    }
 }

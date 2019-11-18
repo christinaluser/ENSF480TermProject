@@ -1,37 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PresentationLayer.UserGUI">
-  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="893" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="aa3a8" class="javax.swing.JButton" binding="searchButton" default-binding="true">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Search"/>
-        </properties>
-      </component>
-      <component id="470d1" class="javax.swing.JTextField" binding="textField1" default-binding="true">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="3a493" class="javax.swing.JTable" binding="table1" default-binding="true">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
+            <minimum-size width="500" height="500"/>
+            <preferred-size width="500" height="500"/>
           </grid>
         </constraints>
         <properties/>
       </component>
+      <toolbar id="54a81">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="500" height="50"/>
+          </grid>
+        </constraints>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="ed5d5" class="javax.swing.JComboBox" binding="Type">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="House"/>
+                <item value="Apartment"/>
+                <item value="Basement"/>
+                <item value="Condo"/>
+              </model>
+            </properties>
+          </component>
+          <component id="34a86" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="#Bedrooms"/>
+            </properties>
+          </component>
+          <component id="3c1e1" class="javax.swing.JSpinner" binding="noBed">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="e7351" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="#Bathrooms"/>
+            </properties>
+          </component>
+          <component id="7ec66" class="javax.swing.JSpinner" binding="noBath">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="20034" class="javax.swing.JComboBox" binding="isFurnished">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="Furnished"/>
+                <item value="Unfurnished"/>
+              </model>
+            </properties>
+          </component>
+          <component id="9ebea" class="javax.swing.JComboBox" binding="cityQuadrant">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="NE"/>
+                <item value="NW"/>
+                <item value="SE"/>
+                <item value="SW"/>
+              </model>
+            </properties>
+          </component>
+          <component id="6479" class="javax.swing.JComboBox" binding="priceRange">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="$0"/>
+                <item value="$400"/>
+                <item value="$600"/>
+                <item value="$800"/>
+                <item value="$1000"/>
+                <item value="$1200"/>
+                <item value="$1400"/>
+              </model>
+            </properties>
+          </component>
+          <component id="aa3a8" class="javax.swing.JButton" binding="searchButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Search"/>
+            </properties>
+          </component>
+          <component id="9d38d" class="javax.swing.JButton" binding="showAllButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Show All"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
     </children>
   </grid>
 </form>

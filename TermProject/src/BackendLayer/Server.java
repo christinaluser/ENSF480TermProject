@@ -28,17 +28,17 @@ public class Server {
     }
 
     public void communicate() {
-        try {
-            while(true) {
-                Shop theShop = new Shop(serverSocket.accept(), theInventory, suppliers);
-                theShop.setDbController(db);
-                pool.execute(theShop);
-            }
-        } catch(IOException e) {
-            e.printStackTrace();
-            pool.shutdown();     
-            db.close();       
-        }
+//        try {
+//            while (true) {
+//                Shop theShop = new Shop(serverSocket.accept(), theInventory, suppliers);
+//                theShop.setDbController(db);
+//                pool.execute(theShop);
+//            }
+//        } catch(IOException e) {
+//            e.printStackTrace();
+//            pool.shutdown();
+//            db.close();
+//        }
         
     }   
     
