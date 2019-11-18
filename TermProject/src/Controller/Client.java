@@ -1,0 +1,32 @@
+package Controller;
+
+import java.net.Socket;
+import java.io.*;
+import java.lang.StringBuilder;
+
+public class Client {
+
+    private Socket socket;
+    private BufferedReader socketIn;
+    private PrintWriter socketOut;
+
+    public Client(String serverName, int portNumber) {
+        try {
+        socket = new Socket(serverName, portNumber);
+        socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        socketOut = new PrintWriter((socket.getOutputStream()), true);
+        } catch (IOException e) {
+        System.err.println(e.getStackTrace());
+        }
+    }
+
+    public void close() {
+        try {
+        socketIn.close();
+        socketOut.close();
+        socket.close();
+        } catch (IOException e) {
+        System.out.println("Closing error: " + e.getMessage());
+        }
+    }
+}

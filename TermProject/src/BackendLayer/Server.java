@@ -27,6 +27,26 @@ public class Server {
         System.out.println("Server is now running...");
     }
 
+    public void communicate() {
+        try {
+            while(true) {
+                Shop theShop = new Shop(serverSocket.accept(), theInventory, suppliers);
+                theShop.setDbController(db);
+                pool.execute(theShop);
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+            pool.shutdown();     
+            db.close();       
+        }
+        
+    }   
+    
+    public static void main(String[] args) {
+        Server server = new Server(5000);
+        server.communicate();
+    }
+
 
 
 }
