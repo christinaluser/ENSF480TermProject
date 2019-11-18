@@ -3,9 +3,11 @@ package Domain;
 import java.util.ArrayList;
 
 public abstract class User implements Observer{
-    public String name;
+    public Name name;
+    public Address address;
     public String email;
-    public String username;
+    protected String username;
+    protected String password;
     ArrayList<Property> properties;
 
 }
