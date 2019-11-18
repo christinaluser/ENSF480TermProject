@@ -20,7 +20,7 @@ public class Listener {
                     Integer.parseInt(split[3]), Boolean.parseBoolean(split[4]), split[5], Double.parseDouble(split[6]));
             return client.search(criteria);
         } else if (split[0].equals("SHOW")){
-
+            //TODO
         }
         return null;
     }
