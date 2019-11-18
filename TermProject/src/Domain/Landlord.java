@@ -24,6 +24,7 @@ public class Landlord extends User {
 
     @Override
     public void update(ArrayList<Property> p) {
-
+        properties = p;
+        System.out.println("Notification to Landlord properties: Changed");
     }
 }
