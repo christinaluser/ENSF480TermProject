@@ -21,6 +21,7 @@ public class Listener {
             return client.search(criteria);
         } else if (split[0].equals("SHOW")){
             //TODO
+            System.out.println("blablasjfbsklb");
         }
         return null;
     }
