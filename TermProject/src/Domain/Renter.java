@@ -3,7 +3,8 @@ package Domain;
 import java.util.ArrayList;
 
 //Does this implement Observer??
-public class Renter extends User {
+public class Renter extends User implements Observer{
+    private ArrayList<Property> matchedProperties;
 
     public void sendListingEmail() {
         
@@ -11,7 +12,7 @@ public class Renter extends User {
 
     @Override
     public void update(ArrayList<Property> p) {
-        properties = p;
+        matchedProperties = p;
         System.out.println("Notification to Renter properties: Changed");
     }
 

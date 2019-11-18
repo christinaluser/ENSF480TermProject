@@ -18,7 +18,7 @@ public class PropertyListing implements PropertySubject{
 
     @Override
     public void removeObserver(Observer o) {
-
+        observers.remove(o);
     }
 
     public void notifyAllObservers() {
