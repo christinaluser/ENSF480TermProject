@@ -8,7 +8,4 @@ public abstract class User implements Observer{
     public String username;
     ArrayList<Property> properties;
 
-    public void updateCriteria(Property p) {
-        
-    };
 }

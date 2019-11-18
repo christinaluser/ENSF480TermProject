@@ -12,7 +12,7 @@ public class Renter extends User {
     @Override
     public void update(ArrayList<Property> p) {
         properties = p;
-        System.out.println("Notification to Manager properties: Changed");
+        System.out.println("Notification to Renter properties: Changed");
     }
 
 }
