@@ -21,4 +21,9 @@ public class Landlord extends User {
     public void changeListingState(Property p, int state) {
 
     }
+
+    @Override
+    public void update(ArrayList<Property> p) {
+
+    }
 }

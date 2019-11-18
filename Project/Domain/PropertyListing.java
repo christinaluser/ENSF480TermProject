@@ -2,13 +2,13 @@ package Domain;
 
 import java.util.ArrayList;
 
-public class PropertyListing implements subject{
+public class PropertyListing implements PropertySubject{
     ArrayList<Observer> observers;
     ArrayList<Property> properties;
 
     PropertyListing() {
-        observers = new ArrayList<observers>();
-        properties = new ArrayList<properties>();
+        observers = new ArrayList<Observer>();
+        properties = new ArrayList<Property>();
     }
 
     public void registerObserver(Observer o) {
@@ -16,14 +16,15 @@ public class PropertyListing implements subject{
         o.update(properties);
     }
 
-    public void removeObservers(Observer o) {
-        observers.remove(o);
+    @Override
+    public void removeObserver(Observer o) {
+
     }
 
     public void notifyAllObservers() {
         for(int i = 0; i < observers.size(); i++) {
             Observer o = observers.get(i);
-            o.update(data);
+            o.update(properties);
         }
     }
 

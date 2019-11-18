@@ -1,6 +1,8 @@
 package Domain;
 
+import java.util.ArrayList;
+
 public interface Observer {
     //public PropertySubject subject;
-    public void updateCriteria(Property p);
+    public void update(ArrayList<Property> p);
 }
