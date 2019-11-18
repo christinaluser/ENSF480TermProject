@@ -8,10 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserGUI {
+    private JFrame frame;
     private JButton searchButton;
     private JTable table1;
     private JPanel panel;
-    private JComboBox Type;
+    private JComboBox type;
     private JComboBox isFurnished;
     private JComboBox cityQuadrant;
     private JComboBox priceRange;
@@ -21,7 +22,7 @@ public class UserGUI {
     private Listener listener;
 
     public String getType() {
-        return (String)Type.getSelectedItem();
+        return (String)type.getSelectedItem();
     }
 
     public boolean getIsFurnished(){
@@ -56,18 +57,14 @@ public class UserGUI {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String response = listener.actionPerformed("SEARCH", this);
+                String criteria = getType() + "/" + getNoBed() + "/" + getNoBath() + "/" + getIsFurnished() + "/"
+                        + getCityQuadrant() + "/" + getPriceRange();
+                String response = listener.actionPerformed("SEARCH" + "/" + criteria);
                 if (response.equals("null")) {
                     UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
                     UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
-                }
-//                else if (response.equals("invalid")) {
-//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
-//                    JOptionPane.showMessageDialog(null, "Please input valid criteria", "Error", JOptionPane.ERROR_MESSAGE);
-//                }
-                else if (response.equals("CLOSE")) {
+                } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
                     UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
@@ -79,7 +76,7 @@ public class UserGUI {
     }
 
     public void updateView(UserGUI gui) {
-        JFrame frame = new JFrame("ProperTee");
+        frame = new JFrame("ProperTee");
         frame.setContentPane(gui.panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

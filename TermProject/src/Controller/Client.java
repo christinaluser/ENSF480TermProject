@@ -1,5 +1,7 @@
 package Controller;
 
+import Domain.SearchCriteria;
+
 import java.net.Socket;
 import java.io.*;
 import java.lang.StringBuilder;
@@ -29,4 +31,11 @@ public class Client {
         System.out.println("Closing error: " + e.getMessage());
         }
     }
+
+    public String search(SearchCriteria criteria) throws IOException {
+        socketOut.println("SEARCH");
+        socketOut.println();
+        return socketIn.readLine();
+    }
+
 }
