@@ -2,11 +2,11 @@ package Domain;
 
 import java.util.ArrayList;
 
-public abstract class User {
+public abstract class User {        // why arent we implementing observer?
     public Name name;
     public Address address;
     public String email;
     protected String username;
     protected String password;
-//    ArrayList<Property> properties;
+    ArrayList<Property> properties;
 }
