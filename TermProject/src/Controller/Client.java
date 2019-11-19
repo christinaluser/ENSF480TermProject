@@ -38,4 +38,16 @@ public class Client {
         return socketIn.readLine();
     }
 
+    public String display() throws IOException {
+        socketOut.println("DISPLAY");
+        String response = socketIn.readLine();
+        StringBuilder data = new StringBuilder();
+        while (!response.equals("END")) {
+            data.append(response);
+            data.append(";");
+            response = socketIn.readLine();
+        }
+        return data.toString();
+    }
+
 }
