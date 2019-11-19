@@ -1,13 +1,22 @@
 package BackendLayer;
 
 import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Database {   // Save as "JdbcSelectTest.java"
     public static void main(String[] args) {
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (Exception e) {
+            System.err.println("Unable to find and load driver");
+        }
+
         try (
                 // Step 1: Allocate a database 'Connection' object
                 Connection conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/ebookshop?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
+                        "jdbc:mysql://localhost:3306/rpmdb?serverTimezone=GMT",
                         "myuser", "xxxx");   // For MySQL only
                 // The format is: "jdbc:mysql://hostname:port/databaseName", "username", "password"
 
