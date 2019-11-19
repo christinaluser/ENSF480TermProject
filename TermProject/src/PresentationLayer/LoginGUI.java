@@ -30,11 +30,16 @@ public class LoginGUI implements GUI{
         frame.setVisible(true);
     }
 
+    @Override
+    public void close() {
+        frame.dispose();
+    }
+
     public void activateButtons() {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                listener.changeGUI(new UserGUI());
             }
         });
     }

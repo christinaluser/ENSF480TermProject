@@ -12,7 +12,7 @@ public class Client {
     private Socket socket;
     private BufferedReader socketIn;
     private PrintWriter socketOut;
-    private GUI currentGUI;
+    private GUI currentGUI = null;
 
     public Client(String serverName, int portNumber) {
         try {
@@ -25,7 +25,11 @@ public class Client {
     }
 
     public void setGUI(GUI g) {
+        if(currentGUI != null) {
+            currentGUI.close();
+        }
         currentGUI = g;
+
     }
 
     public void runGUI() {

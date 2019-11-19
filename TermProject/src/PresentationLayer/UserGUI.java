@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class UserGUI {
+public class UserGUI implements GUI{
     private JFrame frame;
     private JButton searchButton;
     private JTable properties;
@@ -124,14 +124,20 @@ public class UserGUI {
         });
     }
 
-    public void updateView(UserGUI gui) {
+    @Override
+    public void updateView() {
         ((SpinnerNumberModel) noBed.getModel()).setMinimum(0);
         ((SpinnerNumberModel) noBath.getModel()).setMinimum(0);
         frame = new JFrame("ProperTee");
-        frame.setContentPane(gui.panel);
+        frame.setContentPane(this.panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    @Override
+    public void close() {
+        frame.dispose();
     }
 
 }

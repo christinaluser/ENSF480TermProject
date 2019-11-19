@@ -1,5 +1,6 @@
 package Controller;
 
+import PresentationLayer.GUI;
 import PresentationLayer.UserGUI;
 import Domain.SearchCriteria;
 
@@ -27,6 +28,11 @@ public class Listener {
             }
         }
         return null;
+    }
+
+    public void changeGUI(GUI g) {
+        client.setGUI(g);
+        client.runGUI();
     }
 
 }
