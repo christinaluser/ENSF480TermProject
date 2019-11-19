@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="3a493" class="javax.swing.JTable" binding="table1" default-binding="true">
+      <component id="3a493" class="javax.swing.JTable" binding="properties">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <minimum-size width="500" height="500"/>
@@ -42,22 +42,29 @@
           <component id="34a86" class="javax.swing.JLabel">
             <constraints/>
             <properties>
+              <labelFor value="3c1e1"/>
               <text value="#Bedrooms"/>
             </properties>
           </component>
           <component id="3c1e1" class="javax.swing.JSpinner" binding="noBed">
             <constraints/>
-            <properties/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="true"/>
+            </properties>
           </component>
           <component id="e7351" class="javax.swing.JLabel">
             <constraints/>
             <properties>
+              <labelFor value="7ec66"/>
               <text value="#Bathrooms"/>
             </properties>
           </component>
           <component id="7ec66" class="javax.swing.JSpinner" binding="noBath">
             <constraints/>
-            <properties/>
+            <properties>
+              <verifyInputWhenFocusTarget value="true"/>
+            </properties>
           </component>
           <component id="20034" class="javax.swing.JComboBox" binding="isFurnished">
             <constraints/>

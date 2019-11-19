@@ -4,6 +4,9 @@ import Controller.Listener;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -11,7 +14,7 @@ import java.io.IOException;
 public class UserGUI {
     private JFrame frame;
     private JButton searchButton;
-    private JTable table1;
+    private JTable properties;
     private JPanel panel;
     private JComboBox type;
     private JComboBox isFurnished;
@@ -20,6 +23,7 @@ public class UserGUI {
     private JSpinner noBed;
     private JSpinner noBath;
     private JButton showAllButton;
+    private JScrollPane scroll;
     private Listener listener;
 
     public String getType() {
@@ -67,25 +71,67 @@ public class UserGUI {
                     ex.printStackTrace();
                 }
                 if (response.equals("null")) {
-                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
+//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
+//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
+//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
+//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
                     JOptionPane.showMessageDialog(null, response.replaceAll(";", "\n"), "Item", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         });
     }
 
+    private void showAllProperties() {
+        showAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+                try {
+                    response = listener.actionPerformed("DISPLAY");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                String[] headers = {"Type", "Rent", "Location", " "};
+                String[] temp = response.split(";");
+
+                String[][] data = new String[temp.length][];
+
+                for (int i = 0; i < temp.length; i++) {
+                    data[i] = temp[i].split("/");
+                }
+
+                TableModel model = new DefaultTableModel(data, headers) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+
+                properties = new JTable(model);
+//                items = new JTable(data, headers);
+//                items.setEnabled(false);
+
+                if (scroll != null)
+                    panel.remove(scroll);
+                scroll = new JScrollPane(properties);
+                panel.add(scroll);
+
+                panel.validate();
+            }
+        });
+    }
+
     public void updateView(UserGUI gui) {
+        ((SpinnerNumberModel) noBed.getModel()).setMinimum(0);
+        ((SpinnerNumberModel) noBath.getModel()).setMinimum(0);
         frame = new JFrame("ProperTee");
         frame.setContentPane(gui.panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
+
 }
