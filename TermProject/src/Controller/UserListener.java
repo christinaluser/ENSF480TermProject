@@ -1,16 +1,13 @@
 package Controller;
 
-import PresentationLayer.GUI;
-import PresentationLayer.UserGUI;
 import Domain.SearchCriteria;
+import PresentationLayer.GUI;
 
-import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class Listener {
+public class UserListener {
     private Client client;
-    public Listener(Client client) {
+    public UserListener(Client client) {
         this.client = client;
     }
 
@@ -34,9 +31,4 @@ public class Listener {
         client.setGUI(g);
         client.runGUI();
     }
-
-    public Client getClient() {
-        return client;
-    }
-
 }

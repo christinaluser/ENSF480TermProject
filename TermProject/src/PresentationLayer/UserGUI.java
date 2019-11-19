@@ -1,6 +1,6 @@
 package PresentationLayer;
 
-import Controller.Listener;
+import Controller.UserListener;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -24,9 +24,9 @@ public class UserGUI implements GUI{
     private JSpinner noBath;
     private JButton showAllButton;
     private JScrollPane scroll;
-    private Listener listener;
+    private UserListener listener;
 
-    public UserGUI(Listener l) {
+    public UserGUI(UserListener l) {
         listener = l;
     }
 
@@ -58,7 +58,7 @@ public class UserGUI implements GUI{
         return (int)noBath.getValue();
     }
 
-    public void setListener(Listener listener) {
+    public void setListener(UserListener listener) {
         this.listener = listener;
     }
 

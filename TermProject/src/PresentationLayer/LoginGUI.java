@@ -1,6 +1,8 @@
 package PresentationLayer;
 
 import Controller.Listener;
+import Controller.LoginListener;
+import Controller.UserListener;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,9 +16,9 @@ public class LoginGUI implements GUI{
     private JButton signupButton;
     private JButton continueAsGuestButton;
     private JPasswordField passwordField1;
-    private Listener listener;
+    private LoginListener listener;
 
-    public LoginGUI(Listener l) {
+    public LoginGUI(LoginListener l) {
         listener = l;
         activateButtons();
     }
@@ -39,7 +41,7 @@ public class LoginGUI implements GUI{
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listener.changeGUI(new UserGUI(listener)); //Should be new listener
+                listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
             }
         });
     }
