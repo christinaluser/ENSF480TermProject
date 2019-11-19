@@ -2,7 +2,7 @@ package PresentationLayer;
 
 import javax.swing.*;
 
-public class RenterGUI extends UserGUI{
+public class RenterGUI{
     private JTextField textField1;
     private JButton searchButton;
     private JButton notificationsButton;

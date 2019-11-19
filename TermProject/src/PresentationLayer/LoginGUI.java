@@ -39,7 +39,7 @@ public class LoginGUI implements GUI{
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listener.changeGUI(new UserGUI());
+                listener.changeGUI(new UserGUI(listener)); //Should be new listener
             }
         });
     }

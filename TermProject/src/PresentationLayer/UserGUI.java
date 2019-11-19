@@ -26,6 +26,10 @@ public class UserGUI implements GUI{
     private JScrollPane scroll;
     private Listener listener;
 
+    public UserGUI(Listener l) {
+        listener = l;
+    }
+
     public String getType() {
         return (String)type.getSelectedItem();
     }
