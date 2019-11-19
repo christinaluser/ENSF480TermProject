@@ -9,6 +9,7 @@ public class Property {
     public String listingState;
     public double rent;
     public Date datePosted;
+    public Address address;
 
     Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
      String cityQuadrant, String listingState, double rent, Date datePosted) {

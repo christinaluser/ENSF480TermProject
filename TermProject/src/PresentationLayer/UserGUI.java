@@ -26,6 +26,8 @@ public class UserGUI implements GUI{
     private JScrollPane scroll;
     private UserListener listener;
 
+    public UserGUI(){}
+
     public UserGUI(UserListener l) {
         listener = l;
     }

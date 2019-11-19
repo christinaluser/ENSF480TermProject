@@ -10,12 +10,13 @@ import java.awt.event.ActionListener;
 
 public class LoginGUI implements GUI{
     private JFrame frame;
-    private JTextField textField1;
+    private JTextField usernameTextField;
     private JPanel panel1;
     private JButton loginButton;
     private JButton signupButton;
-    private JButton continueAsGuestButton;
-    private JPasswordField passwordField1;
+    private JButton continueWithoutLoginButton;
+    private JPasswordField passwordPasswordField;
+    private JComboBox loginType;
     private LoginListener listener;
 
     public LoginGUI(LoginListener l) {
