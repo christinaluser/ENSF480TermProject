@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class Database {   // Save as "JdbcSelectTest.java"
     public static void main(String[] args) {
-        
+
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
             System.err.println("Unable to find and load driver");
         }
