@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class UserGUI {
     private JFrame frame;
@@ -59,7 +60,12 @@ public class UserGUI {
             public void actionPerformed(ActionEvent e) {
                 String criteria = getType() + "/" + getNoBed() + "/" + getNoBath() + "/" + getIsFurnished() + "/"
                         + getCityQuadrant() + "/" + getPriceRange();
-                String response = listener.actionPerformed("SEARCH" + "/" + criteria);
+                String response = null;
+                try {
+                    response = listener.actionPerformed("SEARCH" + "/" + criteria);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 if (response.equals("null")) {
                     UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
                     UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
