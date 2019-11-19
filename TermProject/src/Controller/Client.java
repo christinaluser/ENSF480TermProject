@@ -1,6 +1,7 @@
 package Controller;
 
 import Domain.SearchCriteria;
+import PresentationLayer.*;
 
 import java.net.Socket;
 import java.io.*;
@@ -11,6 +12,7 @@ public class Client {
     private Socket socket;
     private BufferedReader socketIn;
     private PrintWriter socketOut;
+    private GUI currentGUI;
 
     public Client(String serverName, int portNumber) {
         try {
@@ -20,6 +22,14 @@ public class Client {
         } catch (IOException e) {
         System.err.println(e.getStackTrace());
         }
+    }
+
+    public void setGUI(GUI g) {
+        currentGUI = g;
+    }
+
+    public void runGUI() {
+        currentGUI.updateView();
     }
 
     public void close() {

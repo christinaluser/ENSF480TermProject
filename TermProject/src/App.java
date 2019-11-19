@@ -10,8 +10,9 @@ public class App {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ignored) {}
         Client client = new Client("10.13.99.23", 5000);
-        UserGUI gui = new UserGUI();
+        client.setGUI(new LoginGUI(new Listener(client)));
+        client.runGUI();
 //        gui.setListener(new Listener(client));
-        gui.updateView(gui);
+//        gui.updateView(gui);
     }
 }
