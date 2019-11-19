@@ -4,9 +4,10 @@ import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes i
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Database {   // Save as "JdbcSelectTest.java"
-    public static void main(String[] args) {
+public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
+    public DatabaseController()
+    {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
@@ -46,4 +47,40 @@ public class Database {   // Save as "JdbcSelectTest.java"
             ex.printStackTrace();
         }  // Step 5: Close conn and stmt - Done automatically by try-with-resources (JDK 7)
     }
+
+    void searchProperty()
+    {
+
+    }
+
+    void addPayment()
+    {
+
+    }
+
+    void addProperty()
+    {
+
+    }
+
+    void updateProperty()
+    {
+
+    }
+
+    void getProperty()
+    {
+
+    }
+
+    void updateFee()
+    {
+
+    }
+
+    void validateLogin()
+    {
+
+    }
+
 }
