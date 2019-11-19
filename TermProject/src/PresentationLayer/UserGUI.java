@@ -67,14 +67,14 @@ public class UserGUI {
                     ex.printStackTrace();
                 }
                 if (response.equals("null")) {
-                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
+//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
+//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
+//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
+//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
                     JOptionPane.showMessageDialog(null, response.replaceAll(";", "\n"), "Item", JOptionPane.PLAIN_MESSAGE);
                 }
             }
@@ -82,10 +82,13 @@ public class UserGUI {
     }
 
     public void updateView(UserGUI gui) {
+        ((SpinnerNumberModel) noBed.getModel()).setMinimum(0);
+        ((SpinnerNumberModel) noBath.getModel()).setMinimum(0);
         frame = new JFrame("ProperTee");
         frame.setContentPane(gui.panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
+
 }
