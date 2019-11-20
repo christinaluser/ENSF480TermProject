@@ -8,5 +8,6 @@ public abstract class User {        // why arent we implementing observer?
     public String email;
     protected String username;
     protected String password;
+    protected int accessID;
     ArrayList<Property> properties;
 }

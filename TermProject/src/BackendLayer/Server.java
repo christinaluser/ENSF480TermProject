@@ -29,7 +29,7 @@ public class Server {
 
     public void communicate()
     {
-        
+
     }
 
     public static void main(String[] args) throws Exception {
