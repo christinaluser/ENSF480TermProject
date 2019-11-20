@@ -108,6 +108,8 @@ public class ManagerGUI implements GUI {
         });
     }
 
+    //TODO: i might have interpreted how get report works wrong (should it be that the manager specifies any period of time ?)
+
     private void getReport() {
         getReportButton.addActionListener(new ActionListener() {
             @Override
@@ -128,6 +130,29 @@ public class ManagerGUI implements GUI {
                 }
             }
         });
+    }
+
+    private void logout(){
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+                try {
+                    response = listener.actionPerformed("LOGOUT");
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+                if (response == null) {
+                    // TODO idk lol
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    //TODO idk this either lol
+                }
+            }
+        });
+
     }
 
     private void displayReport (String response){
