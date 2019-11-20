@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PresentationLayer.LandlordGUI">
-  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
@@ -9,11 +8,7 @@
     <border type="none"/>
     <children>
       <toolbar id="3db5f">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="20"/>
-          </grid>
-        </constraints>
+        <constraints border-constraint="North"/>
         <properties>
           <floatable value="false"/>
         </properties>
@@ -39,35 +34,27 @@
           </component>
         </children>
       </toolbar>
-      <component id="b4c61" class="javax.swing.JTable" binding="properties">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
-        </constraints>
+      <toolbar id="95d91">
+        <constraints border-constraint="South"/>
         <properties/>
-      </component>
-      <toolbar id="c4f12">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="20"/>
-          </grid>
-        </constraints>
-        <properties>
-          <floatable value="false"/>
-        </properties>
         <border type="none"/>
         <children>
-          <component id="89b77" class="javax.swing.JButton" binding="registerPropertyButton" default-binding="true">
+          <component id="fdccb" class="javax.swing.JButton" binding="registerPropertyButton" default-binding="true">
             <constraints/>
             <properties>
               <text value="Register Property"/>
             </properties>
           </component>
-          <component id="731c0" class="javax.swing.JButton" binding="showAllButton" default-binding="true">
+          <component id="109f4" class="javax.swing.JButton" binding="showAllButton" default-binding="true">
             <constraints/>
             <properties>
-              <text value="Show All"/>
+              <text value="Show All "/>
+            </properties>
+          </component>
+          <component id="34111" class="javax.swing.JButton" binding="logoutButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Logout"/>
             </properties>
           </component>
         </children>

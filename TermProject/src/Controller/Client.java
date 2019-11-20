@@ -1,5 +1,6 @@
 package Controller;
 
+import Domain.Address;
 import Domain.SearchCriteria;
 import PresentationLayer.*;
 
@@ -20,7 +21,7 @@ public class Client {
         socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         socketOut = new PrintWriter((socket.getOutputStream()), true);
         } catch (IOException e) {
-        System.err.println(e.getStackTrace());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -48,6 +49,12 @@ public class Client {
 
     public String search(SearchCriteria criteria) throws IOException {
         socketOut.println("SEARCH");
+        socketOut.println();
+        return socketIn.readLine();
+    }
+
+    public String search(Address address) throws IOException {
+        socketOut.println("SEARCHADDRESS");
         socketOut.println();
         return socketIn.readLine();
     }

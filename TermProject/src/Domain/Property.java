@@ -1,6 +1,7 @@
 package Domain;
 
 public class Property {
+    public int propertyId;
     public String type;
     public int noBedrooms;
     public int noBathrooms;
@@ -11,8 +12,9 @@ public class Property {
     public Date datePosted;
     public Address address;
 
-    Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
+    Property(int propertyId, String type, int noBedrooms, int noBathrooms, boolean isFurnished,
      String cityQuadrant, String listingState, double rent, Date datePosted) {
+        this.propertyId = propertyId;
         this.type = type;
         this.noBedrooms = noBedrooms;
         this.noBathrooms = noBathrooms;
