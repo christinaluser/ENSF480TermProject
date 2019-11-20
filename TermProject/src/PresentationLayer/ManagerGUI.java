@@ -10,6 +10,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class ManagerGUI implements GUI {
@@ -44,12 +45,13 @@ public class ManagerGUI implements GUI {
             public void actionPerformed(ActionEvent e) {
                 String address = (int) propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
                 String response = null;
-                try {
-                    response = listener.actionPerformed("SEARCH" + "/" + address);
-                } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
-                }
+//                try {
+//                    response = listener.actionPerformed("SEARCH" + "/" + address);
+//                } catch (IOException ex) {
+//                    System.err.println(ex.getMessage());
+//                }
 
+                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
                 if (response == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
@@ -62,16 +64,91 @@ public class ManagerGUI implements GUI {
         });
     }
 
-    private void showTable(String response) {
-        String[] headers = {"ID", "Type", "Rent", "Location", "More Info", "Edit"};
+    private void showAllProperties() {
+        showAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+                try {
+                    response = listener.actionPerformed("DISPLAY");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
 
-        properties.getColumn("Button").setCellRenderer(new CellButton());
-        properties.getColumn("Button").setCellEditor(new CellButtonEditor(new JCheckBox()));
+                if (response == null) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    showTable(response);
+                }
+            }
+        });
+    }
+
+    private void editFee() {
+        editFeeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+                try {
+                    response = listener.actionPerformed("EDITFEE");
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+                if (response == null) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Edit unsuccessful");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    JOptionPane.showMessageDialog(new JFrame(), "Edit successful");
+                }
+            }
+        });
+    }
+
+    private void getReport() {
+        getReportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+                try {
+                    response = listener.actionPerformed("REPORT");
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+                if (response == null) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Could not retrieve report");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    displayReport(response);
+                }
+            }
+        });
+    }
+
+    private void displayReport (String response){
+        Report dialog = new Report();
+        dialog.pack();
+        dialog.setVisible(true);
+        //TODO: need to fix following after implementing db
+        dialog.reportText.setText(response);
+    }
+
+    private void showTable(String response) {
+        String[] headers = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
 
         String[] temp = response.split(";");
-        String[][] data = new String[temp.length][];
+        String[][] data = new String[temp.length][headers.length];
         for (int i = 0; i < temp.length; i++) {
-            data[i] = temp[i].split("/");
+            String[] temp2 = temp[i].split("/");
+            for (int j = 0; j < temp2.length; j++) {
+                data[i][j] = temp2[j];
+            }
+            data[i][headers.length - 1] = "Edit";
         }
 
         TableModel model = new DefaultTableModel(data, headers) {
@@ -82,6 +159,9 @@ public class ManagerGUI implements GUI {
 
         properties = new JTable(model);
         properties = new JTable(data, headers);
+        properties.getColumn("Edit").setCellRenderer(new CellButton());
+        properties.getColumn("Edit").setCellEditor(new CellButtonEditor(new JCheckBox()));
+
         properties.setEnabled(false);
         if (scroll != null)
             panel.remove(scroll);
@@ -97,6 +177,8 @@ public class ManagerGUI implements GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        searchProperties();
+
     }
 
     @Override
@@ -115,6 +197,7 @@ public class ManagerGUI implements GUI {
         ManagerGUI gui = new ManagerGUI();
         gui.updateView();
 
+//        gui.properties.getColumn("Edit").getCellEditor().getCellEditorValue();
     }
 
     {

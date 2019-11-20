@@ -1,6 +1,7 @@
 package Controller;
 
 import Domain.Address;
+import Domain.Date;
 import Domain.SearchCriteria;
 import PresentationLayer.*;
 
@@ -71,4 +72,15 @@ public class Client {
         return data.toString();
     }
 
+    public String editFee(String value) throws IOException {
+        socketOut.println("EDITFEE/" + value);
+        socketOut.println();
+        return socketIn.readLine();
+    }
+
+    public String getReport(String dates) throws IOException {
+        socketOut.println("EDITFEE/" + dates);
+        socketOut.println();
+        return socketIn.readLine();
+    }
 }

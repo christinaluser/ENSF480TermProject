@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 
 public class CellButtonEditor extends DefaultCellEditor {
     protected JButton button;
-
     private String label;
-
     private boolean isPushed;
 
     public CellButtonEditor(JCheckBox checkBox) {
@@ -39,10 +37,7 @@ public class CellButtonEditor extends DefaultCellEditor {
 
     public Object getCellEditorValue() {
         if (isPushed) {
-            //
-            //
             JOptionPane.showMessageDialog(button, label + ": Ouch!");
-            // System.out.println(label + ": Ouch!");
         }
         isPushed = false;
         return new String(label);
