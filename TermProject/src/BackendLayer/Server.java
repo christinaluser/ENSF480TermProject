@@ -27,8 +27,13 @@ public class Server {
         System.out.println("Server is now running...");
     }
 
+    public void communicate()
+    {
+        
+    }
+
     public static void main(String[] args) throws Exception {
-        //Server s = new Server(3306);
+        Server s = new Server(5050);
 
     }
 
