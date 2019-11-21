@@ -1,26 +1,21 @@
 package Domain;
 
-public class Property {
+public class SearchCriteria {
     public String type;
     public int noBedrooms;
     public int noBathrooms;
     public boolean isFurnished;
     public String cityQuadrant;
-    public String listingState;
-    public double rent;
-    //public Date datePosted;
+    public double priceRange;
 
-    public Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
-                    String cityQuadrant, String listingState, double rent) {
+    public SearchCriteria(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
+                          String cityQuadrant, double priceRange) {
         this.type = type;
         this.noBedrooms = noBedrooms;
         this.noBathrooms = noBathrooms;
         this.isFurnished = isFurnished;
         this.cityQuadrant = cityQuadrant;
-        this.listingState = listingState;
-        this.rent = rent;
-        //this.datePosted = datePosted;
-        // REMOVED DATE POSTED
+        this.priceRange = priceRange;
     }
 
     public String getType()
@@ -33,14 +28,14 @@ public class Property {
         return noBedrooms;
     }
 
-    public int getNoBathrooms()
-    {
-        return noBathrooms;
-    }
-
     public boolean getIsFurnished()
     {
         return isFurnished;
+    }
+
+    public int getNoBathrooms()
+    {
+        return noBathrooms;
     }
 
     public String getCityQuadrant()
@@ -48,9 +43,8 @@ public class Property {
         return cityQuadrant;
     }
 
-    public double getRent()
+    public double getPriceRange()
     {
-        return rent;
+        return priceRange;
     }
-
 }

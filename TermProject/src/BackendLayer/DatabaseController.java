@@ -1,6 +1,7 @@
 package BackendLayer;
 
 import Domain.Property;
+import Domain.SearchCriteria;
 
 import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
 import java.sql.DriverManager;
@@ -39,7 +40,8 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         ArrayList <Property> properties = loadProperties();
         for(Property psearch: properties)
         {
-
+            if(psearch.getType().equals(sc.getType()) && psearch.getNoBedrooms() == sc.getNoBedrooms() && psearch.getNoBathrooms() == sc.getNoBathrooms()
+                    && psearch.getIsFurnished() == sc.getIsFurnished() && psearch.getCityQuadrant().equals(sc.getCityQuadrant()) && psearch.getRent() <= sc.getPriceRange())
             return psearch;
         }
         return null;
