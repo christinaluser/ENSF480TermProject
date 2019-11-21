@@ -1,11 +1,20 @@
 package PresentationLayer;
 
+import Controller.LandlordListener;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LandlordGUI implements GUI {
     private JFrame frame;
     private JPanel panel;
+    private JTable properties;
+    private JScrollPane scroll;
     private JButton searchButton;
     private JTextField streetName;
     private JSpinner propertyNumber;
@@ -13,6 +22,111 @@ public class LandlordGUI implements GUI {
     private JButton registerPropertyButton;
     private JButton showAllButton;
     private JButton logoutButton;
+    private LandlordListener listener;
+
+
+    private void registerProperty() {
+        registerPropertyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+                try {
+                    response = listener.actionPerformed("REGISTERPROPERTY");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                if (response == null) {
+                    JOptionPane.showMessageDialog(new JFrame(), "property registration was unsuccessful ");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+
+                }
+            }
+        });
+    }
+
+    private void searchProperties() {
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String address = (int) propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
+                String response = null;
+                try {
+                    response = listener.actionPerformed("SEARCH" + "/" + address);
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                }
+
+//                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+                if (response == null) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    showTable(response);
+
+                }
+            }
+        });
+    }
+
+    private void showAllProperties() {
+        showAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+                try {
+                    response = listener.actionPerformed("DISPLAY");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                if (response == null) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    showTable(response);
+                }
+            }
+        });
+    }
+
+    //TODO Copy manager logout when its done
+
+    private void showTable(String response) {
+        String[] headers = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
+
+        String[] temp = response.split(";");
+        String[][] data = new String[temp.length][headers.length];
+        for (int i = 0; i < temp.length; i++) {
+            String[] temp2 = temp[i].split("/");
+            for (int j = 0; j < temp2.length; j++) {
+                data[i][j] = temp2[j];
+            }
+            data[i][headers.length - 1] = "Edit";
+        }
+
+        TableModel model = new DefaultTableModel(data, headers) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        properties = new JTable(model);
+        properties = new JTable(data, headers);
+        properties.getColumn("Edit").setCellRenderer(new CellButton());
+        properties.getColumn("Edit").setCellEditor(new CellButtonEditor(new JCheckBox()));
+
+        properties.setEnabled(false);
+        if (scroll != null)
+            panel.remove(scroll);
+        scroll = new JScrollPane(properties);
+        panel.add(scroll);
+        panel.validate();
+    }
 
     @Override
     public void updateView() {

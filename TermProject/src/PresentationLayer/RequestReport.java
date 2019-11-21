@@ -1,22 +1,18 @@
 package PresentationLayer;
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.ParseException;
 
-public class EditFee extends JDialog {
+public class RequestReport extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JFormattedTextField value;
+    private JFormattedTextField startDate;
+    private JFormattedTextField endDate;
 
-    public String getValue() {
-        return value.getText();
-    }
-
-    public EditFee() {
+    public RequestReport() {
         $$$setupUI$$$();
         setContentPane(contentPane);
         setModal(true);
@@ -50,14 +46,25 @@ public class EditFee extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    public String getDates() {
+        String ret = startDate.getText() + endDate.getText();
+        return ret;
+    }
+
     private void onOK() {
-        // add your code here
+
         dispose();
     }
 
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    private void createUIComponents() {
+        startDate = new JFormattedTextField(new DateFormatter());
+        endDate = new JFormattedTextField((new DateFormatter()));
+        // TODO: place custom component creation code here
     }
 
     /**
@@ -78,8 +85,9 @@ public class EditFee extends JDialog {
         panel2.setLayout(new GridBagLayout());
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel2, gbc);
@@ -92,35 +100,55 @@ public class EditFee extends JDialog {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         panel2.add(panel3, gbc);
-        final JLabel label1 = new JLabel();
-        label1.setText("New Fee: ");
+        final JPanel spacer1 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel3.add(spacer1, gbc);
+        startDate.setPreferredSize(new Dimension(200, 30));
+        startDate.setText("");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(startDate, gbc);
+        endDate = new JFormattedTextField();
+        endDate.setPreferredSize(new Dimension(200, 30));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(endDate, gbc);
+        final JLabel label1 = new JLabel();
+        label1.setText("End Date");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.WEST;
         panel3.add(label1, gbc);
-        final JPanel spacer1 = new JPanel();
+        final JLabel label2 = new JLabel();
+        label2.setText("Start Date");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(spacer1, gbc);
+        gbc.anchor = GridBagConstraints.WEST;
+        panel3.add(label2, gbc);
         final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        panel3.add(spacer2, gbc);
-        value.setEnabled(true);
-        value.setPreferredSize(new Dimension(300, 30));
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
+        gbc.gridx = 4;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(value, gbc);
+        panel3.add(spacer2, gbc);
+        final JPanel spacer3 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(spacer3, gbc);
         final JToolBar toolBar1 = new JToolBar();
-        toolBar1.setFloatable(false);
         contentPane.add(toolBar1, BorderLayout.SOUTH);
         buttonOK = new JButton();
         buttonOK.setText("OK");
@@ -137,17 +165,4 @@ public class EditFee extends JDialog {
         return contentPane;
     }
 
-    private void createUIComponents() {
-        value = new JFormattedTextField(createFormatter("$######"));
-    }
-
-    protected MaskFormatter createFormatter(String s) {
-        MaskFormatter formatter = null;
-        try {
-            formatter = new MaskFormatter(s);
-        } catch (ParseException exc) {
-            System.err.println("formatter is bad: " + exc.getMessage());
-        }
-        return formatter;
-    }
 }

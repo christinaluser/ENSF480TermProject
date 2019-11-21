@@ -48,8 +48,16 @@ public class Client {
         }
     }
 
-    public String search(SearchCriteria criteria) throws IOException {
-        socketOut.println("SEARCH");
+//    i think this one is wrong
+//    public String search(SearchCriteria criteria) throws IOException {
+//        socketOut.println("SEARCH");
+//        socketOut.println();
+//        return socketIn.readLine();
+//    }
+
+    public String search(String searchCriteria) throws IOException {
+        socketOut.println(searchCriteria);
+        //server should make a new criteria and actually search client just sends strings to server
         socketOut.println();
         return socketIn.readLine();
     }
@@ -72,15 +80,22 @@ public class Client {
         return data.toString();
     }
 
-    public String editFee(String value) throws IOException {
-        socketOut.println("EDITFEE/" + value);
+    public String editFee(String message) throws IOException {
+        socketOut.println(message);
         socketOut.println();
         return socketIn.readLine();
     }
 
-    public String getReport(String dates) throws IOException {
-        socketOut.println("EDITFEE/" + dates);
+    public String getReport(String message) throws IOException {
+        socketOut.println(message);
         socketOut.println();
         return socketIn.readLine();
     }
+
+    public String registerProperty(String propertyInfo) throws IOException {
+        socketOut.println(propertyInfo);
+        socketOut.println();
+        return socketIn.readLine();
+    }
+
 }

@@ -31,7 +31,7 @@ public class RenterGUI extends UserGUI implements GUI {
                         + getCityQuadrant() + "/" + getPriceRange();
                 String response = null;
                 try {
-                    response = listener.actionPerformed("SEARCH" + "/" + criteria);
+                    response = listener.actionPerformed("SEARCHRENTER/" + criteria);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

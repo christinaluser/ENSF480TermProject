@@ -29,10 +29,12 @@ public class ManagerListener {
             EditFee dialog = new EditFee();
             dialog.pack();
             dialog.setVisible(true);
-            return client.editFee(dialog.getValue());
-
+            String toSend = action + "/" + dialog.getValue();
+            return client.editFee(toSend);
         } else if (split[0].equals("REPORT")) {
-            return client.getReport();
+            return client.getReport(action);
+        } else if (split[0].equals("LOGOUT")){
+            //TODO me dunno
         }
         return null;
     }
