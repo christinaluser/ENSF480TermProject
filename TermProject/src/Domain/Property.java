@@ -9,8 +9,8 @@ public class Property {
     public String cityQuadrant;
     public String listingState;
     public double rent;
-    public Date datePosted;
-    public Address address;
+    //public Date datePosted;
+    // I REMOVED ADDRESS bc i havent configured it in the db yet
 
     Property(int propertyId, String type, int noBedrooms, int noBathrooms, boolean isFurnished,
      String cityQuadrant, String listingState, double rent, Date datePosted) {
@@ -22,6 +22,38 @@ public class Property {
         this.cityQuadrant = cityQuadrant;
         this.listingState = listingState;
         this.rent = rent;
-        this.datePosted = datePosted;
+        //this.datePosted = datePosted;
+        // REMOVED DATE POSTED
     }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public int getNoBedrooms()
+    {
+        return noBedrooms;
+    }
+
+    public int getNoBathrooms()
+    {
+        return noBathrooms;
+    }
+
+    public boolean getIsFurnished()
+    {
+        return isFurnished;
+    }
+
+    public String getCityQuadrant()
+    {
+        return cityQuadrant;
+    }
+
+    public double getRent()
+    {
+        return rent;
+    }
+
 }

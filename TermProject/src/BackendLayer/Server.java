@@ -14,13 +14,13 @@ public class Server {
     private Socket socket;
     private ExecutorService pool;
     private ServerSocket serverSocket;
-    private Database database;
+    private DatabaseController database;
 
     public Server(int portNum) {
         try {
             serverSocket = new ServerSocket(portNum);
             pool = Executors.newCachedThreadPool();
-            database = new Database();
+            database = new DatabaseController();
         } catch (IOException e) {
             e.printStackTrace();
         }
