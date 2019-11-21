@@ -8,10 +8,10 @@ public class Property {
     public String cityQuadrant;
     public String listingState;
     public double rent;
-    public Date datePosted;
+    //public Date datePosted;
 
-    Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
-     String cityQuadrant, String listingState, double rent, Date datePosted) {
+    public Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
+                    String cityQuadrant, String listingState, double rent) {
         this.type = type;
         this.noBedrooms = noBedrooms;
         this.noBathrooms = noBathrooms;
@@ -19,6 +19,7 @@ public class Property {
         this.cityQuadrant = cityQuadrant;
         this.listingState = listingState;
         this.rent = rent;
-        this.datePosted = datePosted;
+        //this.datePosted = datePosted;
+        // REMOVED DATE POSTED
     }
 }
