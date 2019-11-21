@@ -34,14 +34,15 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         }
     }
 
-    void searchProperty(Property p)
+    public Property searchProperty(SearchCriteria sc)
     {
         ArrayList <Property> properties = loadProperties();
         for(Property psearch: properties)
         {
 
+            return psearch;
         }
-
+        return null;
     }
 
     public ArrayList<Property> loadProperties()

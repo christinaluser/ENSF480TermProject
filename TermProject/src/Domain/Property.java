@@ -22,4 +22,30 @@ public class Property {
         //this.datePosted = datePosted;
         // REMOVED DATE POSTED
     }
+
+    protected String getType()
+    {
+        return type;
+    }
+
+    protected int getNoBedrooms()
+    {
+        return noBedrooms;
+    }
+
+    protected int getNoBathrooms()
+    {
+        return noBathrooms;
+    }
+
+    protected String getCityQuadrant()
+    {
+        return cityQuadrant;
+    }
+
+    protected double getRent()
+    {
+        return rent;
+    }
+
 }
