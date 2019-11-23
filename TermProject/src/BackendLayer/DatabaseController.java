@@ -2,6 +2,7 @@ package BackendLayer;
 
 import Domain.Property;
 import Domain.SearchCriteria;
+import Domain.User;
 
 import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
 import java.sql.DriverManager;
@@ -66,6 +67,31 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         }
         return properties;
     }
+
+    public ArrayList<User> loadUsers()
+    {
+        ArrayList<User> users = new ArrayList<>();
+        String strSelect = "SELECT * FROM users";
+
+        try {
+            ResultSet rset = stmt.executeQuery(strSelect);
+            while(rset.next())
+            {
+                User u;
+                users.add(u);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    /*public User validateLogin(String username, String password)
+    {
+        for(int i = 0; i < )
+        return null;
+    }*/
 
     /*void addPayment()
     {
