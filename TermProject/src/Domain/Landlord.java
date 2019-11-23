@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.ArrayList;
 
-public class Landlord {
+public class Landlord extends User{
     public ArrayList<Property> ownedProperties;
     public ArrayList<PropertyListing> listings;
 

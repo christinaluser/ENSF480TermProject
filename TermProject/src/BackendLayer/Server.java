@@ -28,20 +28,54 @@ public class Server {
     }
 
     public void communicate() {
-//        try {
-//            while (true) {
-//                Shop theShop = new Shop(serverSocket.accept(), theInventory, suppliers);
-//                theShop.setDbController(db);
-//                pool.execute(theShop);
-//            }
-//        } catch(IOException e) {
-//            e.printStackTrace();
-//            pool.shutdown();
-//            db.close();
-//        }
-        
-    }   
-    
+        boolean userFound = false;
+        String input = "";
+        try {
+            while(!userFound) {
+                input = socketIn.readLine();
+                System.out.println(input);
+                if(input.startsWith("USER/")) {
+                    userFound = true;
+                }
+            }
+
+            switch(input) {
+                case "USER/REGULAR_USER":
+                    communicateRegularUser();
+                    break;
+                case "USER/LANDLORD":
+                    communicateLandlord();
+                    break;
+                case "USER/RENTER":
+                    communicateRenter();
+                    break;
+                case "USER/MANAGER":
+                    communicateManager();
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + input);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void communicateRegularUser() {
+
+    }
+
+    private void communicateLandlord() {
+
+    }
+
+    private void communicateRenter() {
+
+    }
+
+    private void communicateManager() {
+
+    }
+
     public static void main(String[] args) {
         Server server = new Server(5000);
         server.communicate();
