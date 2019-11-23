@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 
-public class LandlordGUI implements TableGUI {
+public class LandlordGUI extends TableGUI {
     private JFrame frame;
     private JPanel panel;
     private JTable properties;
@@ -25,7 +25,7 @@ public class LandlordGUI implements TableGUI {
     private JButton showAllButton;
     private JButton logoutButton;
     private LandlordListener listener;
-
+    private String[] headers = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
 
     private void registerProperty() {
         registerPropertyButton.addActionListener(new ActionListener() {
@@ -67,7 +67,7 @@ public class LandlordGUI implements TableGUI {
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    showTable(response);
+                    showTable(headers, response, panel);
 
                 }
             }
@@ -90,7 +90,7 @@ public class LandlordGUI implements TableGUI {
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    showTable(response);
+                    showTable(headers, response, panel);
                 }
             }
         });
@@ -98,40 +98,40 @@ public class LandlordGUI implements TableGUI {
 
     //TODO Copy manager logout when its done
 
-    private void showTable(String response) {
-        String[] headers = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
-
-        String[] temp = response.split(";");
-        String[][] data = new String[temp.length][headers.length];
-        for (int i = 0; i < temp.length; i++) {
-            String[] temp2 = temp[i].split("/");
-            for (int j = 0; j < temp2.length; j++) {
-                data[i][j] = temp2[j];
-            }
-            data[i][headers.length - 1] = "Edit";
-        }
-
-        TableModel model = new DefaultTableModel(data, headers) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        properties = new JTable(model);
-        properties = new JTable(data, headers);
-        properties.getColumn("Edit").setCellRenderer(new TableButtonRenderer());
-        properties.addMouseListener(new TableButtonMouseListener(this));
-
-        properties.setEnabled(false);
-        if (scroll != null)
-            panel.remove(scroll);
-        scroll = new JScrollPane(properties);
-        panel.add(scroll);
-        panel.validate();
-    }
+//    private void showTable(String response) {
+//
+//
+//        String[] temp = response.split(";");
+//        String[][] data = new String[temp.length][headers.length];
+//        for (int i = 0; i < temp.length; i++) {
+//            String[] temp2 = temp[i].split("/");
+//            for (int j = 0; j < temp2.length; j++) {
+//                data[i][j] = temp2[j];
+//            }
+//            data[i][headers.length - 1] = "Edit";
+//        }
+//
+//        TableModel model = new DefaultTableModel(data, headers) {
+//            public boolean isCellEditable(int row, int column) {
+//                return false;
+//            }
+//        };
+//
+//        properties = new JTable(model);
+//        properties = new JTable(data, headers);
+//        properties.getColumn("Edit").setCellRenderer(new TableButtonRenderer());
+//        properties.addMouseListener(new TableButtonMouseListener(this));
+//
+//        properties.setEnabled(false);
+//        if (scroll != null)
+//            panel.remove(scroll);
+//        scroll = new JScrollPane(properties);
+//        panel.add(scroll);
+//        panel.validate();
+//    }
 
     @Override
-    public void tableButtonClicked() {
+    public void tableButtonClicked(int row, String title) {
         EditPropertyState dialog = new EditPropertyState();
         dialog.pack();
         dialog.setVisible(true);
@@ -167,16 +167,17 @@ public class LandlordGUI implements TableGUI {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
+        createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.NORTH);
-        propertyNumber = new JSpinner();
         toolBar1.add(propertyNumber);
         streetName = new JTextField();
+        streetName.setText("Street");
         toolBar1.add(streetName);
-        postalCode = new JTextField();
+        postalCode.setText("Postal Code");
         toolBar1.add(postalCode);
         searchButton = new JButton();
         searchButton.setText("Search");

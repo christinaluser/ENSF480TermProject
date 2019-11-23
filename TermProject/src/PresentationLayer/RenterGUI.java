@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class RenterGUI extends UserGUI implements TableGUI {
+public class RenterGUI extends UserGUI {
     private JFrame frame;
     private JPanel panel;
     private JButton searchButton;
@@ -52,7 +52,7 @@ public class RenterGUI extends UserGUI implements TableGUI {
     }
 
     @Override
-    public void tableButtonClicked() {
+    public void tableButtonClicked(int row, String Title) {
         String info = "property info"; //TODO figure out how to get info
         JOptionPane.showMessageDialog(new JFrame(), info, "More Property Information", JOptionPane.INFORMATION_MESSAGE);
     }

@@ -38,7 +38,9 @@
       </toolbar>
       <toolbar id="a8ad4">
         <constraints border-constraint="South"/>
-        <properties/>
+        <properties>
+          <floatable value="false"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="f3f2c" class="javax.swing.JButton" binding="getReportButton" default-binding="true">

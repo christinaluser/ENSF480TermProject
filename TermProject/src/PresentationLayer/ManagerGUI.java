@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.ParseException;
 
-public class ManagerGUI implements TableGUI {
+public class ManagerGUI extends TableGUI {
     private JFrame frame;
     private JPanel panel;
     private JButton getReportButton;
@@ -24,17 +24,21 @@ public class ManagerGUI implements TableGUI {
     private JButton logoutButton;
     private JButton searchButton;
     private JTextField streetName;
-    private JTable properties;
+//    private JTable properties;
     private JSpinner propertyNumber;
     private JFormattedTextField postalCode;
-    private JScrollPane scroll;
+//    private JScrollPane scroll;
     private ManagerListener listener;
+
 
     public ManagerGUI(ManagerListener l) {
         listener = l;
     }
 
     public ManagerGUI() {
+        String[] temp = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
+        headers = temp;
+//        super(panel);
     }
 
     public void setListener(ManagerListener listener) {
@@ -59,7 +63,7 @@ public class ManagerGUI implements TableGUI {
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    showTable(response);
+                    showTable(headers, response, panel);
 
                 }
             }
@@ -82,7 +86,7 @@ public class ManagerGUI implements TableGUI {
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    showTable(response);
+                    showTable(headers, response, panel);
                 }
             }
         });
@@ -177,44 +181,17 @@ public class ManagerGUI implements TableGUI {
         dialog.reportText.setText(response);
     }
 
-    private void showTable(String response) {
-        String[] headers = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
-
-        String[] temp = response.split(";");
-        String[][] data = new String[temp.length][headers.length];
-        for (int i = 0; i < temp.length; i++) {
-            String[] temp2 = temp[i].split("/");
-            for (int j = 0; j < temp2.length; j++) {
-                data[i][j] = temp2[j];
-            }
-            data[i][headers.length - 1] = "Edit";
-        }
-
-        TableModel model = new DefaultTableModel(data, headers) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        properties = new JTable(model);
-        properties = new JTable(data, headers);
-        TableButtonRenderer buttonRenderer = new TableButtonRenderer();
-        properties.getColumn("Edit").setCellRenderer(buttonRenderer);
-        properties.addMouseListener(new TableButtonMouseListener(this));
-
-        properties.setEnabled(false);
-        if (scroll != null)
-            panel.remove(scroll);
-        scroll = new JScrollPane(properties);
-        panel.add(scroll);
-        panel.validate();
-    }
-
     @Override
-    public void tableButtonClicked() {
+    public void tableButtonClicked(int row, String dialogTitle) {
         EditPropertyState dialog = new EditPropertyState();
+        dialog.setTitle(dialogTitle);
         dialog.pack();
         dialog.setVisible(true);
+        try {
+            listener.actionPerformed("EDIT/" + row + "/" + dialog.getNewState());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

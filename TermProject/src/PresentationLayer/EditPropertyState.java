@@ -10,6 +10,10 @@ public class EditPropertyState extends JDialog {
     private JButton buttonCancel;
     private JComboBox newState;
 
+    protected String getNewState() {
+        return (String) newState.getSelectedItem();
+    }
+
     public EditPropertyState() {
         setContentPane(contentPane);
         setModal(true);
@@ -126,4 +130,5 @@ public class EditPropertyState extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
