@@ -31,6 +31,8 @@ public class UserGUI implements GUI {
 
     public UserGUI(UserListener l) {
         listener = l;
+        searchProperties();
+        showAllProperties();
     }
 
     public String getType() {
