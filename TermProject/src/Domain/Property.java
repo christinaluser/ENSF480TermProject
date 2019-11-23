@@ -1,5 +1,7 @@
 package Domain;
 
+import java.util.Date;
+
 public class Property {
     public int propertyId;
     public String type;
@@ -9,11 +11,11 @@ public class Property {
     public String cityQuadrant;
     public String listingState;
     public double rent;
-    //public Date datePosted;
+    public Date datePosted;
     // I REMOVED ADDRESS bc i havent configured it in the db yet
 
-    Property(int propertyId, String type, int noBedrooms, int noBathrooms, boolean isFurnished,
-     String cityQuadrant, String listingState, double rent, Date datePosted) {
+    public Property(int propertyId, String type, int noBedrooms, int noBathrooms, boolean isFurnished,
+                    String cityQuadrant, String listingState, double rent, Date datePosted) {
         this.propertyId = propertyId;
         this.type = type;
         this.noBedrooms = noBedrooms;
@@ -22,7 +24,7 @@ public class Property {
         this.cityQuadrant = cityQuadrant;
         this.listingState = listingState;
         this.rent = rent;
-        //this.datePosted = datePosted;
+        this.datePosted = datePosted;
         // REMOVED DATE POSTED
     }
 
@@ -56,4 +58,8 @@ public class Property {
         return rent;
     }
 
+    public Date getDatePosted()
+    {
+        return datePosted;
+    }
 }

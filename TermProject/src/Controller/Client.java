@@ -1,8 +1,6 @@
 package Controller;
 
 import Domain.Address;
-import Domain.Date;
-import Domain.SearchCriteria;
 import PresentationLayer.*;
 
 import java.net.Socket;
