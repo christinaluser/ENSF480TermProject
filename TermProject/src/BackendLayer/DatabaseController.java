@@ -56,9 +56,9 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             ResultSet rset = stmt.executeQuery(strSelect);
             while(rset.next())
             {
-                Property p = new Property(rset.getString("type"), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
-                        rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"));
-                properties.add(p);
+//                Property p = new Property(rset.getString("type"), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
+//                        rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"));
+//                properties.add(p);
             }
 
         } catch (SQLException e) {

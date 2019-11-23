@@ -1,8 +1,10 @@
 package PresentationLayer;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
 
 public class RegisterProperty extends JDialog {
     private JPanel contentPane;
@@ -17,6 +19,7 @@ public class RegisterProperty extends JDialog {
     protected JComboBox isFurnished;
     protected JSpinner rent;
     protected JComboBox type;
+    private JFormattedTextField formattedTextField1;
 
     public String getPropertyInfo() {
         String info = type.getSelectedItem() + "/" + number.getValue() + "/" + street.getText() + "/"
@@ -84,66 +87,52 @@ public class RegisterProperty extends JDialog {
      */
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
-        contentPane.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), -1, -1));
+        contentPane.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1, true, false));
-        panel1.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        buttonOK = new JButton();
-        buttonOK.setText("OK");
-        panel2.add(buttonOK, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        buttonCancel = new JButton();
-        buttonCancel.setText("Cancel");
-        panel2.add(buttonCancel, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridBagLayout());
-        contentPane.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(500, 400), new Dimension(500, 500), 0, false));
-        final JPanel spacer2 = new JPanel();
+        panel1.setLayout(new GridBagLayout());
+        contentPane.add(panel1, BorderLayout.NORTH);
+        final JPanel spacer1 = new JPanel();
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(spacer2, gbc);
+        panel1.add(spacer1, gbc);
         final JLabel label1 = new JLabel();
         label1.setText("Street");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label1, gbc);
+        panel1.add(label1, gbc);
         final JLabel label2 = new JLabel();
         label2.setText("Property Number");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label2, gbc);
+        panel1.add(label2, gbc);
         final JLabel label3 = new JLabel();
         label3.setText("Postal Code");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label3, gbc);
+        panel1.add(label3, gbc);
         final JLabel label4 = new JLabel();
         label4.setText("City Quadrant");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label4, gbc);
+        panel1.add(label4, gbc);
         final JLabel label5 = new JLabel();
         label5.setText("# Bedrooms");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label5, gbc);
+        panel1.add(label5, gbc);
         number = new JSpinner();
         number.setMinimumSize(new Dimension(200, 30));
         number.setPreferredSize(new Dimension(300, 30));
@@ -152,7 +141,7 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(number, gbc);
+        panel1.add(number, gbc);
         street = new JTextField();
         street.setMinimumSize(new Dimension(200, 30));
         street.setPreferredSize(new Dimension(300, 30));
@@ -161,7 +150,7 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(street, gbc);
+        panel1.add(street, gbc);
         postalCode = new JTextField();
         postalCode.setMinimumSize(new Dimension(200, 30));
         postalCode.setPreferredSize(new Dimension(300, 30));
@@ -171,7 +160,7 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(postalCode, gbc);
+        panel1.add(postalCode, gbc);
         quadrant = new JComboBox();
         quadrant.setMinimumSize(new Dimension(200, 30));
         quadrant.setPreferredSize(new Dimension(300, 30));
@@ -180,7 +169,7 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 5;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(quadrant, gbc);
+        panel1.add(quadrant, gbc);
         bedrooms = new JSpinner();
         bedrooms.setMinimumSize(new Dimension(200, 30));
         bedrooms.setPreferredSize(new Dimension(300, 30));
@@ -189,21 +178,21 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 6;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(bedrooms, gbc);
+        panel1.add(bedrooms, gbc);
         final JLabel label6 = new JLabel();
         label6.setText("# Bathrooms");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label6, gbc);
+        panel1.add(label6, gbc);
         final JLabel label7 = new JLabel();
         label7.setText("Furnished");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 8;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label7, gbc);
+        panel1.add(label7, gbc);
         bathrooms = new JSpinner();
         bathrooms.setMinimumSize(new Dimension(200, 30));
         bathrooms.setPreferredSize(new Dimension(300, 30));
@@ -212,7 +201,7 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 7;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(bathrooms, gbc);
+        panel1.add(bathrooms, gbc);
         isFurnished = new JComboBox();
         isFurnished.setMinimumSize(new Dimension(200, 30));
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
@@ -225,14 +214,14 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 8;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(isFurnished, gbc);
+        panel1.add(isFurnished, gbc);
         final JLabel label8 = new JLabel();
         label8.setText("Rent");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 9;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label8, gbc);
+        panel1.add(label8, gbc);
         rent = new JSpinner();
         rent.setMinimumSize(new Dimension(200, 30));
         rent.setPreferredSize(new Dimension(300, 30));
@@ -241,14 +230,14 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 9;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(rent, gbc);
+        panel1.add(rent, gbc);
         final JLabel label9 = new JLabel();
         label9.setText("Type");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.WEST;
-        panel3.add(label9, gbc);
+        panel1.add(label9, gbc);
         type = new JComboBox();
         type.setMinimumSize(new Dimension(200, 30));
         type.setPreferredSize(new Dimension(300, 30));
@@ -257,7 +246,15 @@ public class RegisterProperty extends JDialog {
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel3.add(type, gbc);
+        panel1.add(type, gbc);
+        final JToolBar toolBar1 = new JToolBar();
+        contentPane.add(toolBar1, BorderLayout.SOUTH);
+        buttonOK = new JButton();
+        buttonOK.setText("OK");
+        toolBar1.add(buttonOK);
+        buttonCancel = new JButton();
+        buttonCancel.setText("Cancel");
+        toolBar1.add(buttonCancel);
     }
 
     /**
@@ -265,5 +262,24 @@ public class RegisterProperty extends JDialog {
      */
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
+    }
+
+    private void createUIComponents() {
+        number = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        bedrooms = new JSpinner(new SpinnerNumberModel(0, 1, null, 1));
+        bathrooms = new JSpinner(new SpinnerNumberModel(0, 1, null, 1));
+        postalCode = new JFormattedTextField(createFormatter("U#U #U#"));
+        rent = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+    }
+
+    protected MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+            System.exit(-1);
+        }
+        return formatter;
     }
 }

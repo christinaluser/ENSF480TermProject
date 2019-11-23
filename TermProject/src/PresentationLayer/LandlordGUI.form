@@ -14,17 +14,21 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="be1d2" class="javax.swing.JSpinner" binding="propertyNumber">
+          <component id="be1d2" class="javax.swing.JSpinner" binding="propertyNumber" custom-create="true">
             <constraints/>
             <properties/>
           </component>
           <component id="ae72b" class="javax.swing.JTextField" binding="streetName">
             <constraints/>
-            <properties/>
+            <properties>
+              <text value="Street"/>
+            </properties>
           </component>
-          <component id="e0d4d" class="javax.swing.JTextField" binding="postalCode">
+          <component id="e32a4" class="javax.swing.JFormattedTextField" binding="postalCode" custom-create="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <text value="Postal Code"/>
+            </properties>
           </component>
           <component id="fc3d" class="javax.swing.JButton" binding="searchButton" default-binding="true">
             <constraints/>

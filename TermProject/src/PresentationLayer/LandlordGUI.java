@@ -5,12 +5,14 @@ import Controller.LandlordListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
 
-public class LandlordGUI implements GUI {
+public class LandlordGUI implements TableGUI {
     private JFrame frame;
     private JPanel panel;
     private JTable properties;
@@ -117,8 +119,8 @@ public class LandlordGUI implements GUI {
 
         properties = new JTable(model);
         properties = new JTable(data, headers);
-        properties.getColumn("Edit").setCellRenderer(new CellButton());
-        properties.getColumn("Edit").setCellEditor(new CellButtonEditor(new JCheckBox()));
+        properties.getColumn("Edit").setCellRenderer(new TableButtonRenderer());
+        properties.addMouseListener(new TableButtonMouseListener(this));
 
         properties.setEnabled(false);
         if (scroll != null)
@@ -126,6 +128,13 @@ public class LandlordGUI implements GUI {
         scroll = new JScrollPane(properties);
         panel.add(scroll);
         panel.validate();
+    }
+
+    @Override
+    public void tableButtonClicked() {
+        EditPropertyState dialog = new EditPropertyState();
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     @Override
@@ -190,6 +199,22 @@ public class LandlordGUI implements GUI {
      */
     public JComponent $$$getRootComponent$$$() {
         return panel;
+    }
+
+    private void createUIComponents() {
+        propertyNumber = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        postalCode = new JFormattedTextField(createFormatter("U#U #U#"));
+    }
+
+    protected MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+            System.exit(-1);
+        }
+        return formatter;
     }
 
 }

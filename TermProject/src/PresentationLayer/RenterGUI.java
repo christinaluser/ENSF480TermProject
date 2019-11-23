@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import Controller.RenterListener;
+import com.mysql.cj.xdevapi.Table;
 import com.sun.javaws.util.JfxHelper;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class RenterGUI extends UserGUI implements GUI {
+public class RenterGUI extends UserGUI implements TableGUI {
     private JFrame frame;
     private JPanel panel;
     private JButton searchButton;
@@ -48,6 +49,12 @@ public class RenterGUI extends UserGUI implements GUI {
                 }
             }
         });
+    }
+
+    @Override
+    public void tableButtonClicked() {
+        String info = "property info"; //TODO figure out how to get info
+        JOptionPane.showMessageDialog(new JFrame(), info, "More Property Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
@@ -145,4 +152,5 @@ public class RenterGUI extends UserGUI implements GUI {
     public JComponent $$$getRootComponent$$$() {
         return panel;
     }
+
 }
