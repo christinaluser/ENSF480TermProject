@@ -52,11 +52,23 @@ public class RenterGUI extends UserGUI {
         });
     }
 
+<<<<<<< HEAD
     public RenterGUI(RenterListener l) {
         listener = l;
         searchProperties();
     }
 
+=======
+<<<<<<< Updated upstream
+=======
+    public RenterGUI(RenterListener l) {
+        listener = l;
+        $$$setupUI$$$();
+        searchProperties();
+    }
+
+>>>>>>> Stashed changes
+>>>>>>> parent of 1582a52... .
     private void searchProperties() {
         searchButton.addActionListener(new ActionListener() {
             @Override
