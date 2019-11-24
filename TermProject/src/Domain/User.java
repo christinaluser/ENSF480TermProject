@@ -10,4 +10,11 @@ public abstract class User {        // why arent we implementing observer?
     protected String password;
     protected int accessID;
     ArrayList<Property> properties;
+
+    public User (Name name, Address address, String email, String username, String password, int accessID)
+    {
+
+    }
+
 }
+

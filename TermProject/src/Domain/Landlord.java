@@ -6,9 +6,6 @@ public class Landlord {
     public ArrayList<Property> ownedProperties;
     public ArrayList<PropertyListing> listings;
 
-    public Landlord() {
-
-    }
 
     public void removeProperty(Property p) {
 

@@ -1,5 +1,6 @@
 package BackendLayer;
 
+import Domain.Landlord;
 import Domain.Property;
 import Domain.SearchCriteria;
 import Domain.User;
@@ -77,8 +78,19 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             ResultSet rset = stmt.executeQuery(strSelect);
             while(rset.next())
             {
-                User u;
-                //users.add(u);
+                int accessLevel = rset.getInt("accessLevel");
+                if(accessLevel == 1)
+                {
+                    Landlord l = new Landlord();
+                }
+                else if(accessLevel == 2)
+                {
+
+                } else if (accessLevel == 3) {
+
+
+                }
+
             }
 
         } catch (SQLException e) {
