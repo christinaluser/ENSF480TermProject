@@ -12,7 +12,5 @@ public class App {
         Client client = new Client("10.13.99.23", 5000);
         client.setGUI(new LoginGUI(new LoginListener(client)));
         client.runGUI();
-//        gui.setListener(new Listener(client));
-////        gui.updateView(gui);
     }
 }
