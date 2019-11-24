@@ -55,6 +55,7 @@ public class RenterGUI extends UserGUI {
 
     public RenterGUI(RenterListener l) {
         listener = l;
+        $$$setupUI$$$();
         searchProperties();
     }
 
