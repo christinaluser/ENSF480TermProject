@@ -53,15 +53,6 @@ public class RenterGUI extends UserGUI {
         });
     }
 
-<<<<<<< Updated upstream
-=======
-    public RenterGUI(RenterListener l) {
-        listener = l;
-        $$$setupUI$$$();
-        searchProperties();
-    }
-
->>>>>>> Stashed changes
     private void searchProperties() {
         searchButton.addActionListener(new ActionListener() {
             @Override
