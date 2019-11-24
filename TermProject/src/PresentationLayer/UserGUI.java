@@ -34,6 +34,8 @@ public class UserGUI extends TableGUI {
 
     public UserGUI(UserListener l) {
         listener = l;
+        searchProperties();
+        showAllProperties();
     }
 
     public String getType() {

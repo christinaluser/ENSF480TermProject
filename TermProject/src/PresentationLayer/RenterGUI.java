@@ -24,6 +24,11 @@ public class RenterGUI extends UserGUI {
     private JButton showAllButton;
     private RenterListener listener;
 
+    public RenterGUI(RenterListener l) {
+        listener = l;
+        searchProperties();
+    }
+
     private void searchProperties() {
         searchButton.addActionListener(new ActionListener() {
             @Override

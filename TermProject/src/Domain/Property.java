@@ -3,16 +3,17 @@ package Domain;
 import java.util.Date;
 
 public class Property {
-    public int propertyId;
-    public String type;
-    public Address address;
-    public int noBedrooms;
-    public int noBathrooms;
-    public boolean isFurnished;
-    public String cityQuadrant;
-    public String listingState;
-    public double rent;
-    public Date datePosted;
+    private int propertyId;
+    private String type;
+    private int noBedrooms;
+    private int noBathrooms;
+    private boolean isFurnished;
+    private String cityQuadrant;
+    private String listingState;
+    private double rent;
+    private Date datePosted;
+    private Fee fee;
+    // I REMOVED ADDRESS bc i havent configured it in the db yet
 
     public Property(int propertyId, String type, Address address, int noBedrooms, int noBathrooms, boolean isFurnished,
                     String cityQuadrant, String listingState, double rent, Date datePosted) {
@@ -31,6 +32,23 @@ public class Property {
     public int getPropertyId()
     {
         return propertyId;
+    }
+
+    public Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
+                    String cityQuadrant, String listingState, double rent) {
+        this.type = type;
+        this.noBedrooms = noBedrooms;
+        this.noBathrooms = noBathrooms;
+        this.isFurnished = isFurnished;
+        this.cityQuadrant = cityQuadrant;
+        this.listingState = listingState;
+        this.rent = rent;
+        //this.datePosted = datePosted;
+        // REMOVED DATE POSTED
+    }
+
+    public String toString() {
+        return "ID: " + propertyId + "\tType: " + type + "\tno. Bedrooms: " + noBedrooms + "\t no. Bathrooms: " + noBathrooms + "\n";
     }
 
     public String getType()
@@ -71,6 +89,10 @@ public class Property {
     public double getRent()
     {
         return rent;
+    }
+
+    public void setFee(Fee fee) {
+        this.fee = fee;
     }
 
     public Date getDatePosted()

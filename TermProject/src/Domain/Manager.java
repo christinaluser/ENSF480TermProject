@@ -1,5 +1,9 @@
 package Domain;
 
+import BackendLayer.DatabaseController;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 //Does this implement Observer??
@@ -8,9 +12,91 @@ public class Manager extends User{
     public Manager(Name name, Address address, String email, String username, String password, int accessID) {
         super(name, address, email, username, password, accessID);
     }
+    
+    public Manager(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
+        super(socketIn, socketOut, database);
+    }
+
+    @Override
+    public void communicate() {
+        String input = "";
+        try {
+            while(true) {
+                input = socketIn.readLine();
+               if(input.equals("DISPLAY")) {
+                    refreshProperties();
+                    String allProperties = propertiesToString();
+                    String[] response = allProperties.split(";");
+                    for(String p : response) {
+                        sendString(p);
+                    }
+                    sendString("END");
+
+                } else if(input.startsWith("SEARCHADDRESS/")) {
+                    refreshProperties();
+                    String address = input.replace("SEARCHADDRESS/", "");
+                    String[] response = searchProperties(address).split(";");
+                    for(String p : response) {
+                        sendString(p);
+                    }
+                    sendString("END");
+
+                } else if(input.startsWith("EDITFEE/")) {
+                    String fee = input.replace("EDITFEE/", "");
+                    editFee(fee);
+                    sendString("Done");
+               }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editFee(String amt) {
+        for(Property p : properties) {
+            p.setFee(new Fee(Double.parseDouble(amt)));
+        }
+        updateDatabase();
+    }
+
+    //todo
+    private void updateDatabase() {
+    }
+
+    private String propertiesToString() {
+        String str = "";
+        for (Property p: properties) {
+            str += p.toString();
+        }
+        return str;
+    }
+
+    public void sendString(String s) {
+        socketOut.println(s);
+        socketOut.flush();
+    }
+
+    public String searchProperties(String address) {
+        String str = "";
+        for(Property p : properties) {
+            if(address.equals(p.getCityQuadrant())) { //todo SHOULD BE ADDRESS BUT THAT DOESNT EXIST
+                str += p.toString();
+                str += ";";
+            }
+        }
+        if(str.equals("")) {
+            return null;
+        } else {
+            return str;
+        }
+    }
 
     public void accessInformation() {
 
+    }
+
+    public void refreshProperties() {
+        //Refresh arraylist properties to match database
     }
 
     public void requestReport() {
