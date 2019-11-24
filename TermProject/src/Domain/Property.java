@@ -26,12 +26,21 @@ public class Property {
         this.listingState = listingState;
         this.rent = rent;
         this.datePosted = datePosted;
-        // REMOVED DATE POSTED
+    }
+
+    public int getPropertyId()
+    {
+        return propertyId;
     }
 
     public String getType()
     {
         return type;
+    }
+
+    public Address getAddress()
+    {
+        return address;
     }
 
     public int getNoBedrooms()
@@ -54,6 +63,11 @@ public class Property {
         return cityQuadrant;
     }
 
+    public String getListingState()
+    {
+        return listingState;
+    }
+
     public double getRent()
     {
         return rent;
@@ -63,4 +77,6 @@ public class Property {
     {
         return datePosted;
     }
+
+
 }

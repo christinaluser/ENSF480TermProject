@@ -111,13 +111,19 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         return users;
     }
 
-
-    /*void addPayment()
+    public void addProperty(Property p)
     {
-
+        String strInsert = "INSERT INTO properties VALUES (" + p.getPropertyId() + ", " + p.getType() + ", "
+                + p.getAddress().getPropertyNumber() + ", " + p.getAddress().getStreetName() + ", " + p.getAddress().getPostalCode() + ", " +
+                + p.getNoBedrooms() + ", " + p.getNoBathrooms() + ", " + p.getIsFurnished() + ", " + p.getCityQuadrant() + ", " + p.getListingState() + ", " + p.getRent() + ", " + p.getDatePosted() + ")";
+        try {
+            stmt.executeUpdate(strInsert);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    void addProperty()
+    /*void addPayment()
     {
 
     }
