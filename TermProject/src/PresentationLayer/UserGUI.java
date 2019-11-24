@@ -24,20 +24,23 @@ public class UserGUI extends TableGUI {
     private JSpinner noBed;
     private JSpinner noBath;
     private JButton showAllButton;
+    private JButton loginButton;
     private JScrollPane scroll;
     private UserListener listener;
     private String[] headers = {"Type", "Rent", "Location", "More Info", "Contact Landlord"};
 
     public UserGUI() {
-
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Contact Landlord"};
     }
 
     public UserGUI(UserListener l) {
         listener = l;
     }
 
-    public String getType() {
-        return (String) type.getSelectedItem();
+    public String getCriteria() {
+        return (String) type.getSelectedItem() + "/" + noBed.getValue() + "/" + noBath.getValue()
+                + "/" + getIsFurnished() + "/" + cityQuadrant.getSelectedItem() + "/" + priceRange.getSelectedItem();
     }
 
     public boolean getIsFurnished() {
@@ -48,22 +51,6 @@ public class UserGUI extends TableGUI {
         }
     }
 
-    public String getCityQuadrant() {
-        return (String) cityQuadrant.getSelectedItem();
-    }
-
-    public double getPriceRange() {
-        return (double) priceRange.getSelectedItem();
-    }
-
-    public int getNoBed() {
-        return (int) noBed.getValue();
-    }
-
-    public int getNoBath() {
-        return (int) noBath.getValue();
-    }
-
     public void setListener(UserListener listener) {
         this.listener = listener;
     }
@@ -72,24 +59,21 @@ public class UserGUI extends TableGUI {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String criteria = getType() + "/" + getNoBed() + "/" + getNoBath() + "/" + getIsFurnished() + "/"
-                        + getCityQuadrant() + "/" + getPriceRange();
                 String response = null;
-                try {
-                    response = listener.actionPerformed("SEARCH" + "/" + criteria);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+//                try {
+//                    response = listener.actionPerformed("SEARCH" + "/" + getCriteria());
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+
+                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+
                 if (response.equals("null")) {
-//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
-                    ;
+                    showTable(headers, response, panel);
                 }
             }
         });
@@ -97,7 +81,9 @@ public class UserGUI extends TableGUI {
 
     @Override
     public void tableButtonClicked(String propertyId, String colName) {
-        //TODO figure out how to get info
+        EmailLandlordUnregistered dialog = new EmailLandlordUnregistered();
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     private void showAllProperties() {
@@ -110,8 +96,13 @@ public class UserGUI extends TableGUI {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-
-                showTable(headers, response, panel);
+                if (response.equals(null)) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    showTable(headers, response, panel);
+                }
             }
         });
     }
@@ -124,7 +115,16 @@ public class UserGUI extends TableGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        showAllProperties();
+        searchProperties();
+//        login();
     }
+
+    public static void main(String[] args) {
+        UserGUI gui = new UserGUI();
+        gui.updateView();
+    }
+
 
     public void close() {
         frame.dispose();
@@ -149,7 +149,7 @@ public class UserGUI extends TableGUI {
         panel.setLayout(new BorderLayout(0, 0));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
-        panel.add(toolBar1, BorderLayout.CENTER);
+        panel.add(toolBar1, BorderLayout.NORTH);
         type = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("House");
@@ -199,9 +199,15 @@ public class UserGUI extends TableGUI {
         searchButton = new JButton();
         searchButton.setText("Search");
         toolBar1.add(searchButton);
+        final JToolBar toolBar2 = new JToolBar();
+        toolBar2.setFloatable(false);
+        panel.add(toolBar2, BorderLayout.SOUTH);
         showAllButton = new JButton();
         showAllButton.setText("Show All");
-        toolBar1.add(showAllButton);
+        toolBar2.add(showAllButton);
+        loginButton = new JButton();
+        loginButton.setText("Login");
+        toolBar2.add(loginButton);
         label1.setLabelFor(noBed);
         label2.setLabelFor(noBath);
     }

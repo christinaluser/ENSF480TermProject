@@ -15,9 +15,6 @@ public class RenterListener {
     public String actionPerformed(String action) throws IOException {
         String [] split = action.split("/");
         if (split[0].equals("SEARCHRENTER")) {
-
-//            SearchCriteria criteria = new SearchCriteria(split[1], Integer.parseInt(split[2]),
-//                    Integer.parseInt(split[3]), Boolean.parseBoolean(split[4]), split[5], Double.parseDouble(split[6]));
             return client.communicate(action);
 
         } else if (split[0].equals("DISPLAY")){

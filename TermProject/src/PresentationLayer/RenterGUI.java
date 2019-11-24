@@ -2,7 +2,6 @@ package PresentationLayer;
 
 import Controller.RenterListener;
 import com.mysql.cj.xdevapi.Table;
-import com.sun.javaws.util.JfxHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,29 +21,25 @@ public class RenterGUI extends UserGUI {
     private JComboBox cityQuadrant;
     private JComboBox priceRange;
     private JButton showAllButton;
+    private JButton logoutButton;
     private RenterListener listener;
 
     private void searchProperties() {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String criteria = getType() + "/" + getNoBed() + "/" + getNoBath() + "/" + getIsFurnished() + "/"
-                        + getCityQuadrant() + "/" + getPriceRange();
+
                 String response = null;
                 try {
-                    response = listener.actionPerformed("SEARCHRENTER/" + criteria);
+                    response = listener.actionPerformed("SEARCH/" + getCriteria());
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
                 if (response.equals("null")) {
-//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
                     JOptionPane.showMessageDialog(null, response.replaceAll(";", "\n"), "Item", JOptionPane.PLAIN_MESSAGE);
                 }
             }
@@ -53,7 +48,16 @@ public class RenterGUI extends UserGUI {
 
     @Override
     public void tableButtonClicked(String propertyId, String colName) {
-        //TODO
+        EmailLandlord dialog = new EmailLandlord();
+        dialog.setTitle(colName + " Property ID: " + propertyId);
+        dialog.pack();
+        dialog.setVisible(true);
+
+        try {
+            listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.emailBody.getText());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -85,10 +89,16 @@ public class RenterGUI extends UserGUI {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
+        createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
+        panel.setPreferredSize(new Dimension(1100, 900));
         final JToolBar toolBar1 = new JToolBar();
-        panel.add(toolBar1, BorderLayout.CENTER);
+        toolBar1.setFloatable(false);
+        panel.add(toolBar1, BorderLayout.NORTH);
+        final JLabel label1 = new JLabel();
+        label1.setText("Type: ");
+        toolBar1.add(label1);
         type = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("House");
@@ -97,22 +107,31 @@ public class RenterGUI extends UserGUI {
         defaultComboBoxModel1.addElement("Condo");
         type.setModel(defaultComboBoxModel1);
         toolBar1.add(type);
-        final JLabel label1 = new JLabel();
-        label1.setText("#Bedrooms");
-        toolBar1.add(label1);
-        noBed = new JSpinner();
-        toolBar1.add(noBed);
+        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
+        toolBar1.add(spacer1);
         final JLabel label2 = new JLabel();
-        label2.setText("#Bathooms");
+        label2.setText("# Bedrooms: ");
         toolBar1.add(label2);
-        noBath = new JSpinner();
+        toolBar1.add(noBed);
+        final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
+        toolBar1.add(spacer2);
+        final JLabel label3 = new JLabel();
+        label3.setText("# Bathooms: ");
+        toolBar1.add(label3);
         toolBar1.add(noBath);
+        final com.intellij.uiDesigner.core.Spacer spacer3 = new com.intellij.uiDesigner.core.Spacer();
+        toolBar1.add(spacer3);
         isFurnished = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         defaultComboBoxModel2.addElement("Furnished");
         defaultComboBoxModel2.addElement("Unfurnished");
         isFurnished.setModel(defaultComboBoxModel2);
         toolBar1.add(isFurnished);
+        final com.intellij.uiDesigner.core.Spacer spacer4 = new com.intellij.uiDesigner.core.Spacer();
+        toolBar1.add(spacer4);
+        final JLabel label4 = new JLabel();
+        label4.setText("Location: ");
+        toolBar1.add(label4);
         cityQuadrant = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("NE");
@@ -121,6 +140,11 @@ public class RenterGUI extends UserGUI {
         defaultComboBoxModel3.addElement("SW");
         cityQuadrant.setModel(defaultComboBoxModel3);
         toolBar1.add(cityQuadrant);
+        final com.intellij.uiDesigner.core.Spacer spacer5 = new com.intellij.uiDesigner.core.Spacer();
+        toolBar1.add(spacer5);
+        final JLabel label5 = new JLabel();
+        label5.setText("Price Range: ");
+        toolBar1.add(label5);
         priceRange = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel4 = new DefaultComboBoxModel();
         defaultComboBoxModel4.addElement("$0");
@@ -132,17 +156,24 @@ public class RenterGUI extends UserGUI {
         defaultComboBoxModel4.addElement("$1400");
         priceRange.setModel(defaultComboBoxModel4);
         toolBar1.add(priceRange);
+        final com.intellij.uiDesigner.core.Spacer spacer6 = new com.intellij.uiDesigner.core.Spacer();
+        toolBar1.add(spacer6);
         searchButton = new JButton();
         searchButton.setText("Search");
         toolBar1.add(searchButton);
+        final JToolBar toolBar2 = new JToolBar();
+        panel.add(toolBar2, BorderLayout.SOUTH);
         showAllButton = new JButton();
         showAllButton.setText("Show All");
-        toolBar1.add(showAllButton);
+        toolBar2.add(showAllButton);
         notificationsButton = new JButton();
         notificationsButton.setText("Notifications");
-        toolBar1.add(notificationsButton);
-        label1.setLabelFor(noBed);
-        label2.setLabelFor(noBath);
+        toolBar2.add(notificationsButton);
+        logoutButton = new JButton();
+        logoutButton.setText("Logout");
+        toolBar2.add(logoutButton);
+        label2.setLabelFor(noBed);
+        label3.setLabelFor(noBath);
     }
 
     /**
@@ -152,4 +183,8 @@ public class RenterGUI extends UserGUI {
         return panel;
     }
 
+    private void createUIComponents() {
+        noBed = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        noBath = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+    }
 }

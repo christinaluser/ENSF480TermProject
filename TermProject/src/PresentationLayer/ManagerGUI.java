@@ -59,7 +59,7 @@ public class ManagerGUI extends TableGUI {
 
 //                test
                 response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
-                if (response == null) {
+                if (response.equals(null)) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
@@ -82,7 +82,7 @@ public class ManagerGUI extends TableGUI {
                     ex.printStackTrace();
                 }
 
-                if (response == null) {
+                if (response.equals(null)) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
@@ -109,7 +109,7 @@ public class ManagerGUI extends TableGUI {
                     System.out.println(ex.getMessage());
                 }
 
-                if (response == null) {
+                if (response.equals(null)) {
                     JOptionPane.showMessageDialog(new JFrame(), "Edit unsuccessful");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
@@ -119,8 +119,6 @@ public class ManagerGUI extends TableGUI {
             }
         });
     }
-
-    //TODO: i might have interpreted how get report works wrong (should it be that the manager specifies any period of time ?)
 
     private void getReport() {
         getReportButton.addActionListener(new ActionListener() {
@@ -139,7 +137,7 @@ public class ManagerGUI extends TableGUI {
                     System.out.println(ex.getMessage());
                 }
 
-                if (response == null) {
+                if (response.equals(null)) {
                     JOptionPane.showMessageDialog(new JFrame(), "Could not retrieve report");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
@@ -161,7 +159,7 @@ public class ManagerGUI extends TableGUI {
                     System.out.println(ex.getMessage());
                 }
 
-                if (response == null) {
+                if (response.equals(null)) {
                     // TODO idk lol
                 } else if (response.equals("CLOSE")) {
                     //do nothing
@@ -189,7 +187,7 @@ public class ManagerGUI extends TableGUI {
         dialog.pack();
         dialog.setVisible(true);
         try {
-            listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
+            listener.actionPerformed("EDITSTATE/" + propertyId + "/" + dialog.getNewState());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
