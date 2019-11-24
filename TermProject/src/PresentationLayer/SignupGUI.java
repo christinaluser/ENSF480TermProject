@@ -26,7 +26,7 @@ public class SignupGUI implements GUI {
     private JButton loginButton;
     private Listener listener;
 
-    private String getUserInfo(){
+    private String getUserInfo() {
         return (firstName.getText() + "/" + lastName.getText() + "/" + email.getText() + "/"
                 + username.getText() + "/" + passwordField1.getPassword());
     }
@@ -213,6 +213,13 @@ public class SignupGUI implements GUI {
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.VERTICAL;
         panel.add(spacer2, gbc);
+        loginButton = new JButton();
+        loginButton.setText("Login");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(loginButton, gbc);
     }
 
     /**
