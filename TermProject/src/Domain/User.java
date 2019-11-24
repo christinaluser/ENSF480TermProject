@@ -27,7 +27,6 @@ public abstract class User {        // why arent we implementing observer?
 
     public abstract void communicate();
 
-}
     public User (Name name, Address address, String email, String username, String password, int accessID)
     {
 

@@ -75,7 +75,6 @@ public class RentalPropertyManagementSystem implements Runnable{
     }
 
     private void communicateRegularUser() {
-        RegularUser regUser = new RegularUser();
         String input = "";
         try {
             while(true) {

@@ -8,11 +8,9 @@ import java.util.ArrayList;
 
 //Does this implement Observer??
 public class Manager extends User{
-    ArrayList<Property> properties;
 
     public Manager(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
         super(socketIn, socketOut, database);
-        properties = new ArrayList<Property>();
     }
 
     @Override
