@@ -1,14 +1,14 @@
 package Domain;
 
 public class Property {
-    public int propertyId;
-    public String type;
-    public int noBedrooms;
-    public int noBathrooms;
-    public boolean isFurnished;
-    public String cityQuadrant;
-    public String listingState;
-    public double rent;
+    public int propertyId; //auto-gen
+    public String type; //1
+    public int noBedrooms; //7
+    public int noBathrooms; //6
+    public boolean isFurnished;  //8
+    public String cityQuadrant; // 5
+    public String listingState; //suspended
+    public double rent; //9
     //public Date datePosted;
     // I REMOVED ADDRESS bc i havent configured it in the db yet
 

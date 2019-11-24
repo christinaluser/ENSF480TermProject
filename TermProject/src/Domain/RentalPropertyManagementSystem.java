@@ -43,7 +43,6 @@ public class RentalPropertyManagementSystem implements Runnable{
             try {
                 while (!userFound) {
                     input = socketIn.readLine();
-                    System.out.println(input);
                     if (input.startsWith("USER/")) {
                         userFound = true;
                     }
@@ -54,13 +53,16 @@ public class RentalPropertyManagementSystem implements Runnable{
                         communicateRegularUser();
                         break;
                     case "USER/LANDLORD":
-                        communicateLandlord();
+                        user = new Landlord(socketIn, socketOut, database);
+                        user.communicate();
                         break;
                     case "USER/RENTER":
-                        communicateRenter();
+                        user = new Renter(socketIn, socketOut, database);
+                        user.communicate();
                         break;
                     case "USER/MANAGER":
-                        communicateManager();
+                        user = new Manager(socketIn, socketOut, database);
+                        user.communicate();
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + input);
@@ -79,11 +81,21 @@ public class RentalPropertyManagementSystem implements Runnable{
             while(true) {
                 input = socketIn.readLine();
                 if(input.equals("DISPLAY")) {
-                    sendString(propertiesToString());
+                    String allProperties = propertiesToString();
+                    String[] response = allProperties.split(";");
+                    for(String p : response) {
+                        sendString(p);
+                    }
+                    sendString("END");
+
                 } else if(input.startsWith("SEARCH/")) {
                     refreshProperties();
                     String criteria = input.replace("SEARCH/", "");
-                    sendString(searchCriteria(criteria));
+                    String[] response = searchCriteria(criteria).split(";");
+                    for(String p : response) {
+                        sendString(p);
+                    }
+                    sendString("END");
                 }
             }
         } catch (Exception e) {
@@ -96,7 +108,7 @@ public class RentalPropertyManagementSystem implements Runnable{
         socketOut.flush();
     }
 
-    //FOR RENTER
+    //FOR UNREGISTERED RENTER
     public String searchCriteria(String s) {
         String str = "";
         String[] criteria = s.split("/");
@@ -105,11 +117,12 @@ public class RentalPropertyManagementSystem implements Runnable{
                     && criteria[4].equals(p.getCityQuadrant())) {
                 if(Double.parseDouble(criteria[5]) <= p.getRent()) {
                     str += p.toString();
+                    str += ";";
                 }
             }
         }
         if(str.equals("")) {
-            return "No Properties with that criteria";
+            return null;
         } else {
             return str;
         }
@@ -125,39 +138,6 @@ public class RentalPropertyManagementSystem implements Runnable{
 
     public void refreshProperties() {
         //Refresh arraylist properties to match database
-    }
-
-    private void communicateLandlord() {
-        user = new Landlord();
-        try {
-            while(true) {
-                //READ STRINGS HERE
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void communicateRenter() {
-        user = new Renter();
-        try {
-            while(true) {
-                //READ STRINGS HERE
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void communicateManager() {
-        user = new Manager();
-        try {
-            while(true) {
-                //READ STRINGS HERE
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void setDbController(DatabaseController database) {
