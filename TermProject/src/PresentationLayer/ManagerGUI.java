@@ -24,10 +24,10 @@ public class ManagerGUI extends TableGUI {
     private JButton logoutButton;
     private JButton searchButton;
     private JTextField streetName;
-//    private JTable properties;
+    //    private JTable properties;
     private JSpinner propertyNumber;
     private JFormattedTextField postalCode;
-//    private JScrollPane scroll;
+    //    private JScrollPane scroll;
     private ManagerListener listener;
 
 
@@ -36,9 +36,7 @@ public class ManagerGUI extends TableGUI {
     }
 
     public ManagerGUI() {
-        String[] temp = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
-        headers = temp;
-//        super(panel);
+        headers = new String[]{"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
     }
 
     public void setListener(ManagerListener listener) {
@@ -51,13 +49,14 @@ public class ManagerGUI extends TableGUI {
             public void actionPerformed(ActionEvent e) {
                 String address = (int) propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
                 String response = null;
-//                try {
-//                    response = listener.actionPerformed("SEARCH" + "/" + address);
-//                } catch (IOException ex) {
-//                    System.err.println(ex.getMessage());
-//                }
+                try {
+                    response = listener.actionPerformed("SEARCH" + "/" + address);
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                }
 
-                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+//                test
+//                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
                 if (response == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
@@ -190,7 +189,7 @@ public class ManagerGUI extends TableGUI {
         try {
             listener.actionPerformed("EDIT/" + row + "/" + dialog.getNewState());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -264,6 +263,7 @@ public class ManagerGUI extends TableGUI {
         searchButton.setText("Search");
         toolBar1.add(searchButton);
         final JToolBar toolBar2 = new JToolBar();
+        toolBar2.setFloatable(false);
         panel.add(toolBar2, BorderLayout.SOUTH);
         getReportButton = new JButton();
         getReportButton.setText("Get Report");

@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import Controller.LandlordListener;
+import Domain.Landlord;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,25 +26,33 @@ public class LandlordGUI extends TableGUI {
     private JButton showAllButton;
     private JButton logoutButton;
     private LandlordListener listener;
-    private String[] headers = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
+
+    public LandlordGUI() {
+        headers = new String[]{"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
+    }
 
     private void registerProperty() {
         registerPropertyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                RegisterProperty dialog = new RegisterProperty();
+                dialog.pack();
+                dialog.setVisible(true);
+                String propertyInfo = dialog.getPropertyInfo();
                 String response = null;
                 try {
-                    response = listener.actionPerformed("REGISTERPROPERTY");
+                    response = listener.actionPerformed("REGISTERPROPERTY/" + propertyInfo);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
 
                 if (response == null) {
-                    JOptionPane.showMessageDialog(new JFrame(), "property registration was unsuccessful ");
+                    JOptionPane.showMessageDialog(new JFrame(), "property registration was unsuccessful");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-
+                    JOptionPane.showMessageDialog(new JFrame(), "property has been registered");
+                    showTable(headers, response, panel);
                 }
             }
         });
@@ -53,15 +62,15 @@ public class LandlordGUI extends TableGUI {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String address = (int) propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
-                String response = null;
-                try {
-                    response = listener.actionPerformed("SEARCH" + "/" + address);
-                } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
-                }
+//                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
+                String response;
+//                try {
+//                    response = listener.actionPerformed("SEARCH" + "/" + address);
+//                } catch (IOException ex) {
+//                    System.err.println(ex.getMessage());
+//                }
 
-//                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
                 if (response == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
@@ -79,11 +88,13 @@ public class LandlordGUI extends TableGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String response = null;
-                try {
-                    response = listener.actionPerformed("DISPLAY");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+//                try {
+//                    response = listener.actionPerformed("DISPLAY");
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+
+                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
 
                 if (response == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
@@ -98,43 +109,17 @@ public class LandlordGUI extends TableGUI {
 
     //TODO Copy manager logout when its done
 
-//    private void showTable(String response) {
-//
-//
-//        String[] temp = response.split(";");
-//        String[][] data = new String[temp.length][headers.length];
-//        for (int i = 0; i < temp.length; i++) {
-//            String[] temp2 = temp[i].split("/");
-//            for (int j = 0; j < temp2.length; j++) {
-//                data[i][j] = temp2[j];
-//            }
-//            data[i][headers.length - 1] = "Edit";
-//        }
-//
-//        TableModel model = new DefaultTableModel(data, headers) {
-//            public boolean isCellEditable(int row, int column) {
-//                return false;
-//            }
-//        };
-//
-//        properties = new JTable(model);
-//        properties = new JTable(data, headers);
-//        properties.getColumn("Edit").setCellRenderer(new TableButtonRenderer());
-//        properties.addMouseListener(new TableButtonMouseListener(this));
-//
-//        properties.setEnabled(false);
-//        if (scroll != null)
-//            panel.remove(scroll);
-//        scroll = new JScrollPane(properties);
-//        panel.add(scroll);
-//        panel.validate();
-//    }
-
     @Override
-    public void tableButtonClicked(int row, String title) {
+    public void tableButtonClicked(int row, String dialogTitle) {
         EditPropertyState dialog = new EditPropertyState();
+        dialog.setTitle(dialogTitle);
         dialog.pack();
         dialog.setVisible(true);
+        try {
+            listener.actionPerformed("EDIT/" + row + "/" + dialog.getNewState());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -145,11 +130,35 @@ public class LandlordGUI extends TableGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        showAllProperties();
+        searchProperties();
+        registerProperty();
+//        logout();
     }
 
     @Override
     public void close() {
         frame.dispose();
+    }
+
+    private void createUIComponents() {
+        propertyNumber = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        postalCode = new JFormattedTextField(createFormatter("U#U #U#"));
+    }
+
+    protected MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+        }
+        return formatter;
+    }
+
+    public static void main(String[] args) {
+        LandlordGUI gui = new LandlordGUI();
+        gui.updateView();
     }
 
     {
@@ -170,6 +179,7 @@ public class LandlordGUI extends TableGUI {
         createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
+        panel.setPreferredSize(new Dimension(750, 750));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.NORTH);
@@ -183,6 +193,7 @@ public class LandlordGUI extends TableGUI {
         searchButton.setText("Search");
         toolBar1.add(searchButton);
         final JToolBar toolBar2 = new JToolBar();
+        toolBar2.setFloatable(false);
         panel.add(toolBar2, BorderLayout.SOUTH);
         registerPropertyButton = new JButton();
         registerPropertyButton.setText("Register Property");
@@ -202,20 +213,5 @@ public class LandlordGUI extends TableGUI {
         return panel;
     }
 
-    private void createUIComponents() {
-        propertyNumber = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
-        postalCode = new JFormattedTextField(createFormatter("U#U #U#"));
-    }
-
-    protected MaskFormatter createFormatter(String s) {
-        MaskFormatter formatter = null;
-        try {
-            formatter = new MaskFormatter(s);
-        } catch (ParseException exc) {
-            System.err.println("formatter is bad: " + exc.getMessage());
-            System.exit(-1);
-        }
-        return formatter;
-    }
-
 }
+
