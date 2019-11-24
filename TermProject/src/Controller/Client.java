@@ -46,13 +46,6 @@ public class Client {
         }
     }
 
-//    i think this one is wrong
-//    public String search(SearchCriteria criteria) throws IOException {
-//        socketOut.println("SEARCH");
-//        socketOut.println();
-//        return socketIn.readLine();
-//    }
-
     public String search(String searchCriteria) throws IOException {
         socketOut.println(searchCriteria);
         //server should make a new criteria and actually search client just sends strings to server

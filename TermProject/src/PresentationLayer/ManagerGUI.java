@@ -7,13 +7,15 @@ import Domain.Manager;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.text.ParseException;
 
-public class ManagerGUI implements GUI {
+public class ManagerGUI extends TableGUI {
     private JFrame frame;
     private JPanel panel;
     private JButton getReportButton;
@@ -22,17 +24,21 @@ public class ManagerGUI implements GUI {
     private JButton logoutButton;
     private JButton searchButton;
     private JTextField streetName;
-    private JTable properties;
+    //    private JTable properties;
     private JSpinner propertyNumber;
-    private JTextField postalCode;
-    private JScrollPane scroll;
+    private JFormattedTextField postalCode;
+    //    private JScrollPane scroll;
     private ManagerListener listener;
+
 
     public ManagerGUI(ManagerListener l) {
         listener = l;
     }
 
     public ManagerGUI() {
+        //TODO add address to this list????
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Listing State", "Edit"};
     }
 
     public void setListener(ManagerListener listener) {
@@ -43,21 +49,22 @@ public class ManagerGUI implements GUI {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String address = (int) propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
+//                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
                 String response = null;
-                try {
-                    response = listener.actionPerformed("SEARCH" + "/" + address);
-                } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
-                }
+//                try {
+//                    response = listener.actionPerformed("SEARCH" + "/" + address);
+//                } catch (IOException ex) {
+//                    System.err.println(ex.getMessage());
+//                }
 
-//                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+//                test
+                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
                 if (response == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    showTable(response);
+                    showTable(headers, response, panel);
 
                 }
             }
@@ -80,7 +87,7 @@ public class ManagerGUI implements GUI {
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    showTable(response);
+                    showTable(headers, response, panel);
                 }
             }
         });
@@ -175,36 +182,17 @@ public class ManagerGUI implements GUI {
         dialog.reportText.setText(response);
     }
 
-    private void showTable(String response) {
-        String[] headers = {"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
-
-        String[] temp = response.split(";");
-        String[][] data = new String[temp.length][headers.length];
-        for (int i = 0; i < temp.length; i++) {
-            String[] temp2 = temp[i].split("/");
-            for (int j = 0; j < temp2.length; j++) {
-                data[i][j] = temp2[j];
-            }
-            data[i][headers.length - 1] = "Edit";
+    @Override
+    public void tableButtonClicked(int row, String dialogTitle) {
+        EditPropertyState dialog = new EditPropertyState();
+        dialog.setTitle(dialogTitle);
+        dialog.pack();
+        dialog.setVisible(true);
+        try {
+            listener.actionPerformed("EDIT/" + row + "/" + dialog.getNewState());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
-        TableModel model = new DefaultTableModel(data, headers) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        properties = new JTable(model);
-        properties = new JTable(data, headers);
-        properties.getColumn("Edit").setCellRenderer(new CellButton());
-        properties.getColumn("Edit").setCellEditor(new CellButtonEditor(new JCheckBox()));
-
-        properties.setEnabled(false);
-        if (scroll != null)
-            panel.remove(scroll);
-        scroll = new JScrollPane(properties);
-        panel.add(scroll);
-        panel.validate();
     }
 
     @Override
@@ -227,18 +215,25 @@ public class ManagerGUI implements GUI {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
+        propertyNumber = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        postalCode = new JFormattedTextField(createFormatter("U#U #U#"));
     }
 
-//    public static void main(String[] args) {
-////        Client client = new Client("10.13.99.23", 5000);
-////        client.setGUI(new ManagerGUI(new ManagerListener(client)));
-////        client.runGUI();
-//        ManagerGUI gui = new ManagerGUI();
-//        gui.updateView();
-//
-////        gui.properties.getColumn("Edit").getCellEditor().getCellEditorValue();
-//    }
+    private MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+        }
+        return formatter;
+    }
+
+    public static void main(String[] args) {
+        ManagerGUI gui = new ManagerGUI();
+        gui.updateView();
+    }
+
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
@@ -255,20 +250,22 @@ public class ManagerGUI implements GUI {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
+        createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
+        panel.setPreferredSize(new Dimension(750, 750));
         final JToolBar toolBar1 = new JToolBar();
         panel.add(toolBar1, BorderLayout.NORTH);
-        propertyNumber = new JSpinner();
+        propertyNumber.setPreferredSize(new Dimension(150, 30));
         toolBar1.add(propertyNumber);
         streetName = new JTextField();
         toolBar1.add(streetName);
-        postalCode = new JTextField();
         toolBar1.add(postalCode);
         searchButton = new JButton();
         searchButton.setText("Search");
         toolBar1.add(searchButton);
         final JToolBar toolBar2 = new JToolBar();
+        toolBar2.setFloatable(false);
         panel.add(toolBar2, BorderLayout.SOUTH);
         getReportButton = new JButton();
         getReportButton.setText("Get Report");
