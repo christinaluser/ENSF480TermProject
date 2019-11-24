@@ -28,7 +28,9 @@ public class LandlordGUI extends TableGUI {
     private LandlordListener listener;
 
     public LandlordGUI() {
-        headers = new String[]{"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
+        //TODO add address to this table
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Listing State", "Edit"};
     }
 
     private void registerProperty() {
@@ -70,7 +72,7 @@ public class LandlordGUI extends TableGUI {
 //                    System.err.println(ex.getMessage());
 //                }
 
-                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
                 if (response == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {

@@ -36,7 +36,9 @@ public class ManagerGUI extends TableGUI {
     }
 
     public ManagerGUI() {
-        headers = new String[]{"ID", "Type", "Rent", "Location", "Bedrooms", "Bathrooms", "Furnished", "Listing State", "Edit"};
+        //TODO add address to this list????
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Listing State", "Edit"};
     }
 
     public void setListener(ManagerListener listener) {
@@ -47,16 +49,16 @@ public class ManagerGUI extends TableGUI {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String address = (int) propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
+//                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
                 String response = null;
-                try {
-                    response = listener.actionPerformed("SEARCH" + "/" + address);
-                } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
-                }
+//                try {
+//                    response = listener.actionPerformed("SEARCH" + "/" + address);
+//                } catch (IOException ex) {
+//                    System.err.println(ex.getMessage());
+//                }
 
 //                test
-//                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
                 if (response == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
@@ -217,7 +219,7 @@ public class ManagerGUI extends TableGUI {
         postalCode = new JFormattedTextField(createFormatter("U#U #U#"));
     }
 
-    protected MaskFormatter createFormatter(String s) {
+    private MaskFormatter createFormatter(String s) {
         MaskFormatter formatter = null;
         try {
             formatter = new MaskFormatter(s);
