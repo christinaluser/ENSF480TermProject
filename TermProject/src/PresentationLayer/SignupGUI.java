@@ -13,6 +13,10 @@ import java.io.IOException;
 public class SignupGUI implements GUI {
     private JFrame frame;
     private JPanel panel;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JTextField textField4;
     private JPasswordField passwordField1;
     private JTextField firstName;
     private JTextField lastName;
@@ -22,7 +26,7 @@ public class SignupGUI implements GUI {
     private JButton loginButton;
     private Listener listener;
 
-    private String getUserInfo() {
+    private String getUserInfo(){
         return (firstName.getText() + "/" + lastName.getText() + "/" + email.getText() + "/"
                 + username.getText() + "/" + passwordField1.getPassword());
     }
@@ -92,11 +96,11 @@ public class SignupGUI implements GUI {
         panel.setLayout(new GridBagLayout());
         panel.setMinimumSize(new Dimension(500, 500));
         panel.setPreferredSize(new Dimension(500, 500));
-        firstName = new JTextField();
-        firstName.setMaximumSize(new Dimension(500, 30));
-        firstName.setMinimumSize(new Dimension(300, 20));
-        firstName.setPreferredSize(new Dimension(300, 20));
-        firstName.setText("");
+        textField1 = new JTextField();
+        textField1.setMaximumSize(new Dimension(500, 30));
+        textField1.setMinimumSize(new Dimension(300, 20));
+        textField1.setPreferredSize(new Dimension(300, 20));
+        textField1.setText("");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
@@ -104,42 +108,42 @@ public class SignupGUI implements GUI {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
-        panel.add(firstName, gbc);
-        lastName = new JTextField();
-        lastName.setMaximumSize(new Dimension(500, 30));
-        lastName.setMinimumSize(new Dimension(300, 20));
-        lastName.setPreferredSize(new Dimension(300, 20));
+        panel.add(textField1, gbc);
+        textField2 = new JTextField();
+        textField2.setMaximumSize(new Dimension(500, 30));
+        textField2.setMinimumSize(new Dimension(300, 20));
+        textField2.setPreferredSize(new Dimension(300, 20));
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
-        panel.add(lastName, gbc);
-        email = new JTextField();
-        email.setMaximumSize(new Dimension(500, 30));
-        email.setMinimumSize(new Dimension(300, 20));
-        email.setPreferredSize(new Dimension(300, 20));
-        email.setText("");
+        panel.add(textField2, gbc);
+        textField3 = new JTextField();
+        textField3.setMaximumSize(new Dimension(500, 30));
+        textField3.setMinimumSize(new Dimension(300, 20));
+        textField3.setPreferredSize(new Dimension(300, 20));
+        textField3.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
-        panel.add(email, gbc);
-        username = new JTextField();
-        username.setMaximumSize(new Dimension(500, 30));
-        username.setMinimumSize(new Dimension(300, 20));
-        username.setPreferredSize(new Dimension(300, 20));
-        username.setText("");
+        panel.add(textField3, gbc);
+        textField4 = new JTextField();
+        textField4.setMaximumSize(new Dimension(500, 30));
+        textField4.setMinimumSize(new Dimension(300, 20));
+        textField4.setPreferredSize(new Dimension(300, 20));
+        textField4.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
-        panel.add(username, gbc);
+        panel.add(textField4, gbc);
         final JLabel label1 = new JLabel();
         label1.setText("First Name");
         gbc = new GridBagConstraints();
@@ -209,13 +213,6 @@ public class SignupGUI implements GUI {
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.VERTICAL;
         panel.add(spacer2, gbc);
-        loginButton = new JButton();
-        loginButton.setText("Login");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 7;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel.add(loginButton, gbc);
     }
 
     /**

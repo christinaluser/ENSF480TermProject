@@ -26,7 +26,7 @@ public class LandlordListener {
         } else if (split[0].equals("EDITSTATE")) {
             return client.communicate(action);
         } else if (split[0].equals("LOGOUT")){
-            client.communicate(action);
+            //TODO me dunno
         }
         return null;
     }
