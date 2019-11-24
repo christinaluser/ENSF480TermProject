@@ -210,6 +210,7 @@ public class RenterGUI extends UserGUI {
         searchButton.setText("Search");
         toolBar1.add(searchButton);
         final JToolBar toolBar2 = new JToolBar();
+        toolBar2.setFloatable(false);
         panel.add(toolBar2, BorderLayout.SOUTH);
         showAllButton = new JButton();
         showAllButton.setText("Show All");

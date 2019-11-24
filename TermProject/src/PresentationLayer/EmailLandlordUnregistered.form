@@ -47,9 +47,6 @@
               <text value="User Email: "/>
             </properties>
           </component>
-          <hspacer id="32a72">
-            <constraints/>
-          </hspacer>
           <component id="63316" class="javax.swing.JTextField" binding="userEmail">
             <constraints/>
             <properties>

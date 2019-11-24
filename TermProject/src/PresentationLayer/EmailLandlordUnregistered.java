@@ -89,8 +89,6 @@ public class EmailLandlordUnregistered extends JDialog {
         final JLabel label1 = new JLabel();
         label1.setText("User Email: ");
         toolBar2.add(label1);
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        toolBar2.add(spacer1);
         userEmail = new JTextField();
         userEmail.setMinimumSize(new Dimension(200, 30));
         userEmail.setPreferredSize(new Dimension(300, 30));

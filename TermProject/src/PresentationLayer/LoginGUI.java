@@ -9,6 +9,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LoginGUI implements GUI {
     private JFrame frame;
@@ -24,6 +25,15 @@ public class LoginGUI implements GUI {
     public LoginGUI(LoginListener l) {
         listener = l;
         activateButtons();
+    }
+
+    private void signup() {
+        signupButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO switch guis
+            }
+        });
     }
 
     @Override
