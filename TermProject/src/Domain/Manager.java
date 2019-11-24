@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-//Does this implement Observer??
 public class Manager extends User{
 
     public Manager(Name name, Address address, String email, String username, String password, int accessID) {
@@ -91,7 +90,6 @@ public class Manager extends User{
         updateDatabase();
     }
 
-    //todo
     private void updateDatabase() {
     }
 
@@ -111,7 +109,7 @@ public class Manager extends User{
     public String searchProperties(String address) {
         String str = "";
         for(Property p : properties) {
-            if(address.equals(p.getCityQuadrant())) { //todo SHOULD BE ADDRESS BUT THAT DOESNT EXIST
+            if(address.equals(p.getAddressParts())) { //todo SHOULD BE ADDRESS BUT THAT DOESNT EXIST
                 str += p.toString();
                 str += ";";
             }
@@ -134,12 +132,5 @@ public class Manager extends User{
     public void changeState(PropertyListing pl, Property p, String s) {
         
     }
-
-//    i dont think manager should be an observer ?
-//    @Override
-//    public void update(ArrayList<Property> p) {
-//        properties = p;
-//        System.out.println("Notification to Manager properties: Changed");
-//    }
 
 }

@@ -24,7 +24,7 @@ public class Landlord extends User {
         try {
             while (true) {
                 input = socketIn.readLine();
-                if (input.startsWith("REGISTER/")) { //IT CURRENTLY DOES NOT START WITH REGISTER ADD THAT LATER
+                if (input.startsWith("REGISTERPROPERTY/")) {
                     refreshProperties();
                     String criteria = input.replace("REGISTER/", "");
                     this.addProperty(criteria);
@@ -98,7 +98,7 @@ public class Landlord extends User {
     public String searchProperties(String address) {
         String str = "";
         for (Property p : ownedProperties) {
-            if (address.equals(p.getCityQuadrant())) { //todo SHOULD BE ADDRESS BUT THAT DOESNT EXIST
+            if (address.equals(p.getAddressParts())) {
                 str += p.toString();
                 str += ";";
             }

@@ -72,6 +72,10 @@ public class Property {
         return address;
     }
 
+    public String getAddressParts() {
+        return address.getPropertyNumber() + "/" + address.getStreetName() + "/" + address.getPostalCode();
+    }
+
     public int getNoBedrooms()
     {
         return noBedrooms;
