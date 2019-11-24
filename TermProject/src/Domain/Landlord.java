@@ -24,6 +24,7 @@ public class Landlord extends User{
                     String criteria = input.replace("REGISTER/", "");
                     this.addProperty(criteria);
                 } else if(input.equals("DISPLAY")) {
+                    refreshProperties();
                     String allProperties = propertiesToString();
                     String[] response = allProperties.split(";");
                     for(String p : response) {
@@ -32,6 +33,7 @@ public class Landlord extends User{
                     sendString("END");
 
                 } else if(input.startsWith("SEARCHADDRESS/")) {
+                    refreshProperties();
                     String address = input.replace("SEARCHADDRESS/", "");
                     String[] response = searchProperties(address).split(";");
                     for(String p : response) {
@@ -76,6 +78,10 @@ public class Landlord extends User{
 
     public void removeProperty(Property p) {
 
+    }
+
+    public void refreshProperties() {
+        //Refresh arraylist properties to match database
     }
 
     public void addProperty(String s) {
