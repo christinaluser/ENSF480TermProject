@@ -1,9 +1,6 @@
 package BackendLayer;
 
-import Domain.Landlord;
-import Domain.Property;
-import Domain.SearchCriteria;
-import Domain.User;
+import Domain.*;
 
 import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
 import java.sql.DriverManager;
@@ -58,7 +55,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             ResultSet rset = stmt.executeQuery(strSelect);
             while(rset.next())
             {
-                Property p = new Property(rset.getInt("propertyID"), rset.getString("type"), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
+                Property p = new Property(rset.getInt("propertyID"), rset.getString("type"), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
                         rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"), rset.getDate("datePosted"));
                 properties.add(p);
             }
@@ -81,7 +78,9 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
                 int accessLevel = rset.getInt("accessLevel");
                 if(accessLevel == 1)
                 {
-                    Landlord l = new Landlord();
+                    Landlord l = new Landlord(new Name(rset.getString("firstName"), rset.getString("lastName")), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")),
+                            rset.getString("email"), rset.getString("username"), rset.getString("password"), rset.getInt("accessID"));
+                    users.add(l);
                 }
                 else if(accessLevel == 2)
                 {

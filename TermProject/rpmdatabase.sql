@@ -24,6 +24,9 @@ DROP TABLE IF EXISTS `properties`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `properties` (
   `type` varchar(45) DEFAULT NULL,
+  `propertyNumber` int(11) DEFAULT NULL,
+  `streetName` varchar(45) DEFAULT NULL,
+  `postalCode` varchar(45) DEFAULT NULL,
   `noBedrooms` int(11) DEFAULT NULL,
   `noBathrooms` int(11) DEFAULT NULL,
   `isFurnished` tinyint(4) DEFAULT NULL,
@@ -42,7 +45,7 @@ CREATE TABLE `properties` (
 
 LOCK TABLES `properties` WRITE;
 /*!40000 ALTER TABLE `properties` DISABLE KEYS */;
-INSERT INTO `properties` VALUES ('apartment',1,1,2,'NE','active',750,'11/30/19','100'),('townhouse',3,2,1,'SE','active',2500,'12/01/19','200'),('detached',4,2,1,'NW','rented',5000,'10/01/19','300');
+INSERT INTO `properties` VALUES ('apartment',1,'Apple Street','A1B 2C3',1,1,2,'NE','active',750,'11/30/19','100'),('townhouse',2,'Orange Avenue','D4E 5F6',3,2,1,'SE','active',2500,'12/01/19','200'),('detached',3,'Banana Place','G7H 8I9',4,2,1,'NW','rented',5000,'10/01/19','300');
 /*!40000 ALTER TABLE `properties` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,6 +60,9 @@ CREATE TABLE `users` (
   `username` varchar(45) NOT NULL,
   `password` varchar(45) DEFAULT NULL,
   `accessID` int(11) DEFAULT NULL,
+  `firstName` varchar(45) DEFAULT NULL,
+  `lastName` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -67,7 +73,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('christina.lu','password',1),('jeremy.olea','password',2),('melissa.picazo','password',3);
+INSERT INTO `users` VALUES ('christina.lu','password',1,'Christina','Lu','christina@email.com'),('jeremy.olea','password',2,'Jeremy','Olea','jeremy@email.com'),('melissa.picazo','password',3,'Melissa','Picazo','melissa@email.com');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -80,4 +86,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-23 14:14:50
+-- Dump completed on 2019-11-23 18:49:03
