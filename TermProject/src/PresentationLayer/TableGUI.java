@@ -14,7 +14,7 @@ public abstract class TableGUI implements GUI {
 
     public abstract void updateView();
     public abstract void close();
-    public abstract void tableButtonClicked(int row, String colName, String dialogTitle);
+    public abstract void tableButtonClicked(String propertyId, String colName);
 
 
     public JTable getProperties() {
@@ -37,7 +37,7 @@ public abstract class TableGUI implements GUI {
             if (headers[headers.length-1] == "Edit"){
                 data[i][headers.length - 1] = "Edit";
                 if (headers[headers.length - 2] == "Pay Fee"){
-                    data[i][headers.length - 1] = "Pay Fee";
+                    data[i][headers.length - 2] = "Pay Fee";
                 }
             } else if (headers[headers.length-1] == "Contact Landlord"){
                 data[i][headers.length - 1] = "Contact Landlord";
@@ -57,9 +57,11 @@ public abstract class TableGUI implements GUI {
         if (headers[headers.length-1] == "Edit"){
             properties.getColumn("Edit").setCellRenderer(buttonRenderer);
             properties.addMouseListener(new TableButtonMouseListener(this));
+            if (headers[headers.length-2] == "Pay Fee"){
+                properties.getColumn("Pay Fee").setCellRenderer(buttonRenderer);
+                properties.addMouseListener(new TableButtonMouseListener(this));
+            }
         } else {
-            properties.getColumn("More Info").setCellRenderer(buttonRenderer);
-            properties.addMouseListener(new TableButtonMouseListener(this));
             properties.getColumn("Contact Landlord").setCellRenderer(buttonRenderer);
             properties.addMouseListener(new TableButtonMouseListener(this));
         }

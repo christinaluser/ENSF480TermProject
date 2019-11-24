@@ -52,7 +52,7 @@ public class ManagerGUI extends TableGUI {
 //                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
                 String response = null;
 //                try {
-//                    response = listener.actionPerformed("SEARCH" + "/" + address);
+//                    response = listener.actionPerformed("SEARCHADDRESS" + "/" + address);
 //                } catch (IOException ex) {
 //                    System.err.println(ex.getMessage());
 //                }
@@ -183,13 +183,13 @@ public class ManagerGUI extends TableGUI {
     }
 
     @Override
-    public void tableButtonClicked(int row, String dialogTitle) {
+    public void tableButtonClicked(String propertyId, String colName) {
         EditPropertyState dialog = new EditPropertyState();
-        dialog.setTitle(dialogTitle);
+        dialog.setTitle(colName + " Property ID: " + propertyId);
         dialog.pack();
         dialog.setVisible(true);
         try {
-            listener.actionPerformed("EDIT/" + row + "/" + dialog.getNewState());
+            listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

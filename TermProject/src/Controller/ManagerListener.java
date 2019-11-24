@@ -16,9 +16,8 @@ public class ManagerListener {
 
     public String actionPerformed(String action) throws IOException {
         String [] split = action.split("/");
-        if (split[0].equals("SEARCH")) {
-            Address address = new Address(Integer.parseInt(split[1]), split[2],  split[3]);
-            return client.search(address);
+        if (split[0].equals("SEARCHADDRESS")) {
+            return client.communicate(action);
         } else if (split[0].equals("DISPLAY")){
             try {
                 return client.display();
@@ -30,9 +29,9 @@ public class ManagerListener {
             dialog.pack();
             dialog.setVisible(true);
             String toSend = action + "/" + dialog.getValue();
-            return client.editFee(toSend);
+            return client.communicate(toSend);
         } else if (split[0].equals("REPORT")) {
-            return client.getReport(action);
+            return client.communicate(action);
         } else if (split[0].equals("LOGOUT")){
             //TODO me dunno
         }

@@ -16,16 +16,16 @@ public class Client {
 
     public Client(String serverName, int portNumber) {
         try {
-        socket = new Socket(serverName, portNumber);
-        socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        socketOut = new PrintWriter((socket.getOutputStream()), true);
+            socket = new Socket(serverName, portNumber);
+            socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            socketOut = new PrintWriter((socket.getOutputStream()), true);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
 
     public void setGUI(GUI g) {
-        if(currentGUI != null) {
+        if (currentGUI != null) {
             currentGUI.close();
         }
         currentGUI = g;
@@ -38,23 +38,16 @@ public class Client {
 
     public void close() {
         try {
-        socketIn.close();
-        socketOut.close();
-        socket.close();
+            socketIn.close();
+            socketOut.close();
+            socket.close();
         } catch (IOException e) {
-        System.out.println("Closing error: " + e.getMessage());
+            System.out.println("Closing error: " + e.getMessage());
         }
     }
 
-    public String search(String searchCriteria) throws IOException {
-        socketOut.println(searchCriteria);
-        //server should make a new criteria and actually search client just sends strings to server
-        socketOut.flush();
-        return socketIn.readLine();
-    }
-
-    public String search(Address address) throws IOException {
-        socketOut.println("SEARCHADDRESS/" + address);
+    public String communicate(String action) throws IOException {
+        socketOut.println(action);
         socketOut.flush();
         return socketIn.readLine();
     }
@@ -71,23 +64,4 @@ public class Client {
         }
         return data.toString();
     }
-
-    public String editFee(String message) throws IOException {
-        socketOut.println(message);
-        socketOut.flush();
-        return socketIn.readLine();
-    }
-
-    public String getReport(String message) throws IOException {
-        socketOut.println(message);
-        socketOut.flush();
-        return socketIn.readLine();
-    }
-
-    public String registerProperty(String propertyInfo) throws IOException {
-        socketOut.println(propertyInfo);
-        socketOut.flush();
-        return socketIn.readLine();
-    }
-
 }

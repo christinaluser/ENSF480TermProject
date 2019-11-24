@@ -15,23 +15,20 @@ public class LandlordListener {
 
     public String actionPerformed(String action) throws IOException {
         String [] split = action.split("/");
-        if (split[0].equals("SEARCH")) {
-            Address address = new Address(Integer.parseInt(split[1]), split[2],  split[3]);
-            return client.search(address);
+        if (split[0].equals("SEARCHADDRESS")) {
+            return client.communicate(action); // sends "SEARCHADDRESS/<address>
         } else if (split[0].equals("DISPLAY")){
             try {
                 return client.display();
             } catch (IOException e) {
                 return "Error getting properties";
             }
-        } else if (split[0].equals("REGISTER")) {
-            RegisterProperty dialog = new RegisterProperty();
-            dialog.pack();
-            dialog.setVisible(true);
-            return client.registerProperty(dialog.getPropertyInfo());
-
-        } else if (split[0].equals("REPORT")) {
-//            return client.getReport(); //TODO fix this
+        } else if (split[0].equals("REGISTERPROPERTY")) {
+            return client.communicate(action);
+        } else if (split[0].equals("PAY")) {
+            return client.communicate(split[1]);
+        } else if (split[0].equals("EDITSTATE")) {
+            return client.communicate(action);
         } else if (split[0].equals("LOGOUT")){
             //TODO me dunno
         }
