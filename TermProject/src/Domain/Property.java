@@ -5,6 +5,7 @@ import java.util.Date;
 public class Property {
     public int propertyId;
     public String type;
+    public Address address;
     public int noBedrooms;
     public int noBathrooms;
     public boolean isFurnished;
@@ -12,12 +13,12 @@ public class Property {
     public String listingState;
     public double rent;
     public Date datePosted;
-    // I REMOVED ADDRESS bc i havent configured it in the db yet
 
-    public Property(int propertyId, String type, int noBedrooms, int noBathrooms, boolean isFurnished,
+    public Property(int propertyId, String type, Address address, int noBedrooms, int noBathrooms, boolean isFurnished,
                     String cityQuadrant, String listingState, double rent, Date datePosted) {
         this.propertyId = propertyId;
         this.type = type;
+        this.address = address;
         this.noBedrooms = noBedrooms;
         this.noBathrooms = noBathrooms;
         this.isFurnished = isFurnished;
@@ -25,12 +26,21 @@ public class Property {
         this.listingState = listingState;
         this.rent = rent;
         this.datePosted = datePosted;
-        // REMOVED DATE POSTED
+    }
+
+    public int getPropertyId()
+    {
+        return propertyId;
     }
 
     public String getType()
     {
         return type;
+    }
+
+    public Address getAddress()
+    {
+        return address;
     }
 
     public int getNoBedrooms()
@@ -53,6 +63,11 @@ public class Property {
         return cityQuadrant;
     }
 
+    public String getListingState()
+    {
+        return listingState;
+    }
+
     public double getRent()
     {
         return rent;
@@ -62,4 +77,6 @@ public class Property {
     {
         return datePosted;
     }
+
+
 }

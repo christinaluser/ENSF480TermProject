@@ -2,9 +2,13 @@ package Domain;
 
 import java.util.ArrayList;
 
-public class Landlord {
+public class Landlord extends User{
     public ArrayList<Property> ownedProperties;
     public ArrayList<PropertyListing> listings;
+
+    public Landlord(Name name, Address address, String email, String username, String password, int accessID) {
+        super(name, address, email, username, password, accessID);
+    }
 
 
     public void removeProperty(Property p) {

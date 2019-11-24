@@ -1,9 +1,6 @@
 package BackendLayer;
 
-import Domain.Landlord;
-import Domain.Property;
-import Domain.SearchCriteria;
-import Domain.User;
+import Domain.*;
 
 import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
 import java.sql.DriverManager;
@@ -14,6 +11,9 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
     private Connection conn;
     private Statement stmt;
+
+    private ArrayList<Property> properties = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
 
     public DatabaseController()
     {
@@ -51,14 +51,13 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
     public ArrayList<Property> loadProperties()
     {
-        ArrayList<Property> properties = new ArrayList<>();
         String strSelect = "SELECT * FROM properties";
 
         try {
             ResultSet rset = stmt.executeQuery(strSelect);
             while(rset.next())
             {
-                Property p = new Property(rset.getInt("propertyID"), rset.getString("type"), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
+                Property p = new Property(rset.getInt("propertyID"), rset.getString("type"), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
                         rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"), rset.getDate("datePosted"));
                 properties.add(p);
             }
@@ -69,9 +68,18 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         return properties;
     }
 
+    public User validateLogin(String username, String password)
+    {
+        for(int i = 0; i < users.size(); i++)
+        {
+            if(users.get(i).username.equals(username) && users.get(i).password.equals(password))
+                return users.get(i);
+        }
+        return null;
+    }
+
     public ArrayList<User> loadUsers()
     {
-        ArrayList<User> users = new ArrayList<>();
         String strSelect = "SELECT * FROM users";
 
         try {
@@ -81,36 +89,41 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
                 int accessLevel = rset.getInt("accessLevel");
                 if(accessLevel == 1)
                 {
-                    Landlord l = new Landlord();
+                    Manager m = new Manager(new Name(rset.getString("firstName"), rset.getString("lastName")), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")),
+                            rset.getString("email"), rset.getString("username"), rset.getString("password"), rset.getInt("accessID"));
+                    users.add(m);
                 }
                 else if(accessLevel == 2)
                 {
-
-                } else if (accessLevel == 3) {
-
-
+                    Landlord l = new Landlord(new Name(rset.getString("firstName"), rset.getString("lastName")), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")),
+                            rset.getString("email"), rset.getString("username"), rset.getString("password"), rset.getInt("accessID"));
+                    users.add(l);
+                } else if (accessLevel == 3)
+                {
+                    Renter r = new Renter(new Name(rset.getString("firstName"), rset.getString("lastName")), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")),
+                            rset.getString("email"), rset.getString("username"), rset.getString("password"), rset.getInt("accessID"));
+                    users.add(r);
                 }
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return users;
     }
 
-    /*public User validateLogin(String username, String password)
+    public void addProperty(Property p)
     {
-        for(int i = 0; i < )
-        return null;
-    }*/
-
-    /*void addPayment()
-    {
-
+        String strInsert = "INSERT INTO properties VALUES (" + p.getPropertyId() + ", " + p.getType() + ", "
+                + p.getAddress().getPropertyNumber() + ", " + p.getAddress().getStreetName() + ", " + p.getAddress().getPostalCode() + ", " +
+                + p.getNoBedrooms() + ", " + p.getNoBathrooms() + ", " + p.getIsFurnished() + ", " + p.getCityQuadrant() + ", " + p.getListingState() + ", " + p.getRent() + ", " + p.getDatePosted() + ")";
+        try {
+            stmt.executeUpdate(strInsert);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    void addProperty()
+    /*void addPayment()
     {
 
     }
