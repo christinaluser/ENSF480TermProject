@@ -14,7 +14,7 @@ public abstract class TableGUI implements GUI {
 
     public abstract void updateView();
     public abstract void close();
-    public abstract void tableButtonClicked(int row, String dialogTitle);
+    public abstract void tableButtonClicked(int row, String colName, String dialogTitle);
 
 
     public JTable getProperties() {
@@ -36,14 +36,14 @@ public abstract class TableGUI implements GUI {
             }
             if (headers[headers.length-1] == "Edit"){
                 data[i][headers.length - 1] = "Edit";
+                if (headers[headers.length - 2] == "Pay Fee"){
+                    data[i][headers.length - 1] = "Pay Fee";
+                }
             } else if (headers[headers.length-1] == "Contact Landlord"){
-                data[i][headers.length - 2] = "More Info";
                 data[i][headers.length - 1] = "Contact Landlord";
             }
 
         }
-
-//        TableModel model = new JTableModel(data, headers);
 
         TableModel model = new DefaultTableModel(data, headers) {
             public boolean isCellEditable(int row, int column) {

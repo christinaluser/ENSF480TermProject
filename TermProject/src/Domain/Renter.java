@@ -6,6 +6,10 @@ import java.util.ArrayList;
 public class Renter extends User implements Observer{
     private ArrayList<Property> matchedProperties;
 
+    public Renter(Name name, Address address, String email, String username, String password, int accessID) {
+        super(name, address, email, username, password, accessID);
+    }
+
     public void sendListingEmail() {
         
     }

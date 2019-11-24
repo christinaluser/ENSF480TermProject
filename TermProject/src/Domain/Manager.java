@@ -5,6 +5,10 @@ import java.util.ArrayList;
 //Does this implement Observer??
 public class Manager extends User{
 
+    public Manager(Name name, Address address, String email, String username, String password, int accessID) {
+        super(name, address, email, username, password, accessID);
+    }
+
     public void accessInformation() {
 
     }

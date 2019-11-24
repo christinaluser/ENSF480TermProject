@@ -41,9 +41,10 @@ public class TableButtonMouseListener extends MouseAdapter {
         JTable source = (JTable)e.getSource();
         int row = source.rowAtPoint( e.getPoint() );
         int column = source.columnAtPoint( e.getPoint() );
+        String colName = gui.getProperties().getColumnName(column);
 
-        if (column == (gui.headers.length - 1)){
-            gui.tableButtonClicked(row, gui.getProperties().getColumnName(column) + "Property ID: " + source.getValueAt(row, 0));
+        if (colName =="Edit" || colName =="Pay Fee" || colName == "Contact Landlord"){
+            gui.tableButtonClicked(row, colName, colName + " Property ID: " + source.getValueAt(row, 0));
         }
 
     }

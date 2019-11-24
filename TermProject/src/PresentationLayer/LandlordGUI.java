@@ -30,7 +30,7 @@ public class LandlordGUI extends TableGUI {
     public LandlordGUI() {
         //TODO add address to this table
         headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
-                "Bathrooms", "Furnished", "Listing State", "Edit"};
+                "Bathrooms", "Furnished", "Listing State", "Pay Fee", "Edit"};
     }
 
     private void registerProperty() {
@@ -112,16 +112,26 @@ public class LandlordGUI extends TableGUI {
     //TODO Copy manager logout when its done
 
     @Override
-    public void tableButtonClicked(int row, String dialogTitle) {
+    public void tableButtonClicked(int row, String colName, String dialogTitle) {
         EditPropertyState dialog = new EditPropertyState();
         dialog.setTitle(dialogTitle);
         dialog.pack();
         dialog.setVisible(true);
-        try {
-            listener.actionPerformed("EDIT/" + row + "/" + dialog.getNewState());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+
+        if (colName == "Edit") {
+            try {
+                listener.actionPerformed("EDIT/" + row + "/" + dialog.getNewState());
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            try {
+                listener.actionPerformed("PAY");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
+
     }
 
     @Override
