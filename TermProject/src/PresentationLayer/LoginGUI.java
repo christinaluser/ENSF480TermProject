@@ -57,6 +57,13 @@ public class LoginGUI implements GUI {
                 listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
             }
         });
+
+        continueWithoutLoginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+            }
+        });
     }
 
     {
