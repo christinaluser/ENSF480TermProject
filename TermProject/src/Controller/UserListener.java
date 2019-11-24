@@ -18,7 +18,7 @@ public class UserListener {
 //                    Integer.parseInt(split[3]), Boolean.parseBoolean(split[4]), split[5], Double.parseDouble(split[6]));
 //            return client.search(criteria);
         if (split[0].equals("SEARCH")) {
-            return client.search(action);
+            return client.communicate(action);
         } else if (split[0].equals("DISPLAY")){
             try {
                 return client.display();

@@ -16,16 +16,16 @@ public class Client {
 
     public Client(String serverName, int portNumber) {
         try {
-        socket = new Socket(serverName, portNumber);
-        socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        socketOut = new PrintWriter((socket.getOutputStream()), true);
+            socket = new Socket(serverName, portNumber);
+            socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            socketOut = new PrintWriter((socket.getOutputStream()), true);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
 
     public void setGUI(GUI g) {
-        if(currentGUI != null) {
+        if (currentGUI != null) {
             currentGUI.close();
         }
         currentGUI = g;
@@ -38,22 +38,16 @@ public class Client {
 
     public void close() {
         try {
-        socketIn.close();
-        socketOut.close();
-        socket.close();
+            socketIn.close();
+            socketOut.close();
+            socket.close();
         } catch (IOException e) {
-        System.out.println("Closing error: " + e.getMessage());
+            System.out.println("Closing error: " + e.getMessage());
         }
     }
 
-    public String search(String searchCriteria) throws IOException {
-        socketOut.println(searchCriteria);
-        socketOut.println();
-        return socketIn.readLine();
-    }
-
-    public String searchAddress(String address) throws IOException {
-        socketOut.println(address);
+    public String communicate(String action) throws IOException {
+        socketOut.println(action);
         socketOut.println();
         return socketIn.readLine();
     }
@@ -68,35 +62,5 @@ public class Client {
             response = socketIn.readLine();
         }
         return data.toString();
-    }
-
-    public String editFee(String message) throws IOException {
-        socketOut.println(message);
-        socketOut.println();
-        return socketIn.readLine();
-    }
-
-    public String getReport(String action) throws IOException {
-        socketOut.println(action);
-        socketOut.println();
-        return socketIn.readLine();
-    }
-
-    public String registerProperty(String propertyInfo) throws IOException {
-        socketOut.println(propertyInfo);
-        socketOut.println();
-        return socketIn.readLine();
-    }
-
-    public String payFee(String propertyId) throws IOException {
-        socketOut.println(propertyId);
-        socketOut.println();
-        return socketIn.readLine();
-    }
-
-    public String editState(String action) throws IOException {
-        socketOut.println(action);
-        socketOut.println();
-        return socketIn.readLine();
     }
 }
