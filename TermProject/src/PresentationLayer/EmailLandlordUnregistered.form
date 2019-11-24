@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PresentationLayer.EmailLandlordUnregistered">
+  <grid id="cbd77" binding="contentPane" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="48" y="54" width="656" height="297"/>
+    </constraints>
+    <properties>
+      <preferredSize width="700" height="500"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <toolbar id="916fc">
+        <constraints border-constraint="South"/>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="e7465" class="javax.swing.JButton" binding="buttonOK">
+            <constraints/>
+            <properties>
+              <text value="Send"/>
+            </properties>
+          </component>
+          <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
+            <constraints/>
+            <properties>
+              <text value="Cancel"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+      <component id="5b2de" class="javax.swing.JTextArea" binding="emailBody">
+        <constraints border-constraint="Center"/>
+        <properties/>
+      </component>
+      <toolbar id="b82c2">
+        <constraints border-constraint="North"/>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="b6a28" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="User Email: "/>
+            </properties>
+          </component>
+          <component id="63316" class="javax.swing.JTextField" binding="userEmail">
+            <constraints/>
+            <properties>
+              <minimumSize width="200" height="30"/>
+              <preferredSize width="300" height="30"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+    </children>
+  </grid>
+</form>

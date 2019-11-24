@@ -23,31 +23,41 @@ public class SignupGUI implements GUI {
     private JTextField email;
     private JTextField username;
     private JButton signupButton;
+    private JButton loginButton;
     private Listener listener;
 
-    private void searchProperties() {
+    private String getUserInfo(){
+        return (firstName.getText() + "/" + lastName.getText() + "/" + email.getText() + "/"
+                + username.getText() + "/" + passwordField1.getPassword());
+    }
+
+    private void signup() {
         signupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String userInfo = firstName.getText() + "/" + lastName.getText() + "/" + email.getText() + "/"
-                        + username.getText(); //dont know what to do w/ password
                 String response = null;
                 try {
-                    response = listener.actionPerformed("SIGNUP" + "/" + userInfo);
+                    response = listener.actionPerformed("SIGNUP" + "/" + getUserInfo());
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.out.println(ex.getMessage());
                 }
                 if (response.equals("null")) {
-//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+                    JOptionPane.showMessageDialog(new JFrame(), "Signup failed");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-//                    UIManager.put("OptionPane.background", new ColorUIResource(239, 214, 249));
-//                    UIManager.put("Panel.background", new ColorUIResource(239, 214, 249));
-                    JOptionPane.showMessageDialog(null, response.replaceAll(";", "\n"), "Item", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(new JFrame(), "Signup successful, proceed to login");
+                    //TODO switch guis
                 }
+            }
+        });
+    }
+
+    private void login() {
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO switch guis
             }
         });
     }
@@ -59,6 +69,7 @@ public class SignupGUI implements GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        signup();
     }
 
     @Override
