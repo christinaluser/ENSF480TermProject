@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS `properties`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `properties` (
+  `propertyID` varchar(45) NOT NULL,
   `type` varchar(45) DEFAULT NULL,
   `propertyNumber` int(11) DEFAULT NULL,
   `streetName` varchar(45) DEFAULT NULL,
@@ -34,7 +35,6 @@ CREATE TABLE `properties` (
   `listingState` varchar(45) DEFAULT NULL,
   `rent` double DEFAULT NULL,
   `datePosted` varchar(45) DEFAULT NULL,
-  `propertyID` varchar(45) NOT NULL,
   PRIMARY KEY (`propertyID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -45,7 +45,7 @@ CREATE TABLE `properties` (
 
 LOCK TABLES `properties` WRITE;
 /*!40000 ALTER TABLE `properties` DISABLE KEYS */;
-INSERT INTO `properties` VALUES ('apartment',1,'Apple Street','A1B 2C3',1,1,2,'NE','active',750,'11/30/19','100'),('townhouse',2,'Orange Avenue','D4E 5F6',3,2,1,'SE','active',2500,'12/01/19','200'),('detached',3,'Banana Place','G7H 8I9',4,2,1,'NW','rented',5000,'10/01/19','300');
+INSERT INTO `properties` VALUES ('100','apartment',1,'Apple Street','A1B 2C3',1,1,2,'NE','active',750,'11/30/19'),('200','townhouse',2,'Orange Avenue','D4E 5F6',3,2,1,'SE','active',2500,'12/01/19'),('300','detached',3,'Banana Place','G7H 8I9',4,2,1,'NW','rented',5000,'10/01/19');
 /*!40000 ALTER TABLE `properties` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,4 +86,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-23 18:49:03
+-- Dump completed on 2019-11-23 20:12:56
