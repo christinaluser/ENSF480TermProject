@@ -52,7 +52,7 @@ public class ManagerGUI extends TableGUI {
 //                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
                 String response = null;
 //                try {
-//                    response = listener.actionPerformed("SEARCH" + "/" + address);
+//                    response = listener.actionPerformed("SEARCHADDRESS" + "/" + address);
 //                } catch (IOException ex) {
 //                    System.err.println(ex.getMessage());
 //                }

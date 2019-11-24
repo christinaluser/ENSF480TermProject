@@ -48,13 +48,12 @@ public class Client {
 
     public String search(String searchCriteria) throws IOException {
         socketOut.println(searchCriteria);
-        //server should make a new criteria and actually search client just sends strings to server
         socketOut.println();
         return socketIn.readLine();
     }
 
-    public String search(Address address) throws IOException {
-        socketOut.println("SEARCHADDRESS");
+    public String searchAddress(String address) throws IOException {
+        socketOut.println(address);
         socketOut.println();
         return socketIn.readLine();
     }
@@ -77,8 +76,8 @@ public class Client {
         return socketIn.readLine();
     }
 
-    public String getReport(String message) throws IOException {
-        socketOut.println(message);
+    public String getReport(String action) throws IOException {
+        socketOut.println(action);
         socketOut.println();
         return socketIn.readLine();
     }
@@ -91,6 +90,12 @@ public class Client {
 
     public String payFee(String propertyId) throws IOException {
         socketOut.println(propertyId);
+        socketOut.println();
+        return socketIn.readLine();
+    }
+
+    public String editState(String action) throws IOException {
+        socketOut.println(action);
         socketOut.println();
         return socketIn.readLine();
     }

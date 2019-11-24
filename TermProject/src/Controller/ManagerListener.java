@@ -16,9 +16,8 @@ public class ManagerListener {
 
     public String actionPerformed(String action) throws IOException {
         String [] split = action.split("/");
-        if (split[0].equals("SEARCH")) {
-            Address address = new Address(Integer.parseInt(split[1]), split[2],  split[3]);
-            return client.search(address);
+        if (split[0].equals("SEARCHADDRESS")) {
+            return client.search(action);
         } else if (split[0].equals("DISPLAY")){
             try {
                 return client.display();

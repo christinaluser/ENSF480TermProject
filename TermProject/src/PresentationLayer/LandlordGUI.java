@@ -28,7 +28,6 @@ public class LandlordGUI extends TableGUI {
     private LandlordListener listener;
 
     public LandlordGUI() {
-        //TODO add address to this table
         headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
                 "Bathrooms", "Furnished", "Listing State", "Pay Fee", "Edit"};
     }
@@ -64,13 +63,13 @@ public class LandlordGUI extends TableGUI {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
+                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
                 String response;
-//                try {
-//                    response = listener.actionPerformed("SEARCH" + "/" + address);
-//                } catch (IOException ex) {
-//                    System.err.println(ex.getMessage());
-//                }
+                try {
+                    response = listener.actionPerformed("SEARCHADDRESS" + "/" + address);
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                }
 
                 response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
                 if (response == null) {
@@ -90,13 +89,13 @@ public class LandlordGUI extends TableGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String response = null;
-//                try {
-//                    response = listener.actionPerformed("DISPLAY");
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
+                try {
+                    response = listener.actionPerformed("DISPLAY");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
 
-                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+//                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
 
                 if (response == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
@@ -119,7 +118,7 @@ public class LandlordGUI extends TableGUI {
             dialog.pack();
             dialog.setVisible(true);
             try {
-                listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
+                listener.actionPerformed("EDITSTATE/" + propertyId + "/" + dialog.getNewState());
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
