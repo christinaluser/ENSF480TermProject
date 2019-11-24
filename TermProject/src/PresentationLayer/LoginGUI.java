@@ -2,6 +2,7 @@ package PresentationLayer;
 
 import Controller.Listener;
 import Controller.LoginListener;
+import Controller.SignupListener;
 import Controller.UserListener;
 
 import javax.swing.*;
@@ -27,13 +28,12 @@ public class LoginGUI implements GUI {
         activateButtons();
     }
 
-    private void signup() {
-        signupButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO switch guis
-            }
-        });
+    private String getLoginInfo(){
+        return loginType.getSelectedIndex() + "/" + username.getText() + "/" + password.getPassword();
+    }
+
+    private String login() throws IOException {
+        return listener.actionPerformed("LOGIN/" + getLoginInfo());
     }
 
     @Override
@@ -43,6 +43,7 @@ public class LoginGUI implements GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        activateButtons();
     }
 
     @Override
@@ -52,6 +53,31 @@ public class LoginGUI implements GUI {
 
     public void activateButtons() {
         loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String action = null;
+                try {
+                    action = login();
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+                if (action.equals(null)){
+                    JOptionPane.showMessageDialog(new JFrame(), "Login unsuccessful, please try again.");
+                } else {
+                    listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+                }
+            }
+        });
+
+        signupButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.changeGUI(new SignupGUI(new SignupListener(listener.getClient())));
+            }
+        });
+
+        continueWithoutLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));

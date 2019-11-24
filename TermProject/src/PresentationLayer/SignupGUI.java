@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import Controller.Listener;
+import Controller.SignupListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +21,11 @@ public class SignupGUI implements GUI {
     private JTextField username;
     private JButton signupButton;
     private JButton loginButton;
-    private Listener listener;
+    private SignupListener listener;
+
+    public SignupGUI(SignupListener l){
+        listener = l;
+    }
 
     private String getUserInfo() {
         return (firstName.getText() + "/" + lastName.getText() + "/" + email.getText() + "/"
