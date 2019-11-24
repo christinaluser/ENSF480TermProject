@@ -27,7 +27,7 @@ public class UserGUI extends TableGUI {
     private JButton loginButton;
     private JScrollPane scroll;
     private UserListener listener;
-    private String[] headers = {"Type", "Rent", "Location", "More Info", "Contact Landlord"};
+    private String[] headers;
 
     public UserGUI() {
         headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
@@ -60,11 +60,11 @@ public class UserGUI extends TableGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String response = null;
-//                try {
-//                    response = listener.actionPerformed("SEARCH" + "/" + getCriteria());
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
+                try {
+                    response = listener.actionPerformed("SEARCH" + "/" + getCriteria());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
 
                 response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
 

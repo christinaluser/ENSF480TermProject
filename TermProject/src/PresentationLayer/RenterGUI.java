@@ -23,24 +23,76 @@ public class RenterGUI extends UserGUI {
     private JButton showAllButton;
     private JButton logoutButton;
     private RenterListener listener;
+    private String[] headers;
+
+    public RenterGUI() {
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Contact Landlord"};
+    }
+
+    private void showAllProperties() {
+        showAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+//                try {
+//                    response = listener.actionPerformed("DISPLAY");
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+                response = "1/apt/$400/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+                if (response.equals(null)) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No properties posted at the moment!");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    showTable(headers, response, panel);
+                }
+            }
+        });
+    }
 
     private void searchProperties() {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 String response = null;
-                try {
-                    response = listener.actionPerformed("SEARCH/" + getCriteria());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+//                try {
+//                    response = listener.actionPerformed("SEARCH" + "/" + getCriteria());
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+
+                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+
                 if (response.equals("null")) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
                 } else if (response.equals("CLOSE")) {
                     //do nothing
                 } else {
-                    JOptionPane.showMessageDialog(null, response.replaceAll(";", "\n"), "Item", JOptionPane.PLAIN_MESSAGE);
+                    showTable(headers, response, panel);
+                }
+            }
+        });
+    }
+
+    private void showNotifiedProperties() {
+        notificationsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String response = null;
+//                try {
+//                    response = listener.actionPerformed("DISPLAYNOTIFIED");
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+                response = "2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+                if (response.equals(null)) {
+                    JOptionPane.showMessageDialog(new JFrame(), "No properties match your criteria at the moment");
+                } else if (response.equals("CLOSE")) {
+                    //do nothing
+                } else {
+                    showTable(headers, response, panel);
                 }
             }
         });
@@ -67,6 +119,14 @@ public class RenterGUI extends UserGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        showAllProperties();
+        searchProperties();
+        showNotifiedProperties();
+    }
+
+    public static void main(String[] args) {
+        RenterGUI gui = new RenterGUI();
+        gui.updateView();
     }
 
     @Override
@@ -107,28 +167,20 @@ public class RenterGUI extends UserGUI {
         defaultComboBoxModel1.addElement("Condo");
         type.setModel(defaultComboBoxModel1);
         toolBar1.add(type);
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        toolBar1.add(spacer1);
         final JLabel label2 = new JLabel();
         label2.setText("# Bedrooms: ");
         toolBar1.add(label2);
         toolBar1.add(noBed);
-        final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
-        toolBar1.add(spacer2);
         final JLabel label3 = new JLabel();
         label3.setText("# Bathooms: ");
         toolBar1.add(label3);
         toolBar1.add(noBath);
-        final com.intellij.uiDesigner.core.Spacer spacer3 = new com.intellij.uiDesigner.core.Spacer();
-        toolBar1.add(spacer3);
         isFurnished = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         defaultComboBoxModel2.addElement("Furnished");
         defaultComboBoxModel2.addElement("Unfurnished");
         isFurnished.setModel(defaultComboBoxModel2);
         toolBar1.add(isFurnished);
-        final com.intellij.uiDesigner.core.Spacer spacer4 = new com.intellij.uiDesigner.core.Spacer();
-        toolBar1.add(spacer4);
         final JLabel label4 = new JLabel();
         label4.setText("Location: ");
         toolBar1.add(label4);
@@ -140,8 +192,6 @@ public class RenterGUI extends UserGUI {
         defaultComboBoxModel3.addElement("SW");
         cityQuadrant.setModel(defaultComboBoxModel3);
         toolBar1.add(cityQuadrant);
-        final com.intellij.uiDesigner.core.Spacer spacer5 = new com.intellij.uiDesigner.core.Spacer();
-        toolBar1.add(spacer5);
         final JLabel label5 = new JLabel();
         label5.setText("Price Range: ");
         toolBar1.add(label5);
@@ -156,8 +206,6 @@ public class RenterGUI extends UserGUI {
         defaultComboBoxModel4.addElement("$1400");
         priceRange.setModel(defaultComboBoxModel4);
         toolBar1.add(priceRange);
-        final com.intellij.uiDesigner.core.Spacer spacer6 = new com.intellij.uiDesigner.core.Spacer();
-        toolBar1.add(spacer6);
         searchButton = new JButton();
         searchButton.setText("Search");
         toolBar1.add(searchButton);
