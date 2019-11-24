@@ -23,6 +23,7 @@ public class Landlord extends User{
                 if(input.startsWith("REGISTER/")) { //IT CURRENTLY DOES NOT START WITH REGISTER ADD THAT LATER
                     String criteria = input.replace("REGISTER/", "");
                     this.addProperty(criteria);
+                    sendString("Done");
                 } else if(input.equals("DISPLAY")) {
                     refreshProperties();
                     String allProperties = propertiesToString();
@@ -76,6 +77,10 @@ public class Landlord extends User{
         }
     }
 
+    //todo
+    private void updateDatabase() {
+    }
+
     public void removeProperty(Property p) {
 
     }
@@ -91,6 +96,7 @@ public class Landlord extends User{
 //                    criteria[5], criteria[6], Double.parseDouble(criteria[7]));
         //database.addProperty(p);
         //ownedProperties.add(p);
+        updateDatabase();
     }
 
     public void changeListingState(Property p, int state) {

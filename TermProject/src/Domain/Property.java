@@ -3,15 +3,16 @@ package Domain;
 import java.util.Date;
 
 public class Property {
-    public int propertyId;
-    public String type;
-    public int noBedrooms;
-    public int noBathrooms;
-    public boolean isFurnished;
-    public String cityQuadrant;
-    public String listingState;
-    public double rent;
-    public Date datePosted;
+    private int propertyId;
+    private String type;
+    private int noBedrooms;
+    private int noBathrooms;
+    private boolean isFurnished;
+    private String cityQuadrant;
+    private String listingState;
+    private double rent;
+    private Date datePosted;
+    private Fee fee;
     // I REMOVED ADDRESS bc i havent configured it in the db yet
 
     public Property(int propertyId, String type, int noBedrooms, int noBathrooms, boolean isFurnished,
@@ -73,6 +74,10 @@ public class Property {
     public double getRent()
     {
         return rent;
+    }
+
+    public void setFee(Fee fee) {
+        this.fee = fee;
     }
 
     public Date getDatePosted()
