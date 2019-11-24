@@ -30,8 +30,7 @@ CREATE TABLE `properties` (
   `cityQuadrant` varchar(45) DEFAULT NULL,
   `listingState` varchar(45) DEFAULT NULL,
   `rent` double DEFAULT NULL,
-  `startDate` varchar(45) DEFAULT NULL,
-  `endDate` varchar(45) DEFAULT NULL,
+  `datePosted` varchar(45) DEFAULT NULL,
   `propertyID` varchar(45) NOT NULL,
   PRIMARY KEY (`propertyID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -43,7 +42,7 @@ CREATE TABLE `properties` (
 
 LOCK TABLES `properties` WRITE;
 /*!40000 ALTER TABLE `properties` DISABLE KEYS */;
-INSERT INTO `properties` VALUES ('apartment',1,1,2,'NE','active',750,'11/30/19','11/30/20','100'),('townhouse',3,2,1,'SE','active',2500,'12/01/19','12/01/20','200'),('detached',4,2,1,'NW','rented',5000,'10/01/19','10/01/20','300');
+INSERT INTO `properties` VALUES ('apartment',1,1,2,'NE','active',750,'11/30/19','100'),('townhouse',3,2,1,'SE','active',2500,'12/01/19','200'),('detached',4,2,1,'NW','rented',5000,'10/01/19','300');
 /*!40000 ALTER TABLE `properties` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,4 +80,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-20  1:01:18
+-- Dump completed on 2019-11-23 14:14:50
