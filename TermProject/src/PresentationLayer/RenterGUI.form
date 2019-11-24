@@ -2,26 +2,16 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PresentationLayer.RenterGUI">
   <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="1054" height="60"/>
+      <xy x="20" y="20" width="991" height="34"/>
     </constraints>
-    <properties>
-      <preferredSize width="1100" height="900"/>
-    </properties>
+    <properties/>
     <border type="none"/>
     <children>
       <toolbar id="14e4b">
-        <constraints border-constraint="North"/>
-        <properties>
-          <floatable value="false"/>
-        </properties>
+        <constraints border-constraint="Center"/>
+        <properties/>
         <border type="none"/>
         <children>
-          <component id="435ea" class="javax.swing.JLabel">
-            <constraints/>
-            <properties>
-              <text value="Type: "/>
-            </properties>
-          </component>
           <component id="19d4c" class="javax.swing.JComboBox" binding="type">
             <constraints/>
             <properties>
@@ -37,10 +27,10 @@
             <constraints/>
             <properties>
               <labelFor value="64b6c"/>
-              <text value="# Bedrooms: "/>
+              <text value="#Bedrooms"/>
             </properties>
           </component>
-          <component id="64b6c" class="javax.swing.JSpinner" binding="noBed" custom-create="true">
+          <component id="64b6c" class="javax.swing.JSpinner" binding="noBed">
             <constraints/>
             <properties/>
           </component>
@@ -48,10 +38,10 @@
             <constraints/>
             <properties>
               <labelFor value="a9ccb"/>
-              <text value="# Bathooms: "/>
+              <text value="#Bathooms"/>
             </properties>
           </component>
-          <component id="a9ccb" class="javax.swing.JSpinner" binding="noBath" custom-create="true">
+          <component id="a9ccb" class="javax.swing.JSpinner" binding="noBath">
             <constraints/>
             <properties/>
           </component>
@@ -64,12 +54,15 @@
               </model>
             </properties>
           </component>
+<<<<<<< HEAD
           <component id="34254" class="javax.swing.JLabel">
             <constraints/>
             <properties>
               <text value="Location: "/>
             </properties>
           </component>
+=======
+>>>>>>> parent of 6c87455... fixed usergui
           <component id="b598a" class="javax.swing.JComboBox" binding="cityQuadrant">
             <constraints/>
             <properties>
@@ -81,12 +74,15 @@
               </model>
             </properties>
           </component>
+<<<<<<< HEAD
           <component id="c60a1" class="javax.swing.JLabel">
             <constraints/>
             <properties>
               <text value="Price Range: "/>
             </properties>
           </component>
+=======
+>>>>>>> parent of 6c87455... fixed usergui
           <component id="71ebf" class="javax.swing.JComboBox" binding="priceRange">
             <constraints/>
             <properties>
@@ -107,6 +103,7 @@
               <text value="Search"/>
             </properties>
           </component>
+<<<<<<< HEAD
         </children>
       </toolbar>
       <toolbar id="392b8">
@@ -116,6 +113,8 @@
         </properties>
         <border type="none"/>
         <children>
+=======
+>>>>>>> parent of 6c87455... fixed usergui
           <component id="1dea8" class="javax.swing.JButton" binding="showAllButton" default-binding="true">
             <constraints/>
             <properties>
@@ -126,12 +125,6 @@
             <constraints/>
             <properties>
               <text value="Notifications"/>
-            </properties>
-          </component>
-          <component id="674bc" class="javax.swing.JButton" binding="logoutButton" default-binding="true">
-            <constraints/>
-            <properties>
-              <text value="Logout"/>
             </properties>
           </component>
         </children>

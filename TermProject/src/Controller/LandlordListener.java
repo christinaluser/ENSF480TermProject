@@ -18,7 +18,11 @@ public class LandlordListener {
         if (split[0].equals("SEARCHADDRESS")) {
             return client.communicate(action); // sends "SEARCHADDRESS/<address>
         } else if (split[0].equals("DISPLAY")){
-            return client.display();
+            try {
+                return client.display();
+            } catch (IOException e) {
+                return "Error getting properties";
+            }
         } else if (split[0].equals("REGISTERPROPERTY")) {
             return client.communicate(action);
         } else if (split[0].equals("PAY")) {

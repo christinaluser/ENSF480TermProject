@@ -20,7 +20,7 @@ public class Listener {
             SearchCriteria criteria = new SearchCriteria(split[1], Integer.parseInt(split[2]),
                     Integer.parseInt(split[3]), Boolean.parseBoolean(split[4]), split[5], Double.parseDouble(split[6]));
 //            return client.search(criteria);
-            return client.communicate(action);
+            return client.search(action);
         } else if (split[0].equals("DISPLAY")){
             try {
                 return client.display();

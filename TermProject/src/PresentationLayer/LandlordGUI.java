@@ -63,13 +63,13 @@ public class LandlordGUI extends TableGUI {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
+                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
                 String response;
-//                try {
-//                    response = listener.actionPerformed("SEARCHADDRESS" + "/" + address);
-//                } catch (IOException ex) {
-//                    System.err.println(ex.getMessage());
-//                }
+                try {
+                    response = listener.actionPerformed("SEARCHADDRESS" + "/" + address);
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                }
 
                 response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
                 if (response == null) {
