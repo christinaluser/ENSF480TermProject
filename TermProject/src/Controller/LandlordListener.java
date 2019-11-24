@@ -29,9 +29,8 @@ public class LandlordListener {
             dialog.pack();
             dialog.setVisible(true);
             return client.registerProperty(dialog.getPropertyInfo());
-
-        } else if (split[0].equals("REPORT")) {
-//            return client.getReport(); //TODO fix this
+        } else if (split[0].equals("PAY")) {
+            return client.payFee(split[1]);
         } else if (split[0].equals("LOGOUT")){
             //TODO me dunno
         }

@@ -96,9 +96,8 @@ public class UserGUI extends TableGUI {
     }
 
     @Override
-    public void tableButtonClicked(int row, String title) {
-        String info = "property info"; //TODO figure out how to get info
-        JOptionPane.showMessageDialog(new JFrame(), info, "More Property Information", JOptionPane.INFORMATION_MESSAGE);
+    public void tableButtonClicked(String propertyId, String colName) {
+        //TODO figure out how to get info
     }
 
     private void showAllProperties() {

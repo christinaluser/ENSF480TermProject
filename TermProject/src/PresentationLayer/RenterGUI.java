@@ -52,9 +52,8 @@ public class RenterGUI extends UserGUI {
     }
 
     @Override
-    public void tableButtonClicked(int row, String Title) {
-        String info = "property info"; //TODO figure out how to get info
-        JOptionPane.showMessageDialog(new JFrame(), info, "More Property Information", JOptionPane.INFORMATION_MESSAGE);
+    public void tableButtonClicked(String propertyId, String colName) {
+        //TODO
     }
 
     @Override

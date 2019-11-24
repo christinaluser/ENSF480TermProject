@@ -44,7 +44,7 @@ public class TableButtonMouseListener extends MouseAdapter {
         String colName = gui.getProperties().getColumnName(column);
 
         if (colName =="Edit" || colName =="Pay Fee" || colName == "Contact Landlord"){
-            gui.tableButtonClicked(row, colName, colName + " Property ID: " + source.getValueAt(row, 0));
+            gui.tableButtonClicked((String)source.getValueAt(row, 0), colName);
         }
 
     }

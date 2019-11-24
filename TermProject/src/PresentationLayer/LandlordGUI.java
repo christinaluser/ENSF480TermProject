@@ -112,26 +112,27 @@ public class LandlordGUI extends TableGUI {
     //TODO Copy manager logout when its done
 
     @Override
-    public void tableButtonClicked(int row, String colName, String dialogTitle) {
-        EditPropertyState dialog = new EditPropertyState();
-        dialog.setTitle(dialogTitle);
-        dialog.pack();
-        dialog.setVisible(true);
-
+    public void tableButtonClicked(String propertyId, String colName) {
         if (colName == "Edit") {
+            EditPropertyState dialog = new EditPropertyState();
+            dialog.setTitle(colName + " Property ID: " + propertyId);
+            dialog.pack();
+            dialog.setVisible(true);
             try {
-                listener.actionPerformed("EDIT/" + row + "/" + dialog.getNewState());
+                listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         } else {
             try {
-                listener.actionPerformed("PAY");
+                int confirm = JOptionPane.showConfirmDialog(new JFrame(), "Pay fee for this property?", colName + " Property ID: " + propertyId, JOptionPane.YES_NO_OPTION);
+                if (confirm == 0) {
+                    listener.actionPerformed("PAY/" + propertyId);
+                }
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         }
-
     }
 
     @Override
@@ -191,7 +192,8 @@ public class LandlordGUI extends TableGUI {
         createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
-        panel.setPreferredSize(new Dimension(750, 750));
+        panel.setEnabled(true);
+        panel.setPreferredSize(new Dimension(1100, 900));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.NORTH);

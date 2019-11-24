@@ -89,4 +89,9 @@ public class Client {
         return socketIn.readLine();
     }
 
+    public String payFee(String propertyId) throws IOException {
+        socketOut.println(propertyId);
+        socketOut.println();
+        return socketIn.readLine();
+    }
 }
