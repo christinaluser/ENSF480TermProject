@@ -1,5 +1,6 @@
 package PresentationLayer;
 
+import Controller.LoginListener;
 import Controller.UserListener;
 import com.mysql.cj.xdevapi.Table;
 
@@ -15,7 +16,6 @@ import java.io.IOException;
 public class UserGUI extends TableGUI {
     private JFrame frame;
     private JButton searchButton;
-    private JTable properties;
     private JPanel panel;
     private JComboBox type;
     private JComboBox isFurnished;
@@ -25,7 +25,6 @@ public class UserGUI extends TableGUI {
     private JSpinner noBath;
     private JButton showAllButton;
     private JButton loginButton;
-    private JScrollPane scroll;
     private UserListener listener;
     private String[] headers;
 
@@ -35,11 +34,13 @@ public class UserGUI extends TableGUI {
     }
 
     public UserGUI(UserListener l) {
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Contact Landlord"};
         listener = l;
     }
 
     public String getCriteria() {
-        return (String) type.getSelectedItem() + "/" + noBed.getValue() + "/" + noBath.getValue()
+        return type.getSelectedItem() + "/" + noBed.getValue() + "/" + noBath.getValue()
                 + "/" + getIsFurnished() + "/" + cityQuadrant.getSelectedItem() + "/" + priceRange.getSelectedItem();
     }
 
@@ -51,32 +52,44 @@ public class UserGUI extends TableGUI {
         }
     }
 
-    public void setListener(UserListener listener) {
-        this.listener = listener;
+    private void searchProperties() throws IOException {
+        String result = listener.actionPerformed("SEARCH" + "/" + getCriteria());
+//        test
+//        result = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+        } else {
+            showTable(headers, result, panel);
+        }
     }
 
-    private void searchProperties() {
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-                try {
-                    response = listener.actionPerformed("SEARCH" + "/" + getCriteria());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+    private void showAllProperties() throws IOException {
+        String result = listener.actionPerformed("DISPLAY");
+        if (result.equals(null)) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+        } else {
+            showTable(headers, result, panel);
+        }
+    }
 
-                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
-
-                if (response.equals("null")) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-                }
+    public void activateButtons() {
+        showAllButton.addActionListener(e -> {
+            try {
+                showAllProperties();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
+
+        searchButton.addActionListener(e -> {
+            try {
+                searchProperties();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        loginButton.addActionListener(e -> listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient()))));
     }
 
     @Override
@@ -86,27 +99,7 @@ public class UserGUI extends TableGUI {
         dialog.setVisible(true);
     }
 
-    private void showAllProperties() {
-        showAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-                try {
-                    response = listener.actionPerformed("DISPLAY");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                if (response.equals(null)) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-                }
-            }
-        });
-    }
-
+    @Override
     public void updateView() {
         ((SpinnerNumberModel) noBed.getModel()).setMinimum(0);
         ((SpinnerNumberModel) noBath.getModel()).setMinimum(0);
@@ -115,15 +108,13 @@ public class UserGUI extends TableGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        showAllProperties();
-        searchProperties();
-//        login();
+        activateButtons();
     }
 
-    public static void main(String[] args) {
-        UserGUI gui = new UserGUI();
-        gui.updateView();
-    }
+//    public static void main(String[] args) {
+//        UserGUI gui = new UserGUI();
+//        gui.updateView();
+//    }
 
 
     public void close() {

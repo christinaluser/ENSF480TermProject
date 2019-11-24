@@ -9,52 +9,31 @@ public class EditPropertyState extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JComboBox newState;
+    private boolean isForLandlord;
 
-    protected String getNewState() {
+    String getNewState() {
         return (String) newState.getSelectedItem();
     }
 
-    public EditPropertyState() {
+    EditPropertyState(boolean b) {
+        isForLandlord = b;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> dispose());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> dispose());
 
-        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                onCancel();
+                dispose();
             }
         });
 
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
-
-    private void onOK() {
-        // add your code here
-        dispose();
-    }
-
-    private void onCancel() {
-        // add your code here if necessary
-        dispose();
+        contentPane.registerKeyboardAction(e -> dispose(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     {
@@ -131,4 +110,13 @@ public class EditPropertyState extends JDialog {
         return contentPane;
     }
 
+    private void createUIComponents() {
+        if (isForLandlord){
+            final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+            defaultComboBoxModel1.addElement("Suspended");
+            defaultComboBoxModel1.addElement("Cancelled");
+            defaultComboBoxModel1.addElement("Rented");
+            newState.setModel(defaultComboBoxModel1);
+        }
+    }
 }

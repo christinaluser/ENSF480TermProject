@@ -1,15 +1,12 @@
 package PresentationLayer;
 
-import Controller.Listener;
+import Controller.LoginListener;
 import Controller.SignupListener;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class SignupGUI implements GUI {
     private JFrame frame;
@@ -23,42 +20,34 @@ public class SignupGUI implements GUI {
     private JButton loginButton;
     private SignupListener listener;
 
-    public SignupGUI(SignupListener l){
+    SignupGUI(SignupListener l) {
         listener = l;
     }
 
     private String getUserInfo() {
         return (firstName.getText() + "/" + lastName.getText() + "/" + email.getText() + "/"
-                + username.getText() + "/" + passwordField1.getPassword());
+                + username.getText() + "/" + Arrays.toString(passwordField1.getPassword()));
     }
 
-    private void signup() {
-        signupButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-                try {
-                    response = listener.actionPerformed("SIGNUP" + "/" + getUserInfo());
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-                if (response.equals("null")) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Signup failed");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    JOptionPane.showMessageDialog(new JFrame(), "Signup successful, proceed to login");
-                    //TODO switch guis
-                }
-            }
-        });
+    private void signup() throws IOException {
+        String result = listener.actionPerformed("SIGNUP" + "/" + getUserInfo());
+
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Signup unsuccessful.");
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "Signup successful! Please proceed to login.");
+            listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient())));
+        }
     }
 
-    private void login() {
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO switch guis
+    private void activateButtons() {
+        loginButton.addActionListener(e -> listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient()))));
+
+        signupButton.addActionListener(e -> {
+            try {
+                signup();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
     }
@@ -70,7 +59,7 @@ public class SignupGUI implements GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        signup();
+        activateButtons();
     }
 
     @Override
