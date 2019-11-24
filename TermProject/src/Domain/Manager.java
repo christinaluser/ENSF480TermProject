@@ -42,14 +42,46 @@ public class Manager extends User{
                     sendString("END");
 
                 } else if(input.startsWith("EDITFEE/")) {
+                    refreshProperties();
                     String fee = input.replace("EDITFEE/", "");
                     editFee(fee);
                     sendString("Done");
+               } else if (input.startsWith("EDITSTATE/")) {
+                   refreshProperties();
+                   sendString(editState(input));
+               } else if (input.startsWith("PAY/")) {
+                   refreshProperties();
+                   sendString(payFees(input));
                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String payFees(String input) {
+        String[] split = input.split("/");
+        for(Property p : properties) {
+            if(p.getPropertyId() == Integer.parseInt(split[1])) {
+                p.setState("active");
+                return "Done";
+            }
+        }
+        return null;
+    }
+
+    private String editState(String input) {
+        String[] split = input.split("/");
+        for (Property p : properties) {
+            if (p.getPropertyId() == Integer.parseInt(split[1])) {
+                if(!p.getListingState().equals("suspended")) {
+                    p.setState(split[2]);
+                    refreshProperties();
+                    return "Done";
+                }
+            }
+        }
+        return null;
     }
 
     private void editFee(String amt) {
@@ -93,10 +125,6 @@ public class Manager extends User{
 
     public void accessInformation() {
 
-    }
-
-    public void refreshProperties() {
-        //Refresh arraylist properties to match database
     }
 
     public void requestReport() {

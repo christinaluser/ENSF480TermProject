@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class Landlord extends User{
+public class Landlord extends User {
     public ArrayList<Property> ownedProperties;
     public ArrayList<PropertyListing> listings;
 
@@ -22,29 +22,33 @@ public class Landlord extends User{
     public void communicate() {
         String input = "";
         try {
-            while(true) {
+            while (true) {
                 input = socketIn.readLine();
-                if(input.startsWith("REGISTER/")) { //IT CURRENTLY DOES NOT START WITH REGISTER ADD THAT LATER
+                if (input.startsWith("REGISTER/")) { //IT CURRENTLY DOES NOT START WITH REGISTER ADD THAT LATER
+                    refreshProperties();
                     String criteria = input.replace("REGISTER/", "");
                     this.addProperty(criteria);
                     sendString("Done");
-                } else if(input.equals("DISPLAY")) {
+                } else if (input.equals("DISPLAY")) {
                     refreshProperties();
                     String allProperties = propertiesToString();
                     String[] response = allProperties.split(";");
-                    for(String p : response) {
+                    for (String p : response) {
                         sendString(p);
                     }
                     sendString("END");
 
-                } else if(input.startsWith("SEARCHADDRESS/")) {
+                } else if (input.startsWith("SEARCHADDRESS/")) {
                     refreshProperties();
                     String address = input.replace("SEARCHADDRESS/", "");
-                    String[] response = searchProperties(address).split(";");
-                    for(String p : response) {
-                        sendString(p);
-                    }
-                    sendString("END");
+                    String response = searchProperties(address);
+                    sendString(response);
+                } else if (input.startsWith("EDITSTATE/")) {
+                    refreshProperties();
+                    sendString(editState(input));
+                } else if (input.startsWith("PAY/")) {
+                    refreshProperties();
+                    sendString(payFees(input));
                 }
                 //READ STRINGS HERE
             }
@@ -53,9 +57,34 @@ public class Landlord extends User{
         }
     }
 
+    private String payFees(String input) {
+        String[] split = input.split("/");
+        for(Property p : ownedProperties) {
+            if(p.getPropertyId() == Integer.parseInt(split[1])) {
+                p.setState("active");
+                return "Done";
+            }
+        }
+        return null;
+    }
+
+    private String editState(String input) {
+        String[] split = input.split("/");
+        for (Property p : ownedProperties) {
+            if (p.getPropertyId() == Integer.parseInt(split[1])) {
+                if(!p.getListingState().equals("suspended")) {
+                    p.setState(split[2]);
+                    refreshProperties();
+                    return "Done";
+                }
+            }
+        }
+        return null;
+    }
+
     private String propertiesToString() {
         String str = "";
-        for (Property p: ownedProperties) {
+        for (Property p : ownedProperties) {
             str += p.toString();
         }
         return str;
@@ -68,48 +97,31 @@ public class Landlord extends User{
 
     public String searchProperties(String address) {
         String str = "";
-        for(Property p : ownedProperties) {
-            if(address.equals(p.getCityQuadrant())) { //todo SHOULD BE ADDRESS BUT THAT DOESNT EXIST
+        for (Property p : ownedProperties) {
+            if (address.equals(p.getCityQuadrant())) { //todo SHOULD BE ADDRESS BUT THAT DOESNT EXIST
                 str += p.toString();
                 str += ";";
             }
         }
-        if(str.equals("")) {
+        if (str.equals("")) {
             return null;
         } else {
             return str;
         }
     }
 
-    //todo
-    private void updateDatabase() {
-    }
-
     public void removeProperty(Property p) {
 
     }
 
-    public void refreshProperties() {
-        //Refresh arraylist properties to match database
-    }
 
     public void addProperty(String s) {
         String[] criteria = s.split("/");
         //construct the property
-//        Property p = new Property(Integer.parseInt(criteria[0]), criteria[1], Integer.parseInt(criteria[2]), Integer.parseInt(criteria[3]), Boolean.parseBoolean(criteria[4]),
-//                    criteria[5], criteria[6], Double.parseDouble(criteria[7]));
-        //database.addProperty(p);
-        //ownedProperties.add(p);
-        updateDatabase();
+        Property p = new Property(criteria[0], Integer.parseInt(criteria[1]), criteria[2], criteria[3], criteria[4],
+                Integer.parseInt(criteria[5]), Integer.parseInt(criteria[6]), Boolean.parseBoolean(criteria[7]), Double.parseDouble(criteria[8]));
+        database.addProperty(p);
+        ownedProperties.add(p);
+        refreshProperties();
     }
-
-    public void changeListingState(Property p, int state) {
-
-    }
-
-//    @Override
-//    public void update(ArrayList<Property> p) {
-//        properties = p;
-//        System.out.println("Notification to Landlord properties: Changed");
-//    }
 }

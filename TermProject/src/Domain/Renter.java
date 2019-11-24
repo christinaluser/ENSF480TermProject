@@ -24,6 +24,7 @@ public class Renter extends User implements Observer{
         try {
             while(true) {
                 if(input.equals("DISPLAY")) {
+                    refreshProperties();
                     String allProperties = propertiesToString();
                     String[] response = allProperties.split(";");
                     for(String p : response) {

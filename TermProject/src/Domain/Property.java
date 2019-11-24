@@ -13,7 +13,7 @@ public class Property {
     private double rent;
     private Date datePosted;
     private Fee fee;
-    // I REMOVED ADDRESS bc i havent configured it in the db yet
+    private Address address;
 
     public Property(int propertyId, String type, Address address, int noBedrooms, int noBathrooms, boolean isFurnished,
                     String cityQuadrant, String listingState, double rent, Date datePosted) {
@@ -27,6 +27,17 @@ public class Property {
         this.listingState = listingState;
         this.rent = rent;
         this.datePosted = datePosted;
+    }
+
+    public Property(String type, int houseNumber, String street, String postalCode, String cityQuadrant,
+                    int noBedrooms, int noBathrooms, boolean isFurnished, double rent) {
+        this.type = type;
+        this.address = new Address(houseNumber, street, postalCode);
+        this.cityQuadrant = cityQuadrant;
+        this.noBedrooms = noBedrooms;
+        this.noBathrooms = noBathrooms;
+        this.isFurnished = isFurnished;
+        this.rent = rent;
     }
 
     public int getPropertyId()
@@ -101,4 +112,7 @@ public class Property {
     }
 
 
+    public void setState(String newState) {
+        listingState = newState;
+    }
 }
