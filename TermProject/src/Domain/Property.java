@@ -1,23 +1,21 @@
 package Domain;
 
+import java.util.Date;
+
 public class Property {
-    public int propertyId; //auto-gen
-    public String type; //1
-    public int noBedrooms; //7
-    public int noBathrooms; //6
-    public boolean isFurnished;  //8
-    public String cityQuadrant; // 5
-    public String listingState; //suspended
-    public double rent; //9
-    //public Date datePosted;
+    public int propertyId;
+    public String type;
+    public int noBedrooms;
+    public int noBathrooms;
+    public boolean isFurnished;
+    public String cityQuadrant;
+    public String listingState;
+    public double rent;
+    public Date datePosted;
     // I REMOVED ADDRESS bc i havent configured it in the db yet
 
-    public String toString() {
-        return "ID: " + propertyId + "\tType: " + type + "\tno. Bedrooms: " + noBedrooms + "\t no. Bathrooms: " + noBathrooms + "\n";
-    }
-
     public Property(int propertyId, String type, int noBedrooms, int noBathrooms, boolean isFurnished,
-     String cityQuadrant, String listingState, double rent) {
+                    String cityQuadrant, String listingState, double rent, Date datePosted) {
         this.propertyId = propertyId;
         this.type = type;
         this.noBedrooms = noBedrooms;
@@ -26,7 +24,7 @@ public class Property {
         this.cityQuadrant = cityQuadrant;
         this.listingState = listingState;
         this.rent = rent;
-        //this.datePosted = datePosted;
+        this.datePosted = datePosted;
         // REMOVED DATE POSTED
     }
 
@@ -41,6 +39,10 @@ public class Property {
         this.rent = rent;
         //this.datePosted = datePosted;
         // REMOVED DATE POSTED
+    }
+
+    public String toString() {
+        return "ID: " + propertyId + "\tType: " + type + "\tno. Bedrooms: " + noBedrooms + "\t no. Bathrooms: " + noBathrooms + "\n";
     }
 
     public String getType()
@@ -73,4 +75,8 @@ public class Property {
         return rent;
     }
 
+    public Date getDatePosted()
+    {
+        return datePosted;
+    }
 }

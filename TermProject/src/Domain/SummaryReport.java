@@ -1,6 +1,7 @@
 package Domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SummaryReport {
     public Date startDate;

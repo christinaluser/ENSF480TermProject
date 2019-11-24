@@ -1,7 +1,9 @@
 package BackendLayer;
 
+import Domain.Landlord;
 import Domain.Property;
 import Domain.SearchCriteria;
+import Domain.User;
 
 import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
 import java.sql.DriverManager;
@@ -56,8 +58,8 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             ResultSet rset = stmt.executeQuery(strSelect);
             while(rset.next())
             {
-                Property p = new Property(rset.getString("type"), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
-                        rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"));
+                Property p = new Property(rset.getInt("propertyID"), rset.getString("type"), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
+                        rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"), rset.getDate("datePosted"));
                 properties.add(p);
             }
 
@@ -66,6 +68,42 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         }
         return properties;
     }
+
+    public ArrayList<User> loadUsers()
+    {
+        ArrayList<User> users = new ArrayList<>();
+        String strSelect = "SELECT * FROM users";
+
+        try {
+            ResultSet rset = stmt.executeQuery(strSelect);
+            while(rset.next())
+            {
+                int accessLevel = rset.getInt("accessLevel");
+                if(accessLevel == 1)
+                {
+                    Landlord l = new Landlord();
+                }
+                else if(accessLevel == 2)
+                {
+
+                } else if (accessLevel == 3) {
+
+
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    /*public User validateLogin(String username, String password)
+    {
+        for(int i = 0; i < )
+        return null;
+    }*/
 
     /*void addPayment()
     {

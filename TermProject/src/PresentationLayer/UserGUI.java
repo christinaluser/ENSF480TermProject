@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import Controller.UserListener;
+import com.mysql.cj.xdevapi.Table;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -11,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class UserGUI implements GUI {
+public class UserGUI extends TableGUI {
     private JFrame frame;
     private JButton searchButton;
     private JTable properties;
@@ -25,8 +26,10 @@ public class UserGUI implements GUI {
     private JButton showAllButton;
     private JScrollPane scroll;
     private UserListener listener;
+    private String[] headers = {"Type", "Rent", "Location", "More Info", "Contact Landlord"};
 
     public UserGUI() {
+
     }
 
     public UserGUI(UserListener l) {
@@ -94,6 +97,12 @@ public class UserGUI implements GUI {
         });
     }
 
+    @Override
+    public void tableButtonClicked(int row, String title) {
+        String info = "property info"; //TODO figure out how to get info
+        JOptionPane.showMessageDialog(new JFrame(), info, "More Property Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     private void showAllProperties() {
         showAllButton.addActionListener(new ActionListener() {
             @Override
@@ -104,36 +113,12 @@ public class UserGUI implements GUI {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                String[] headers = {"Type", "Rent", "Location", " "};
-                String[] temp = response.split(";");
 
-                String[][] data = new String[temp.length][];
-
-                for (int i = 0; i < temp.length; i++) {
-                    data[i] = temp[i].split("/");
-                }
-
-                TableModel model = new DefaultTableModel(data, headers) {
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
-                };
-
-                properties = new JTable(model);
-//                items = new JTable(data, headers);
-//                items.setEnabled(false);
-
-                if (scroll != null)
-                    panel.remove(scroll);
-                scroll = new JScrollPane(properties);
-                panel.add(scroll);
-
-                panel.validate();
+                showTable(headers, response, panel);
             }
         });
     }
 
-    @Override
     public void updateView() {
         ((SpinnerNumberModel) noBed.getModel()).setMinimum(0);
         ((SpinnerNumberModel) noBath.getModel()).setMinimum(0);
@@ -144,7 +129,6 @@ public class UserGUI implements GUI {
         frame.setVisible(true);
     }
 
-    @Override
     public void close() {
         frame.dispose();
     }

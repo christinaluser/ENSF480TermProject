@@ -1,8 +1,6 @@
 package Controller;
 
 import Domain.Address;
-import Domain.Date;
-import Domain.SearchCriteria;
 import PresentationLayer.*;
 
 import java.net.Socket;
@@ -47,13 +45,6 @@ public class Client {
         System.out.println("Closing error: " + e.getMessage());
         }
     }
-
-//    i think this one is wrong
-//    public String search(SearchCriteria criteria) throws IOException {
-//        socketOut.println("SEARCH");
-//        socketOut.println();
-//        return socketIn.readLine();
-//    }
 
     public String search(String searchCriteria) throws IOException {
         socketOut.println(searchCriteria);

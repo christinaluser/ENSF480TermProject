@@ -4,9 +4,9 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
-public class CellButton  extends JButton implements TableCellRenderer {
+public class TableButtonRenderer  extends JButton implements TableCellRenderer {
 
-    public CellButton() {
+    public TableButtonRenderer() {
         setOpaque(true);
     }
 
