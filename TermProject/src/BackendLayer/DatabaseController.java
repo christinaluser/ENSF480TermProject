@@ -27,7 +27,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             // Step 1: Allocate a database 'Connection' object
             conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/rpmdatabase?serverTimezone=GMT",
-                    "admin3", "password");   // For MySQL only
+                    "root", "password");   // For MySQL only
             // The format is: "jdbc:mysql://hostname:port/databaseName", "username", "password"
 
             stmt = conn.createStatement();
