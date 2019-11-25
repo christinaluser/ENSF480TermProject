@@ -18,6 +18,7 @@ public abstract class TableGUI implements GUI {
     }
 
     void showTable(String [] headers, String response, JPanel panel) {
+        
         String[] temp = response.split(";");
         String[][] data = new String[temp.length][headers.length];
         for (int i = 0; i < temp.length; i++) {
@@ -43,7 +44,9 @@ public abstract class TableGUI implements GUI {
         };
 
         properties = new JTable(model);
-        properties = new JTable(data, headers);
+        JTable newData = new JTable(data, headers);
+        properties = newData;
+
         TableButtonRenderer buttonRenderer = new TableButtonRenderer();
         if (headers[headers.length-1].equals("Edit")){
             properties.getColumn("Edit").setCellRenderer(buttonRenderer);
