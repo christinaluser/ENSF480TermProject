@@ -137,46 +137,86 @@ public class RenterGUI extends UserGUI {
      */
     private void $$$setupUI$$$() {
         createUIComponents();
-        panel = new javax.swing.JPanel();
-        panel.setLayout(new java.awt.BorderLayout(0, 0));
-        final javax.swing.JToolBar toolBar1 = new javax.swing.JToolBar();
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout(0, 0));
+        panel.setMinimumSize(new Dimension(1000, 900));
+        panel.setPreferredSize(new Dimension(1100, 900));
+        final JToolBar toolBar1 = new JToolBar();
+        toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.NORTH);
-        final javax.swing.JLabel label1 = new javax.swing.JLabel();
+        final JLabel label1 = new JLabel();
+        label1.setText("Type: ");
         toolBar1.add(label1);
-        type = new javax.swing.JComboBox();
+        type = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("House");
+        defaultComboBoxModel1.addElement("Apartment");
+        defaultComboBoxModel1.addElement("Basement");
+        defaultComboBoxModel1.addElement("Condo");
+        type.setModel(defaultComboBoxModel1);
         toolBar1.add(type);
-        final javax.swing.JLabel label2 = new javax.swing.JLabel();
+        final JLabel label2 = new JLabel();
+        label2.setText("# Bedrooms: ");
         toolBar1.add(label2);
         toolBar1.add(noBed);
-        final javax.swing.JLabel label3 = new javax.swing.JLabel();
+        final JLabel label3 = new JLabel();
+        label3.setText("# Bathooms: ");
         toolBar1.add(label3);
         toolBar1.add(noBath);
-        isFurnished = new javax.swing.JComboBox();
+        isFurnished = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
+        defaultComboBoxModel2.addElement("Furnished");
+        defaultComboBoxModel2.addElement("Unfurnished");
+        isFurnished.setModel(defaultComboBoxModel2);
         toolBar1.add(isFurnished);
-        final javax.swing.JLabel label4 = new javax.swing.JLabel();
+        final JLabel label4 = new JLabel();
+        label4.setText("Location: ");
         toolBar1.add(label4);
-        cityQuadrant = new javax.swing.JComboBox();
+        cityQuadrant = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
+        defaultComboBoxModel3.addElement("NE");
+        defaultComboBoxModel3.addElement("NW");
+        defaultComboBoxModel3.addElement("SE");
+        defaultComboBoxModel3.addElement("SW");
+        cityQuadrant.setModel(defaultComboBoxModel3);
         toolBar1.add(cityQuadrant);
-        final javax.swing.JLabel label5 = new javax.swing.JLabel();
+        final JLabel label5 = new JLabel();
+        label5.setText("Price Range: ");
         toolBar1.add(label5);
-        priceRange = new javax.swing.JComboBox();
+        priceRange = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel4 = new DefaultComboBoxModel();
+        defaultComboBoxModel4.addElement("$0");
+        defaultComboBoxModel4.addElement("$400");
+        defaultComboBoxModel4.addElement("$600");
+        defaultComboBoxModel4.addElement("$800");
+        defaultComboBoxModel4.addElement("$1000");
+        defaultComboBoxModel4.addElement("$1200");
+        defaultComboBoxModel4.addElement("$1400");
+        priceRange.setModel(defaultComboBoxModel4);
         toolBar1.add(priceRange);
-        searchButton = new javax.swing.JButton();
+        searchButton = new JButton();
+        searchButton.setText("Search");
         toolBar1.add(searchButton);
-        final javax.swing.JToolBar toolBar2 = new javax.swing.JToolBar();
+        final JToolBar toolBar2 = new JToolBar();
+        toolBar2.setFloatable(false);
         panel.add(toolBar2, BorderLayout.SOUTH);
-        showAllButton = new javax.swing.JButton();
+        showAllButton = new JButton();
+        showAllButton.setText("Show All");
         toolBar2.add(showAllButton);
-        notificationsButton = new javax.swing.JButton();
+        notificationsButton = new JButton();
+        notificationsButton.setText("Notifications");
         toolBar2.add(notificationsButton);
-        logoutButton = new javax.swing.JButton();
+        logoutButton = new JButton();
+        logoutButton.setText("Logout");
         toolBar2.add(logoutButton);
+        label2.setLabelFor(noBed);
+        label3.setLabelFor(noBath);
     }
 
     /**
      * @noinspection ALL
      */
-    public javax.swing.JComponent $$$getRootComponent$$$() {
+    public JComponent $$$getRootComponent$$$() {
         return panel;
     }
 
