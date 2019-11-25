@@ -9,12 +9,8 @@ import java.util.ArrayList;
 public class Renter extends User {
     private ArrayList<Property> matchedProperties;
 
-    public Renter(Name name, Address address, String email, String username, String password, int accessID) {
-        super(name, address, email, username, password, accessID);
-    }
-    
-    public Renter(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
-        super(socketIn, socketOut, database);
+    public Renter(Name name, String email, String username, String password, int accessID) {
+        super(name, email, username, password, accessID);
     }
 
     @Override
@@ -24,7 +20,10 @@ public class Renter extends User {
     }
 
     @Override
-    public void communicate() {
+    public void communicate(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
+        this.socketOut = socketOut;
+        this.socketIn = socketIn;
+        this.database = database;
         String input = "";
         try {
             while(true) {
@@ -34,7 +33,7 @@ public class Renter extends User {
                     String[] response = allProperties.split(";");
                     for(String p : response) {
                         sendString(p);
-                        matchedProperties.update(p);
+//                        update(matchedProperties);
                     }
                     sendString("END");
 

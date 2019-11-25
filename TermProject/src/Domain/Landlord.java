@@ -10,14 +10,9 @@ public class Landlord extends User {
     public ArrayList<Property> ownedProperties;
     public ArrayList<PropertyListing> listings;
 
-    public Landlord(Name name, Address address, String email, String username, String password, int accessID) {
-        super(name, address, email, username, password, accessID);
+    public Landlord(Name name, String email, String username, String password, int accessID) {
+        super(name, email, username, password, accessID);
     }
-
-    public Landlord(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
-        super(socketIn, socketOut, database);
-    }
-
 
     @Override
     public void update(ArrayList<Property> p)
@@ -26,7 +21,10 @@ public class Landlord extends User {
     }
 
     @Override
-    public void communicate() {
+    public void communicate(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
+        this.socketOut = socketOut;
+        this.socketIn = socketIn;
+        this.database = database;
         String input = "";
         try {
             while (true) {

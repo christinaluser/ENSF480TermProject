@@ -43,35 +43,72 @@ public class RentalPropertyManagementSystem implements Runnable{
             try {
                 while (!userFound) {
                     input = socketIn.readLine();
-                    if (input.startsWith("USER/")) {
+                    if(input.startsWith("SIGNUP/")) {
+                        signUpNewUser(input);
+                    }
+                    if (input.startsWith("LOGIN/")) {
+                        userFound = verifyLogin(input);
+                    }
+                    if(input.equals("CONTINUE")) {
                         userFound = true;
                     }
                 }
 
-                switch (input) {
-                    case "USER/REGULAR_USER":
-                        communicateRegularUser();
-                        break;
-                    case "USER/LANDLORD":
-                        user = new Landlord(socketIn, socketOut, database);
-                        user.communicate();
-                        break;
-                    case "USER/RENTER":
-                        user = new Renter(socketIn, socketOut, database);
-                        user.communicate();
-                        break;
-                    case "USER/MANAGER":
-                        user = new Manager(socketIn, socketOut, database);
-                        user.communicate();
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + input);
+                input.replace("LOGIN/", "");
+                String[] info = input.split("/");
+
+                if(info[0].equals("CONTINUE")) {
+                    communicateRegularUser();
+                } else {
+                    user = database.validateLogin(info[2],info[3]); // create new user
+                    user.communicate(socketIn, socketOut, database);
                 }
+
                 userFound = false;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private boolean verifyLogin(String s) {
+        String[] info = s.split("/");
+        if(database.validateLogin(info[2],info[3]) != null) {
+            sendString(info[1]);
+            return true;
+        }
+        sendString("null");
+        return false;
+
+    }
+
+    private void signUpNewUser(String s) {
+        String[] info = s.split("/");
+        ArrayList<User> allUsers = database.loadUsers();
+        for (User u: allUsers) {
+            if (u.email.equals(info[4])){
+                sendString("null");
+                return;
+            }
+        }
+
+        if (info[1].equals("Manager")){
+            User newUser = new Manager(new Name(info[2], info[3]), info[4] , info[5], info[6], 1);
+            database.addUser(newUser);
+            sendString("success");
+        } else if (info[1].equals("Landlord")){
+            User newUser = new Manager(new Name(info[2], info[3]), info[4] , info[5], info[6], 2);
+            database.addUser(newUser);
+            sendString("success");
+        } else if (info[1].equals("Renter")){
+            User newUser = new Manager(new Name(info[2], info[3]), info[4] , info[5], info[6], 1);
+            database.addUser(newUser);
+            sendString("success");
+        } else {
+            sendString("null");
+        }
+
+
     }
 
     private void communicateRegularUser() {

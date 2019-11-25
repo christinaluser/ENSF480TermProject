@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class Manager extends User{
 
-    public Manager(Name name, Address address, String email, String username, String password, int accessID) {
-        super(name, address, email, username, password, accessID);
+    public Manager(Name name, String email, String username, String password, int accessID) {
+        super(name, email, username, password, accessID);
     }
     
     public Manager(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
@@ -24,7 +24,10 @@ public class Manager extends User{
     }
 
     @Override
-    public void communicate() {
+    public void communicate(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
+        this.socketIn = socketIn;
+        this.socketOut = socketOut;
+        this.database = database;
         String input = "";
         try {
             while(true) {

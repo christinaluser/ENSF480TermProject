@@ -25,15 +25,14 @@ public abstract class User implements Observer {
         this.database = database;
     }
 
-    public abstract void communicate();
+    public abstract void communicate(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database);
 
     public void refreshProperties() {
         properties = database.loadProperties();
     }
 
-    public User(Name name, Address address, String email, String username, String password, int accessID) {
+    public User(Name name, String email, String username, String password, int accessID) {
         this.name = name;
-        this.address = address;
         this.email = email;
         this.username = username;
         this.password = password;

@@ -2,15 +2,9 @@ package PresentationLayer;
 
 import Controller.LoginListener;
 import Controller.UserListener;
-import com.mysql.cj.xdevapi.Table;
 
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class UserGUI extends TableGUI {
@@ -140,7 +134,7 @@ public class UserGUI extends TableGUI {
         panel.setLayout(new BorderLayout(0, 0));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
-        panel.add(toolBar1, BorderLayout.NORTH);
+        panel.add(toolBar1, BorderLayout.CENTER);
         type = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("House");
@@ -190,15 +184,9 @@ public class UserGUI extends TableGUI {
         searchButton = new JButton();
         searchButton.setText("Search");
         toolBar1.add(searchButton);
-        final JToolBar toolBar2 = new JToolBar();
-        toolBar2.setFloatable(false);
-        panel.add(toolBar2, BorderLayout.SOUTH);
         showAllButton = new JButton();
         showAllButton.setText("Show All");
-        toolBar2.add(showAllButton);
-        loginButton = new JButton();
-        loginButton.setText("Login");
-        toolBar2.add(loginButton);
+        toolBar1.add(showAllButton);
         label1.setLabelFor(noBed);
         label2.setLabelFor(noBath);
     }

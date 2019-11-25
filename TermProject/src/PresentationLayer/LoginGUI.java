@@ -39,17 +39,17 @@ public class LoginGUI implements GUI {
     }
 
     private void login() throws IOException {
-        String type = getLoginType();
+//        String type = getLoginType();
         String result = listener.actionPerformed("LOGIN/" + getLoginInfo());
 
         if (result.equals(null)) {
             JOptionPane.showMessageDialog(new JFrame(), "Login unsuccessful, please try again.");
         } else {
-            if (type.equals("Manager")) {
+            if (result.equals("Manager")) {
                 listener.changeGUI(new ManagerGUI(new ManagerListener(listener.getClient())));
-            } else if (type.equals("Renter")) {
+            } else if (result.equals("Renter")) {
                 listener.changeGUI(new RenterGUI(new RenterListener(listener.getClient())));
-            } else if (type.equals("Landlord")) {
+            } else if (result.equals("Landlord")) {
                 listener.changeGUI(new LandlordGUI(new LandlordListener(listener.getClient())));
             }
         }
@@ -77,6 +77,11 @@ public class LoginGUI implements GUI {
         continueWithoutLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    listener.actionPerformed("CONTINUE");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
             }
         });
