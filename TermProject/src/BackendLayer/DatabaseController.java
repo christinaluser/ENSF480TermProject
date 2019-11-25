@@ -73,7 +73,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         try {
             ResultSet rset = stmt.executeQuery(strSelect);
             while (rset.next()) {
-                int accessLevel = rset.getInt("accessLevel");
+                int accessLevel = rset.getInt("accessID");
                 if (accessLevel == 1) {
                     Manager m = new Manager(new Name(rset.getString("firstName"), rset.getString("lastName")),
                             rset.getString("email"), rset.getString("username"), rset.getString("password"), rset.getInt("accessID"));
@@ -106,8 +106,9 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
     }
 
     public void addUser(User u) {
-        String strInsert = "INSERT INTO users VALUES (" + u.getName().getFirstName() + ", " + u.getName().getLastName() + ", "
-                + u.getUsername() + ", " + u.getPassword() + ", " + u.getAccessId() + ")";
+        String strInsert = "INSERT INTO users VALUES ('" + u.getUsername() + "', '" + u.getPassword() + "', " + u.getAccessId() + ", '"
+                + u.getName().getFirstName() + "', '" + u.getName().getLastName() + "' , '" + u.getEmail() + "')";
+        System.out.println("statement is" + strInsert);
         try {
             stmt.executeUpdate(strInsert);
         } catch (SQLException e) {

@@ -86,6 +86,8 @@ public class RentalPropertyManagementSystem implements Runnable{
         String[] info = s.split("/");
         ArrayList<User> allUsers = database.loadUsers();
         for (User u: allUsers) {
+            System.out.println(u.email);
+            System.out.println(info[6]);
             if (u.email.equals(info[4])){
                 sendString("null");
                 return;

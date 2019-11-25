@@ -34,8 +34,19 @@ public class LoginGUI implements GUI {
         return (String) loginType.getSelectedItem();
     }
 
+    private String getPassword() {
+        String s = new String(this.password.getPassword());
+        System.out.println(s);
+//        s.replace("[", "");
+//        s.replace("]", "");
+//        s.replace(", ", "");
+
+
+        return s;
+    }
+
     private String getLoginInfo() {
-        return loginType.getSelectedItem() + "/" + username.getText() + "/" + password.getPassword();
+        return loginType.getSelectedItem() + "/" + username.getText() + "/" + getPassword();
     }
 
     private void login() throws IOException {

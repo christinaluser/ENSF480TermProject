@@ -27,7 +27,18 @@ public class SignupGUI implements GUI {
 
     private String getUserInfo() {
         return (type.getSelectedItem() + "/" + firstName.getText() + "/" + lastName.getText() + "/" + email.getText()
-                + "/" + username.getText() + "/" + Arrays.toString(passwordField1.getPassword()));
+                + "/" + username.getText() + "/" + getPassword());
+    }
+
+    private String getPassword() {
+        String s = new String(this.passwordField1.getPassword());
+        System.out.println(s);
+//        s.replace("[", "");
+//        s.replace("]", "");
+//        s.replace(", ", "");
+
+
+        return s;
     }
 
     private void signup() throws IOException {

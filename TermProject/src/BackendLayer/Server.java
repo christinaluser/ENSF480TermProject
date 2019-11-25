@@ -41,7 +41,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server server = new Server(5050);
+        Server server = new Server(5000);
         server.communicate();
     }
 
