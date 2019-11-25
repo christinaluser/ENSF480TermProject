@@ -139,6 +139,7 @@ public class RenterGUI extends UserGUI {
         createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
+        panel.setMinimumSize(new Dimension(1000, 900));
         panel.setPreferredSize(new Dimension(1100, 900));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
