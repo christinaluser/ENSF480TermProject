@@ -155,9 +155,4 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
     }
 
-    void validateLogin()
-    {
-
-    }*/
-
 }
