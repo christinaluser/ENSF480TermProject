@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PresentationLayer.RenterGUI">
+  <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="991" height="34"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <toolbar id="14e4b">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="19d4c" class="javax.swing.JComboBox" binding="type">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="House"/>
+                <item value="Apartment"/>
+                <item value="Basement"/>
+                <item value="Condo"/>
+              </model>
+            </properties>
+          </component>
+          <component id="a8747" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <labelFor value="64b6c"/>
+              <text value="#Bedrooms"/>
+            </properties>
+          </component>
+          <component id="64b6c" class="javax.swing.JSpinner" binding="noBed">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="ffb98" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <labelFor value="a9ccb"/>
+              <text value="#Bathooms"/>
+            </properties>
+          </component>
+          <component id="a9ccb" class="javax.swing.JSpinner" binding="noBath">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="c20db" class="javax.swing.JComboBox" binding="isFurnished">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="Furnished"/>
+                <item value="Unfurnished"/>
+              </model>
+            </properties>
+          </component>
+          <component id="b598a" class="javax.swing.JComboBox" binding="cityQuadrant">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="NE"/>
+                <item value="NW"/>
+                <item value="SE"/>
+                <item value="SW"/>
+              </model>
+            </properties>
+          </component>
+          <component id="71ebf" class="javax.swing.JComboBox" binding="priceRange">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="$0"/>
+                <item value="$400"/>
+                <item value="$600"/>
+                <item value="$800"/>
+                <item value="$1000"/>
+                <item value="$1200"/>
+                <item value="$1400"/>
+              </model>
+            </properties>
+          </component>
+          <component id="df0f9" class="javax.swing.JButton" binding="searchButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Search"/>
+            </properties>
+          </component>
+          <component id="1dea8" class="javax.swing.JButton" binding="showAllButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Show All"/>
+            </properties>
+          </component>
+          <component id="ee8da" class="javax.swing.JButton" binding="notificationsButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Notifications"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+    </children>
+  </grid>
+</form>
