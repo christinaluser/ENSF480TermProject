@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public abstract class User {        // why arent we implementing observer?
+public abstract class User implements Observer {
     public Name name;
     public Address address;
     public String email;
