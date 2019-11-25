@@ -37,8 +37,6 @@ public class UserGUI extends TableGUI {
         headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
                 "Bathrooms", "Furnished", "Contact Landlord"};
         listener = l;
-        searchProperties();
-        showAllProperties();
     }
 
     public String getCriteria() {
