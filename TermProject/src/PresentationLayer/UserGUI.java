@@ -133,9 +133,11 @@ public class UserGUI extends TableGUI {
     private void $$$setupUI$$$() {
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
+        panel.setMinimumSize(new Dimension(1100, 900));
+        panel.setPreferredSize(new Dimension(1100, 900));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
-        panel.add(toolBar1, BorderLayout.CENTER);
+        panel.add(toolBar1, BorderLayout.NORTH);
         type = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("House");
@@ -185,9 +187,15 @@ public class UserGUI extends TableGUI {
         searchButton = new JButton();
         searchButton.setText("Search");
         toolBar1.add(searchButton);
+        final JToolBar toolBar2 = new JToolBar();
+        toolBar2.setFloatable(false);
+        panel.add(toolBar2, BorderLayout.SOUTH);
         showAllButton = new JButton();
         showAllButton.setText("Show All");
-        toolBar1.add(showAllButton);
+        toolBar2.add(showAllButton);
+        loginButton = new JButton();
+        loginButton.setText("Login");
+        toolBar2.add(loginButton);
         label1.setLabelFor(noBed);
         label2.setLabelFor(noBath);
     }

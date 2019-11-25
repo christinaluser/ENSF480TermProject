@@ -58,6 +58,7 @@ public class RentalPropertyManagementSystem implements Runnable{
                 String[] info = input.split("/");
 
                 if(info[0].equals("CONTINUE")) {
+                    sendString("done");
                     communicateRegularUser();
                 } else {
                     user = database.validateLogin(info[2],info[3]); // create new user
