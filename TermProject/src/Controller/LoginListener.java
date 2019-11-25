@@ -10,17 +10,20 @@ public class LoginListener {
         this.client = client;
     }
 
-    public String actionPerformed(String action) throws IOException {
+    public LoginListener() { }
 
-        return action;
+
+
+    public Client getClient() {
+        return client;
+    }
+
+    public String actionPerformed(String action) throws IOException {
+        return client.communicate(action);
     }
 
     public void changeGUI(GUI g) {
         client.setGUI(g);
         client.runGUI();
-    }
-
-    public Client getClient() {
-        return client;
     }
 }

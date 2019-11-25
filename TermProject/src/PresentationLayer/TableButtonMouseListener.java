@@ -1,15 +1,13 @@
 package PresentationLayer;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class TableButtonMouseListener extends MouseAdapter {
     private final TableGUI gui;
 
-    public TableButtonMouseListener(TableGUI gui) {
+    TableButtonMouseListener(TableGUI gui) {
         this.gui = gui;
     }
 
@@ -20,7 +18,7 @@ public class TableButtonMouseListener extends MouseAdapter {
         int column = source.columnAtPoint( e.getPoint() );
         String colName = gui.getProperties().getColumnName(column);
 
-        if (colName =="Edit" || colName =="Pay Fee" || colName == "Contact Landlord"){
+        if (colName.equals("Edit") || colName.equals("Pay Fee") || colName.equals("Contact Landlord")){
             gui.tableButtonClicked((String)source.getValueAt(row, 0), colName);
         }
     }
