@@ -6,8 +6,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-//Does this implement Observer??
-public class Renter extends User implements Observer{
+public class Renter extends User {
     private ArrayList<Property> matchedProperties;
 
     public Renter(Name name, Address address, String email, String username, String password, int accessID) {
@@ -16,6 +15,12 @@ public class Renter extends User implements Observer{
     
     public Renter(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
         super(socketIn, socketOut, database);
+    }
+
+    @Override
+    public void update(ArrayList<Property> p) {
+        matchedProperties = p;
+        System.out.println("Notification to matched Renter properties: Changed");
     }
 
     @Override
@@ -29,10 +34,12 @@ public class Renter extends User implements Observer{
                     String[] response = allProperties.split(";");
                     for(String p : response) {
                         sendString(p);
+                        matchedProperties.update(p);
                     }
                     sendString("END");
 
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,12 +61,6 @@ public class Renter extends User implements Observer{
 
     public void sendListingEmail() {
         
-    }
-
-    @Override
-    public void update(ArrayList<Property> p) {
-        matchedProperties = p;
-        System.out.println("Notification to Renter properties: Changed");
     }
 
 }
