@@ -36,12 +36,12 @@ public class RenterGUI extends UserGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String response = null;
-                try {
-                    response = listener.actionPerformed("DISPLAY");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                //response = "1/apt/$400/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+//                try {
+//                    response = listener.actionPerformed("DISPLAY");
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+                response = "1/apt/$400/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
                 if (response.equals(null)) {
                     JOptionPane.showMessageDialog(new JFrame(), "No properties posted at the moment!");
                 } else if (response.equals("CLOSE")) {
