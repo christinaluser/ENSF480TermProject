@@ -82,9 +82,17 @@ public class RentalPropertyManagementSystem implements Runnable{
     //TODO validate function doesnt work
     private boolean verifyLogin(String s) {
         String[] info = s.split("/");
+        int access = -1;
+        if (info[1].equals("Manager")) {
+            access = 1;
+        } else if (info[1].equals("Landlord")){
+            access = 2;
+        } else if (info[1].equals("Renter")) {
+            access = 3;
+        }
         ArrayList<User> allUsers = database.loadUsers();
         for (User u: allUsers) {
-            if (u.username.equals(info[2]) && u.password.equals(info[3])) {
+            if (u.username.equals(info[2]) && u.password.equals(info[3]) && u.accessID == access) {
                 sendString(info[1]);
                 return true;
             }
@@ -139,7 +147,10 @@ public class RentalPropertyManagementSystem implements Runnable{
         try {
             while(true) {
                 input = socketIn.readLine();
+                System.out.println("Read line");
                 if(input.equals("DISPLAY")) {
+                    refreshProperties();
+                    System.out.println("in display");
                     String allProperties = propertiesToString();
                     String[] response = allProperties.split(";");
                     for(String p : response) {
@@ -190,13 +201,17 @@ public class RentalPropertyManagementSystem implements Runnable{
     public String propertiesToString() {
         String str = "";
         for (Property p: properties) {
+            System.out.println("in loop");
+            System.out.println(p.toString());
             str += p.toString();
+            str += ";";
         }
+        System.out.println(str);
         return str;
     }
 
     public void refreshProperties() {
-        //Refresh arraylist properties to match database
+        properties = database.loadProperties();
     }
 
     public void setDbController(DatabaseController database) {
