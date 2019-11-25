@@ -60,7 +60,14 @@ public class RentalPropertyManagementSystem implements Runnable{
                 if(info[0].equals("CONTINUE")) {
                     communicateRegularUser();
                 } else {
-                    user = database.validateLogin(info[2],info[3]); // create new user
+                    ArrayList<User> allUsers = database.loadUsers();
+                    for (User u: allUsers) {
+                        if (u.username.equals(info[2]) && u.password.equals(info[3])) {
+                            user = u;
+                            break;
+                        }
+                    }
+//                    user = database.validateLogin(info[2],info[3]); // create new user
                     user.communicate(socketIn, socketOut, database);
                 }
 
@@ -71,14 +78,27 @@ public class RentalPropertyManagementSystem implements Runnable{
         }
     }
 
+    //TODO validate function doesnt work
     private boolean verifyLogin(String s) {
         String[] info = s.split("/");
-        if(database.validateLogin(info[2],info[3]) != null) {
-            sendString(info[1]);
-            return true;
+        ArrayList<User> allUsers = database.loadUsers();
+        for (User u: allUsers) {
+            if (u.username.equals(info[2]) && u.password.equals(info[3])) {
+                sendString(info[1]);
+                return true;
+            }
         }
         sendString("null");
         return false;
+
+//        User u = database.validateLogin(info[2],info[3]);
+//        if(u == null) {
+//            System.out.println("User not found");
+//            sendString("null");
+//            return false;
+//        }
+//        sendString(info[1]);
+//        return true;
 
     }
 
