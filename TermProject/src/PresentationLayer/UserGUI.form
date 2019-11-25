@@ -11,7 +11,7 @@
     <border type="none"/>
     <children>
       <toolbar id="54a81">
-        <constraints border-constraint="Center"/>
+        <constraints border-constraint="North"/>
         <properties>
           <floatable value="false"/>
         </properties>
@@ -95,10 +95,25 @@
               <text value="Search"/>
             </properties>
           </component>
+        </children>
+      </toolbar>
+      <toolbar id="fad01">
+        <constraints border-constraint="South"/>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
           <component id="9d38d" class="javax.swing.JButton" binding="showAllButton" default-binding="true">
             <constraints/>
             <properties>
               <text value="Show All"/>
+            </properties>
+          </component>
+          <component id="51b8" class="javax.swing.JButton" binding="loginButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Login"/>
             </properties>
           </component>
         </children>

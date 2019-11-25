@@ -22,7 +22,7 @@ public class LoginGUI implements GUI {
 
     public LoginGUI(LoginListener l) {
         listener = l;
-        activateButtons();
+//        activateButtons();
     }
 
     public LoginGUI() {
@@ -88,12 +88,15 @@ public class LoginGUI implements GUI {
         continueWithoutLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                try {
-//                    listener.actionPerformed("CONTINUE");
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-                listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+                String result = null;
+                try {
+                    result = listener.actionPerformed("CONTINUE");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                if (result.equals("done")) {
+                    listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+                }
             }
         });
     }
