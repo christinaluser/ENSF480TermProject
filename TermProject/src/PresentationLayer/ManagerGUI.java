@@ -1,11 +1,14 @@
 package PresentationLayer;
 
+import Controller.LoginListener;
 import Controller.ManagerListener;
 import Controller.UserListener;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -142,11 +145,18 @@ public class ManagerGUI extends TableGUI {
             }
         });
 
-        logoutButton.addActionListener(e -> {
-            try {
-                logout();
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result = null;
+                try {
+                    result = listener.actionPerformed("LOGOUT");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                if (result.equals("done")) {
+                    listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient())));
+                }
             }
         });
 
