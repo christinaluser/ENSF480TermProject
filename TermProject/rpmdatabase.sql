@@ -38,7 +38,7 @@ CREATE TABLE `properties` (
   `cityQuadrant` varchar(45) DEFAULT NULL,
   `listingState` varchar(45) DEFAULT NULL,
   `rent` double DEFAULT NULL,
-  `datePosted` varchar(45) DEFAULT NULL,
+  `datePosted` date DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`propertyID`),
   KEY `email_idx` (`email`),
@@ -93,4 +93,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-25 15:42:26
+-- Dump completed on 2019-11-25 15:56:33
