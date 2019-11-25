@@ -23,14 +23,10 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         }
 
         try {
-            // Step 1: Allocate a database 'Connection' object
             conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/rpmdatabase?serverTimezone=GMT",
-                    "root", "password");   // For MySQL only
-            // The format is: "jdbc:mysql://hostname:port/databaseName", "username", "password"
-
+                    "root", "password");
             stmt = conn.createStatement();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -79,15 +75,15 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             while (rset.next()) {
                 int accessLevel = rset.getInt("accessLevel");
                 if (accessLevel == 1) {
-                    Manager m = new Manager(new Name(rset.getString("firstName"), rset.getString("lastName")), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")),
+                    Manager m = new Manager(new Name(rset.getString("firstName"), rset.getString("lastName")),
                             rset.getString("email"), rset.getString("username"), rset.getString("password"), rset.getInt("accessID"));
                     users.add(m);
                 } else if (accessLevel == 2) {
-                    Landlord l = new Landlord(new Name(rset.getString("firstName"), rset.getString("lastName")), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")),
+                    Landlord l = new Landlord(new Name(rset.getString("firstName"), rset.getString("lastName")),
                             rset.getString("email"), rset.getString("username"), rset.getString("password"), rset.getInt("accessID"));
                     users.add(l);
                 } else if (accessLevel == 3) {
-                    Renter r = new Renter(new Name(rset.getString("firstName"), rset.getString("lastName")), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")),
+                    Renter r = new Renter(new Name(rset.getString("firstName"), rset.getString("lastName")),
                             rset.getString("email"), rset.getString("username"), rset.getString("password"), rset.getInt("accessID"));
                     users.add(r);
                 }
@@ -111,8 +107,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
     public void addUser(User u) {
         String strInsert = "INSERT INTO users VALUES (" + u.getName().getFirstName() + ", " + u.getName().getLastName() + ", "
-                + u.getAddress().getPropertyNumber() + ", " + u.getAddress().getStreetName() + ", " + u.getAddress().getPostalCode() + ", " +
-                +u.getUsername() + ", " + u.getPassword() + ", " + u.getAccessId() + ")";
+                + u.getUsername() + ", " + u.getPassword() + ", " + u.getAccessId() + ")";
         try {
             stmt.executeUpdate(strInsert);
         } catch (SQLException e) {
@@ -120,11 +115,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         }
     }
 }
-
-    /*void addPayment()
-    {
-
-    }
+/*
 
     void updateProperty()
     {

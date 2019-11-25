@@ -4,10 +4,6 @@
 -- ------------------------------------------------------
 -- Server version	8.0.18
 
-CREATE DATABASE RPMDATABASE;
-
-USE RPMDATABASE;
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -66,9 +62,6 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `firstName` varchar(45) DEFAULT NULL,
   `lastName` varchar(45) DEFAULT NULL,
-  `propertyNumber` varchar(45) DEFAULT NULL,
-  `streetName` varchar(45) DEFAULT NULL,
-  `postalCode` varchar(45) DEFAULT NULL,
   `email` varchar(45) NOT NULL,
   `username` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
@@ -83,7 +76,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('Christina','Lu','1','Circle','Z9Y 8X7','christina@email.com','christina.lu','password',1),('Jeremy','Olea','2','Square','L5M 6N7','jeremy@email.com','jeremy.olea','password',2),('Melissa','Picazo','3','Triangle','O3P 4Q5','melissa@email.com','melissa.picazo','password',3);
+INSERT INTO `users` VALUES ('Christina','Lu','christina@email.com','christina.lu','password',1),('Jeremy','Olea','jeremy@email.com','jeremy.olea','password',2),('Melissa','Picazo','melissa@email.com','melissa.picazo','password',3);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -96,4 +89,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-25 10:46:13
+-- Dump completed on 2019-11-25 11:42:36

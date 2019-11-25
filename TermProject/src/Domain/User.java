@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public abstract class User implements Observer {
     public Name name;
-    public Address address;
     public String email;
     public String username;
     public String password;
@@ -43,10 +42,6 @@ public abstract class User implements Observer {
         return name;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -59,7 +54,7 @@ public abstract class User implements Observer {
         return password;
     }
 
-    public int getAccessID()
+    public int getAccessId()
     {
         return accessID;
     }
