@@ -4,19 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class EmailLandlordUnregistered extends JDialog {
+public class EmailLandlord extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextArea emailBody;
-    private JTextField userEmail;
+    protected JTextArea emailBody;
 
-    EmailLandlordUnregistered() {
+    EmailLandlord() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
         buttonOK.addActionListener(e -> dispose());
+
         buttonCancel.addActionListener(e -> dispose());
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -26,9 +26,7 @@ public class EmailLandlordUnregistered extends JDialog {
             }
         });
 
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(e -> dispose(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> dispose(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     {
@@ -49,6 +47,15 @@ public class EmailLandlordUnregistered extends JDialog {
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(0, 0));
         contentPane.setPreferredSize(new Dimension(700, 500));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout(0, 0));
+        contentPane.add(panel1, BorderLayout.CENTER);
+        emailBody = new JTextArea();
+        emailBody.setText("");
+        panel1.add(emailBody, BorderLayout.CENTER);
+        final JLabel label1 = new JLabel();
+        label1.setText("Email Body: ");
+        panel1.add(label1, BorderLayout.NORTH);
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         contentPane.add(toolBar1, BorderLayout.SOUTH);
@@ -58,18 +65,9 @@ public class EmailLandlordUnregistered extends JDialog {
         buttonCancel = new JButton();
         buttonCancel.setText("Cancel");
         toolBar1.add(buttonCancel);
-        emailBody = new JTextArea();
-        contentPane.add(emailBody, BorderLayout.CENTER);
-        final JToolBar toolBar2 = new JToolBar();
-        toolBar2.setFloatable(false);
-        contentPane.add(toolBar2, BorderLayout.NORTH);
-        final JLabel label1 = new JLabel();
-        label1.setText("User Email: ");
-        toolBar2.add(label1);
-        userEmail = new JTextField();
-        userEmail.setMinimumSize(new Dimension(200, 30));
-        userEmail.setPreferredSize(new Dimension(300, 30));
-        toolBar2.add(userEmail);
+        final JLabel label2 = new JLabel();
+        label2.setText("");
+        contentPane.add(label2, BorderLayout.NORTH);
     }
 
     /**

@@ -1,17 +1,11 @@
 package PresentationLayer;
 
-import Controller.Client;
 import Controller.ManagerListener;
-import Domain.Manager;
+import Controller.UserListener;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -24,167 +18,143 @@ public class ManagerGUI extends TableGUI {
     private JButton logoutButton;
     private JButton searchButton;
     private JTextField streetName;
-    //    private JTable properties;
     private JSpinner propertyNumber;
     private JFormattedTextField postalCode;
-    //    private JScrollPane scroll;
     private ManagerListener listener;
 
 
     public ManagerGUI(ManagerListener l) {
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Listing State", "Edit"};
         listener = l;
     }
 
     public ManagerGUI() {
-        //TODO add address to this list????
         headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
                 "Bathrooms", "Furnished", "Listing State", "Edit"};
     }
 
-    public void setListener(ManagerListener listener) {
-        this.listener = listener;
+    private String getAddress() {
+        return propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
     }
 
-    private void searchProperties() {
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
-                String response = null;
-//                try {
-//                    response = listener.actionPerformed("SEARCHADDRESS" + "/" + address);
-//                } catch (IOException ex) {
-//                    System.err.println(ex.getMessage());
-//                }
+    private void searchProperties() throws IOException {
+        String result = listener.actionPerformed("SEARCHADDRESS" + "/" + getAddress());
+//        test
+//        result = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+        } else {
+            showTable(headers, result, panel);
+        }
 
-//                test
-                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
-                if (response == null) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-
-                }
-            }
-        });
     }
 
-    private void showAllProperties() {
-        showAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-                try {
-                    response = listener.actionPerformed("DISPLAY");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-                if (response == null) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-                }
-            }
-        });
+    private void showAllProperties() throws IOException {
+        String result = listener.actionPerformed("DISPLAY");
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+        } else {
+            showTable(headers, result, panel);
+        }
     }
 
-    private void editFee() {
-        editFeeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                EditFee dialog = new EditFee();
-                dialog.pack();
-                dialog.setVisible(true);
-
-                String toSend = "EDITFEE/" + dialog.getValue();
-                String response = null;
-                try {
-                    response = listener.actionPerformed(toSend);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-
-                if (response == null) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Edit unsuccessful");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    JOptionPane.showMessageDialog(new JFrame(), "Edit successful");
-                }
-            }
-        });
+    private void editFee() throws IOException {
+        String result = listener.actionPerformed("EDITFEE/" + displayEditDialog());
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Failed to edit listing state");
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "Successfully edited listing state!");
+        }
     }
 
-    //TODO: i might have interpreted how get report works wrong (should it be that the manager specifies any period of time ?)
-
-    private void getReport() {
-        getReportButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RequestReport dialog = new RequestReport();
-                dialog.pack();
-                dialog.setVisible(true);
-
-                String toSend = "REPORT/" + dialog.getDates();
-                String response = null;
-
-                try {
-                    response = listener.actionPerformed(toSend);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-
-                if (response == null) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Could not retrieve report");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    displayReport(response);
-                }
-            }
-        });
+    private String displayEditDialog() {
+        EditFee dialog = new EditFee();
+        dialog.pack();
+        dialog.setVisible(true);
+        return dialog.getValue();
     }
 
-    private void logout() {
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-                try {
-                    response = listener.actionPerformed("LOGOUT");
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
+    private void getReport() throws IOException {
+        String result = listener.actionPerformed("REPORT/" + displayReportRequestDialog());
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Could not retrieve report");
+        } else {
+            displayReport(result);
+        }
+    }
 
-                if (response == null) {
-                    // TODO idk lol
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    //TODO idk this either lol probably switch gui
-                }
-            }
-        });
-
+    private String displayReportRequestDialog() {
+        RequestReport dialog = new RequestReport();
+        dialog.pack();
+        dialog.setVisible(true);
+        return dialog.getDates();
     }
 
     private void displayReport(String response) {
         Report dialog = new Report();
         dialog.pack();
         dialog.setVisible(true);
-        //TODO: need to fix following after implementing db
-        //TODO i think it will be the same as display table but in a text area instead
-        dialog.reportText.setText(response);
+        //TODO: need to figure this out
+        dialog.setReportText(response);
+    }
+
+    private void logout() throws IOException {
+        String result = listener.actionPerformed("LOGOUT");
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Logout unsuccessful.");
+        } else {
+            listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+            JOptionPane.showMessageDialog(new JFrame(), "Logged out!");
+        }
+    }
+
+    private void activateButtons() {
+        searchButton.addActionListener(e -> {
+            try {
+                searchProperties();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+
+        showAllButton.addActionListener(e -> {
+            try {
+                showAllProperties();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+
+        editFeeButton.addActionListener(e -> {
+            try {
+                editFee();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+
+        getReportButton.addActionListener(e -> {
+            try {
+                getReport();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+
+        logoutButton.addActionListener(e -> {
+            try {
+                logout();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+
     }
 
     @Override
     public void tableButtonClicked(String propertyId, String colName) {
-        EditPropertyState dialog = new EditPropertyState();
+        EditPropertyState dialog = new EditPropertyState(false);
         dialog.setTitle(colName + " Property ID: " + propertyId);
         dialog.pack();
         dialog.setVisible(true);
@@ -202,11 +172,7 @@ public class ManagerGUI extends TableGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        searchProperties();
-        getReport();
-        logout();
-        editFee();
-        showAllProperties();
+        activateButtons();
     }
 
     @Override
@@ -229,10 +195,10 @@ public class ManagerGUI extends TableGUI {
         return formatter;
     }
 
-    public static void main(String[] args) {
-        ManagerGUI gui = new ManagerGUI();
-        gui.updateView();
-    }
+//    public static void main(String[] args) {
+//        ManagerGUI gui = new ManagerGUI();
+//        gui.updateView();
+//    }
 
 
     {
