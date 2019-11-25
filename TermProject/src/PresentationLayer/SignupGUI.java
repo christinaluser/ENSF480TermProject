@@ -18,6 +18,7 @@ public class SignupGUI implements GUI {
     private JTextField username;
     private JButton signupButton;
     private JButton loginButton;
+    private JComboBox type;
     private SignupListener listener;
 
     SignupGUI(SignupListener l) {
@@ -25,8 +26,8 @@ public class SignupGUI implements GUI {
     }
 
     private String getUserInfo() {
-        return (firstName.getText() + "/" + lastName.getText() + "/" + email.getText() + "/"
-                + username.getText() + "/" + Arrays.toString(passwordField1.getPassword()));
+        return (type.getSelectedItem() + "/" + firstName.getText() + "/" + lastName.getText() + "/" + email.getText()
+                + "/" + username.getText() + "/" + Arrays.toString(passwordField1.getPassword()));
     }
 
     private void signup() throws IOException {
@@ -94,7 +95,7 @@ public class SignupGUI implements GUI {
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 0;
+        gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
@@ -105,7 +106,7 @@ public class SignupGUI implements GUI {
         lastName.setPreferredSize(new Dimension(300, 20));
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 1;
+        gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
@@ -117,7 +118,7 @@ public class SignupGUI implements GUI {
         email.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
@@ -129,7 +130,7 @@ public class SignupGUI implements GUI {
         username.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
@@ -138,28 +139,28 @@ public class SignupGUI implements GUI {
         label1.setText("First Name");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
         panel.add(label1, gbc);
         final JLabel label2 = new JLabel();
         label2.setText("Last Name");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.WEST;
         panel.add(label2, gbc);
         final JLabel label3 = new JLabel();
         label3.setText("Email");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.WEST;
         panel.add(label3, gbc);
         final JLabel label4 = new JLabel();
         label4.setText("Username");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
         gbc.anchor = GridBagConstraints.WEST;
         panel.add(label4, gbc);
         passwordField1 = new JPasswordField();
@@ -169,7 +170,7 @@ public class SignupGUI implements GUI {
         passwordField1.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 4;
+        gbc.gridy = 6;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10;
@@ -178,7 +179,7 @@ public class SignupGUI implements GUI {
         label5.setText("Password");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 6;
         gbc.anchor = GridBagConstraints.WEST;
         panel.add(label5, gbc);
         signupButton = new JButton();
@@ -188,28 +189,52 @@ public class SignupGUI implements GUI {
         signupButton.setText("Signup");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 6;
+        gbc.gridy = 8;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(signupButton, gbc);
         final JPanel spacer1 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 6;
+        gbc.gridy = 8;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(spacer1, gbc);
         final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 5;
+        gbc.gridy = 7;
         gbc.fill = GridBagConstraints.VERTICAL;
         panel.add(spacer2, gbc);
         loginButton = new JButton();
         loginButton.setText("Login");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 7;
+        gbc.gridy = 9;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(loginButton, gbc);
+        type = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("Renter");
+        defaultComboBoxModel1.addElement("Landlord");
+        type.setModel(defaultComboBoxModel1);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(type, gbc);
+        final JLabel label6 = new JLabel();
+        label6.setText("User Type");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(label6, gbc);
+        final JPanel spacer3 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel.add(spacer3, gbc);
     }
 
     /**

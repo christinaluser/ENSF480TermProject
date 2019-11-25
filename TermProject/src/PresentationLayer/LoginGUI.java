@@ -41,7 +41,7 @@ public class LoginGUI implements GUI {
     private void login() throws IOException {
         String type = getLoginType();
         String result = listener.actionPerformed("LOGIN/" + getLoginInfo());
-        
+
         if (result.equals(null)) {
             JOptionPane.showMessageDialog(new JFrame(), "Login unsuccessful, please try again.");
         } else {
