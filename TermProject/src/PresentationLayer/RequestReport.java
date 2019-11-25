@@ -88,7 +88,6 @@ public class RequestReport extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel3.add(startDate, gbc);
-        endDate = new JFormattedTextField();
         endDate.setPreferredSize(new Dimension(200, 30));
         gbc = new GridBagConstraints();
         gbc.gridx = 3;

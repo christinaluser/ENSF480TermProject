@@ -10,6 +10,10 @@ public class LoginListener {
         this.client = client;
     }
 
+    public LoginListener() { }
+
+
+
     public Client getClient() {
         return client;
     }

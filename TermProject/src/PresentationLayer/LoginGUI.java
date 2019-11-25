@@ -1,9 +1,6 @@
 package PresentationLayer;
 
-import Controller.Listener;
-import Controller.LoginListener;
-import Controller.SignupListener;
-import Controller.UserListener;
+import Controller.*;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -28,16 +25,33 @@ public class LoginGUI implements GUI {
         activateButtons();
     }
 
+    public LoginGUI() {
+        activateButtons();
+    }
+
+
+    private String getLoginType() {
+        return (String) loginType.getSelectedItem();
+    }
+
     private String getLoginInfo() {
-        return loginType.getSelectedIndex() + "/" + username.getText() + "/" + password.getPassword();
+        return loginType.getSelectedItem() + "/" + username.getText() + "/" + password.getPassword();
     }
 
     private void login() throws IOException {
+        String type = getLoginType();
         String result = listener.actionPerformed("LOGIN/" + getLoginInfo());
+        
         if (result.equals(null)) {
             JOptionPane.showMessageDialog(new JFrame(), "Login unsuccessful, please try again.");
         } else {
-            listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+            if (type.equals("Manager")) {
+                listener.changeGUI(new ManagerGUI(new ManagerListener(listener.getClient())));
+            } else if (type.equals("Renter")) {
+                listener.changeGUI(new RenterGUI(new RenterListener(listener.getClient())));
+            } else if (type.equals("Landlord")) {
+                listener.changeGUI(new LandlordGUI(new LandlordListener(listener.getClient())));
+            }
         }
     }
 
@@ -81,6 +95,11 @@ public class LoginGUI implements GUI {
     @Override
     public void close() {
         frame.dispose();
+    }
+
+    public static void main(String[] args) {
+        LoginGUI gui = new LoginGUI();
+        gui.updateView();
     }
 
 
