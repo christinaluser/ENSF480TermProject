@@ -10,8 +10,8 @@ public class Landlord extends User {
     public ArrayList<Property> ownedProperties;
     public ArrayList<PropertyListing> listings;
 
-    public Landlord(Name name, Address address, String email, String username, String password, int accessID) {
-        super(name, address, email, username, password, accessID);
+    public Landlord(Name name, String email, String username, String password, int accessID) {
+        super(name, email, username, password, accessID);
     }
 
     public Landlord(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {

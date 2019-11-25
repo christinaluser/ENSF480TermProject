@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class Manager extends User{
 
-    public Manager(Name name, Address address, String email, String username, String password, int accessID) {
-        super(name, address, email, username, password, accessID);
+    public Manager(Name name, String email, String username, String password, int accessID) {
+        super(name, email, username, password, accessID);
     }
     
     public Manager(BufferedReader socketIn, PrintWriter socketOut, DatabaseController database) {
