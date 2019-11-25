@@ -18,6 +18,13 @@ public class Landlord extends User {
         super(socketIn, socketOut, database);
     }
 
+
+    @Override
+    public void update(ArrayList<Property> p)
+    {
+        // do nothing, Landlord doesn't need to have their properties updated
+    }
+
     @Override
     public void communicate() {
         String input = "";

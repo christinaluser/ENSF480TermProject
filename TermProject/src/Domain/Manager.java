@@ -17,6 +17,13 @@ public class Manager extends User{
     }
 
     @Override
+    public void update(ArrayList<Property> p)
+    {
+        properties = p;
+        System.out.println("Notification to all properties: Changed");
+    }
+
+    @Override
     public void communicate() {
         String input = "";
         try {

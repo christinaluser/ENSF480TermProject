@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public abstract class User {        // why arent we implementing observer?
+public abstract class User implements Observer {
     public Name name;
     public Address address;
     public String email;
@@ -31,14 +31,38 @@ public abstract class User {        // why arent we implementing observer?
         properties = database.loadProperties();
     }
 
-    public User (Name name, Address address, String email, String username, String password, int accessID)
-    {
+    public User(Name name, Address address, String email, String username, String password, int accessID) {
         this.name = name;
         this.address = address;
         this.email = email;
         this.username = username;
         this.password = password;
         this.accessID = accessID;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getAccessID()
+    {
+        return accessID;
     }
 
 }
