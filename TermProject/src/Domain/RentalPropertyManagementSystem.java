@@ -159,6 +159,7 @@ public class RentalPropertyManagementSystem implements Runnable{
                     sendString("END");
 
                 } else if(input.startsWith("SEARCH/")) {
+                    System.out.println("in search");
                     refreshProperties();
                     String criteria = input.replace("SEARCH/", "");
                     String[] response = searchCriteria(criteria).split(";");
@@ -182,20 +183,22 @@ public class RentalPropertyManagementSystem implements Runnable{
     public String searchCriteria(String s) {
         String str = "";
         String[] criteria = s.split("/");
-        for(Property p : properties) {
-            if(criteria[0].equals(p.getType()) && criteria[1].equals(p.getNoBedrooms()) && criteria[2].equals(p.getNoBathrooms()) && criteria[3].equals(p.getIsFurnished())
-                    && criteria[4].equals(p.getCityQuadrant())) {
-                if(Double.parseDouble(criteria[5]) <= p.getRent()) {
-                    str += p.toString();
-                    str += ";";
-                }
-            }
-        }
-        if(str.equals("")) {
-            return null;
-        } else {
-            return str;
-        }
+        SearchCriteria search = new SearchCriteria(criteria[0], Integer.parseInt(criteria[1]), Integer.parseInt(criteria[2]),
+                Boolean.parseBoolean(criteria[3]), criteria[4], Double.parseDouble(criteria[5]));
+//        for(Property p : properties) {
+//            if(criteria[0].equals(p.getType()) && criteria[1].equals(p.getNoBedrooms()) && criteria[2].equals(p.getNoBathrooms()) && criteria[3].equals(p.getIsFurnished())
+//                    && criteria[4].equals(p.getCityQuadrant())) {
+//                if(Double.parseDouble(criteria[5]) <= p.getRent()) {
+//                    str += p.toString();
+//                    str += ";";
+//                }
+//            }
+//        }
+//        if(str.equals("")) {
+//            return null;
+//        } else {
+//            return str;
+//        }
     }
 
     public String propertiesToString() {

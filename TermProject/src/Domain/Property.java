@@ -60,7 +60,7 @@ public class Property {
 
     public String toString() {
         return propertyId + "/" + type + "/" + rent + "/" + address.getPropertyNumber() + "/" + address.getStreetName()
-                + "/" + address.getPostalCode() + "/" + noBedrooms + "/" + noBathrooms;
+                + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished + "\n" ;
     }
 
     public String getType()
