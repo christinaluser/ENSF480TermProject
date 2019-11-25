@@ -123,6 +123,18 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         }
     }
 
+    public void addUser(User u)
+    {
+        String strInsert = "INSERT INTO users VALUES (" + u.getFirstName() + ", " + u.getLastName() + ", "
+                + u.getAddress().getPropertyNumber() + ", " + u.getAddress().getStreetName() + ", " + u.getAddress().getPostalCode() + ", " +
+                + u.getUsername() + ", " + u.getPassword() + ", " + u.getAccessId() + ")";
+        try {
+            stmt.executeUpdate(strInsert);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*void addPayment()
     {
 
