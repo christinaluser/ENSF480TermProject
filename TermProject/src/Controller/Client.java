@@ -1,6 +1,5 @@
 package Controller;
 
-import Domain.Address;
 import PresentationLayer.*;
 
 import java.net.Socket;
@@ -29,7 +28,6 @@ public class Client {
             currentGUI.close();
         }
         currentGUI = g;
-
     }
 
     public void runGUI() {

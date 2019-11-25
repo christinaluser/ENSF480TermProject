@@ -1,12 +1,9 @@
 package PresentationLayer;
 
 import Controller.RenterListener;
-import com.mysql.cj.xdevapi.Table;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class RenterGUI extends UserGUI {
@@ -28,79 +25,71 @@ public class RenterGUI extends UserGUI {
     public RenterGUI() {
         headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
                 "Bathrooms", "Furnished", "Contact Landlord"};
-        $$$setupUI$$$();
-    }
-
-    private void showAllProperties() {
-        showAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-//                try {
-//                    response = listener.actionPerformed("DISPLAY");
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-                response = "1/apt/$400/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
-                if (response.equals(null)) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties posted at the moment!");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-                }
-            }
-        });
     }
 
     public RenterGUI(RenterListener l) {
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Contact Landlord"};
         listener = l;
         $$$setupUI$$$();
-        searchProperties();
     }
 
-    private void searchProperties() {
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-//                try {
-//                    response = listener.actionPerformed("SEARCH" + "/" + getCriteria());
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
+    private void showAllProperties() throws IOException {
+        String result = listener.actionPerformed("DISPLAY");
+//        test
+//        result = "1/apt/$400/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+        if (result.equals(null)) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties posted at the moment!");
+        } else {
+            showTable(headers, result, panel);
+        }
+    }
 
-                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+    private void searchProperties() throws IOException {
+        String result = listener.actionPerformed("SEARCH" + "/" + getCriteria());
+//        test
+//        result = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+        if (result.equals(null)) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+        } else {
+            showTable(headers, result, panel);
+        }
+    }
 
-                if (response.equals("null")) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-                }
+    private void showNotifiedProperties() throws IOException {
+        String result = listener.actionPerformed("DISPLAYNOTIFIED");
+//        test
+//        result = "2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
+        if (result.equals(null)) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties match your criteria at the moment");
+        } else {
+            showTable(headers, result, panel);
+        }
+    }
+
+    public void activateButtons() {
+        notificationsButton.addActionListener(e -> {
+            try {
+                showNotifiedProperties();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
-    }
 
-    private void showNotifiedProperties() {
-        notificationsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-//                try {
-//                    response = listener.actionPerformed("DISPLAYNOTIFIED");
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-                response = "2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
-                if (response.equals(null)) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties match your criteria at the moment");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-                }
+        searchButton.addActionListener(e -> {
+            try {
+                searchProperties();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        });
+
+        showAllButton.addActionListener(e -> {
+            try {
+                showAllProperties();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
     }
@@ -126,15 +115,13 @@ public class RenterGUI extends UserGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        showAllProperties();
-        searchProperties();
-        showNotifiedProperties();
+        activateButtons();
     }
 
-    public static void main(String[] args) {
-        RenterGUI gui = new RenterGUI();
-        gui.updateView();
-    }
+//    public static void main(String[] args) {
+//        RenterGUI gui = new RenterGUI();
+//        gui.updateView();
+//    }
 
     @Override
     public void close() {

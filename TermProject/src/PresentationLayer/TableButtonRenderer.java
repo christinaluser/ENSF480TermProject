@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class TableButtonRenderer  extends JButton implements TableCellRenderer {
 
-    public TableButtonRenderer() {
+    TableButtonRenderer() {
         setOpaque(true);
     }
 

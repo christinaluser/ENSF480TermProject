@@ -1,23 +1,17 @@
 package PresentationLayer;
 
 import Controller.LandlordListener;
-import Domain.Landlord;
+import Controller.UserListener;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 
 public class LandlordGUI extends TableGUI {
     private JFrame frame;
     private JPanel panel;
-    private JTable properties;
-    private JScrollPane scroll;
     private JButton searchButton;
     private JTextField streetName;
     private JSpinner propertyNumber;
@@ -32,88 +26,105 @@ public class LandlordGUI extends TableGUI {
                 "Bathrooms", "Furnished", "Listing State", "Pay Fee", "Edit"};
     }
 
-    private void registerProperty() {
-        registerPropertyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RegisterProperty dialog = new RegisterProperty();
-                dialog.pack();
-                dialog.setVisible(true);
-                String propertyInfo = dialog.getPropertyInfo();
-                String response = null;
-                try {
-                    response = listener.actionPerformed("REGISTERPROPERTY/" + propertyInfo);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+    public LandlordGUI(LandlordListener l) {
+        headers = new String[]{"ID", "Type", "Rent", "Property #", "Street", "Postal Code", "City Quadrant", "Bedrooms",
+                "Bathrooms", "Furnished", "Listing State", "Pay Fee", "Edit"};
+        listener = l;
+    }
 
-                if (response == null) {
-                    JOptionPane.showMessageDialog(new JFrame(), "property registration was unsuccessful");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    JOptionPane.showMessageDialog(new JFrame(), "property has been registered");
-                    showTable(headers, response, panel);
-                }
+    private String getAddress() {
+        return propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
+    }
+
+    private void registerProperty() throws IOException {
+        String result = listener.actionPerformed("REGISTERPROPERTY/" + displayRegisterPropertyDialog());
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Failed to register property");
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "Successfully registered property");
+            showTable(headers, result, panel);
+        }
+
+    }
+
+    private String displayRegisterPropertyDialog() {
+        RegisterProperty dialog = new RegisterProperty();
+        dialog.pack();
+        dialog.setVisible(true);
+        return dialog.getPropertyInfo();
+    }
+
+    private void searchProperties() throws IOException {
+//        String result = listener.actionPerformed("SEARCHADDRESS" + "/" + getAddress());
+//        test
+        String result = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+        } else {
+            showTable(headers, result, panel);
+        }
+    }
+
+    private void showAllProperties() throws IOException {
+//        String result = listener.actionPerformed("DISPLAY");
+//        test
+        String result = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
+        } else {
+            showTable(headers, result, panel);
+        }
+    }
+
+    private void logout() throws IOException {
+        String result = listener.actionPerformed("LOGOUT");
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Logout unsuccessful.");
+        } else {
+            listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+            JOptionPane.showMessageDialog(new JFrame(), "Logged out!");
+        }
+
+    }
+
+    private void activateButtons() {
+        registerPropertyButton.addActionListener(e -> {
+            try {
+                registerProperty();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        searchButton.addActionListener(e -> {
+            try {
+                searchProperties();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+
+        showAllButton.addActionListener(e -> {
+            try {
+                showAllProperties();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+
+        logoutButton.addActionListener(e -> {
+            try {
+                logout();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
             }
         });
     }
-
-    private void searchProperties() {
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                String address = propertyNumber.getValue() + "/" + streetName.getText() + "/" + postalCode.getText();
-                String response;
-//                try {
-//                    response = listener.actionPerformed("SEARCHADDRESS" + "/" + address);
-//                } catch (IOException ex) {
-//                    System.err.println(ex.getMessage());
-//                }
-
-                response = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
-                if (response == null) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-
-                }
-            }
-        });
-    }
-
-    private void showAllProperties() {
-        showAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String response = null;
-                try {
-                    response = listener.actionPerformed("DISPLAY");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-//                response = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
-
-                if (response == null) {
-                    JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
-                } else if (response.equals("CLOSE")) {
-                    //do nothing
-                } else {
-                    showTable(headers, response, panel);
-                }
-            }
-        });
-    }
-
-    //TODO Copy manager logout when its done
 
     @Override
     public void tableButtonClicked(String propertyId, String colName) {
-        if (colName == "Edit") {
-            EditPropertyState dialog = new EditPropertyState();
+        if (colName.equals("Edit")) {
+            EditPropertyState dialog = new EditPropertyState(true);
             dialog.setTitle(colName + " Property ID: " + propertyId);
             dialog.pack();
             dialog.setVisible(true);
@@ -142,10 +153,7 @@ public class LandlordGUI extends TableGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        showAllProperties();
-        searchProperties();
-        registerProperty();
-//        logout();
+        activateButtons();
     }
 
     @Override
