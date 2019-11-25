@@ -132,6 +132,8 @@ public class UserGUI extends TableGUI {
     private void $$$setupUI$$$() {
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
+        panel.setMinimumSize(new Dimension(1100, 900));
+        panel.setPreferredSize(new Dimension(1100, 900));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.CENTER);

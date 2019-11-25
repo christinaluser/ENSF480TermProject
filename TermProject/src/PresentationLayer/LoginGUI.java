@@ -88,11 +88,11 @@ public class LoginGUI implements GUI {
         continueWithoutLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    listener.actionPerformed("CONTINUE");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+//                try {
+//                    listener.actionPerformed("CONTINUE");
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
                 listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
             }
         });
