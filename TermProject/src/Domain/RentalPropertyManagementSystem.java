@@ -68,8 +68,18 @@ public class RentalPropertyManagementSystem implements Runnable{
                             break;
                         }
                     }
-//                    user = database.validateLogin(info[2],info[3]); // create new user
+
                     user.communicate(socketIn, socketOut, database);
+
+//                    System.out.println(info[1]);
+//                    if(info[1].equals("Renter")) {
+//                        user.communicate(socketIn, socketOut, database);
+//                        //communicateRenter(user);
+//                    } else if(info[1].equals("Manager")) {
+//                        communicateManager();
+//                    } else if(info[1].equals("Landlord")) {
+//                        communicateLandlord();
+//                    }
                 }
 
                 userFound = false;
@@ -99,16 +109,6 @@ public class RentalPropertyManagementSystem implements Runnable{
         }
         sendString("null");
         return false;
-
-//        User u = database.validateLogin(info[2],info[3]);
-//        if(u == null) {
-//            System.out.println("User not found");
-//            sendString("null");
-//            return false;
-//        }
-//        sendString(info[1]);
-//        return true;
-
     }
 
     private void signUpNewUser(String s) {
@@ -128,11 +128,11 @@ public class RentalPropertyManagementSystem implements Runnable{
             database.addUser(newUser);
             sendString("success");
         } else if (info[1].equals("Landlord")){
-            User newUser = new Manager(new Name(info[2], info[3]), info[4] , info[5], info[6], 2);
+            User newUser = new Landlord(new Name(info[2], info[3]), info[4] , info[5], info[6], 2);
             database.addUser(newUser);
             sendString("success");
         } else if (info[1].equals("Renter")){
-            User newUser = new Manager(new Name(info[2], info[3]), info[4] , info[5], info[6], 1);
+            User newUser = new Renter(new Name(info[2], info[3]), info[4] , info[5], info[6], 1);
             database.addUser(newUser);
             sendString("success");
         } else {
@@ -150,7 +150,6 @@ public class RentalPropertyManagementSystem implements Runnable{
                 System.out.println("Read line");
                 if(input.equals("DISPLAY")) {
                     refreshProperties();
-                    System.out.println("in display");
                     String allProperties = propertiesToString();
                     String[] response = allProperties.split(";");
                     for(String p : response) {
@@ -159,7 +158,6 @@ public class RentalPropertyManagementSystem implements Runnable{
                     sendString("END");
 
                 } else if(input.startsWith("SEARCH/")) {
-                    System.out.println("in search");
                     refreshProperties();
                     String criteria = searchCriteria(input);
                     String[] response = criteria.split(";");
@@ -183,13 +181,14 @@ public class RentalPropertyManagementSystem implements Runnable{
     public String searchCriteria(String s) {
         String str = "";
         String[] criteria = s.split("/");
-        SearchCriteria search = new SearchCriteria(criteria[1], Integer.parseInt(criteria[2]), Integer.parseInt(criteria[3]),
+        SearchCriteria sc = new SearchCriteria(criteria[1], Integer.parseInt(criteria[2]), Integer.parseInt(criteria[3]),
                 Boolean.parseBoolean(criteria[4]), criteria[5], Double.parseDouble(criteria[6]));
-        ArrayList<Property> allMatchedProperties = database.searchProperty(search);
-        for(Property p : allMatchedProperties) {
-            System.out.println("found");
-            str += p.toString();
-            str += ";";
+        for(Property p : properties) {
+            if (p.getType().equals(sc.getType()) && p.getNoBedrooms() == sc.getNoBedrooms() && p.getNoBathrooms() == sc.getNoBathrooms()
+                    && p.getIsFurnished() == sc.getIsFurnished() && p.getCityQuadrant().equals(sc.getCityQuadrant()) && p.getRent() <= sc.getPriceRange()) {
+                str += p.toString();
+                str += ";";
+            }
         }
 //        for(Property p : properties) {
 //            if(criteria[0].equals(p.getType()) && criteria[1].equals(p.getNoBedrooms()) && criteria[2].equals(p.getNoBathrooms()) && criteria[3].equals(p.getIsFurnished())

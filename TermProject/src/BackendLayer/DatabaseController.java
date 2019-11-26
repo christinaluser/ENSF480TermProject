@@ -37,7 +37,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         ArrayList<Property> matchedProperties = new ArrayList<>();
 
         for (Property psearch : searchProperties) {
-            if (psearch.getType().equals(sc.getType()) && psearch.getNoBedrooms() == sc.getNoBedrooms() && psearch.getNoBathrooms() == sc.getNoBathrooms()
+            if (psearch.getType().equals(sc.getType().toLowerCase()) && psearch.getNoBedrooms() == sc.getNoBedrooms() && psearch.getNoBathrooms() == sc.getNoBathrooms()
                     && psearch.getIsFurnished() == sc.getIsFurnished() && psearch.getCityQuadrant().equals(sc.getCityQuadrant()) && psearch.getRent() <= sc.getPriceRange())
                 matchedProperties.add(psearch);
         }

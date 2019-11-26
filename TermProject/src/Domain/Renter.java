@@ -27,16 +27,15 @@ public class Renter extends User {
         String input = "";
         try {
             while(true) {
+                input = socketIn.readLine();
                 if(input.equals("DISPLAY")) {
                     refreshProperties();
                     String allProperties = propertiesToString();
                     String[] response = allProperties.split(";");
                     for(String p : response) {
                         sendString(p);
-//                        update(matchedProperties);
                     }
                     sendString("END");
-
                 }
 
             }

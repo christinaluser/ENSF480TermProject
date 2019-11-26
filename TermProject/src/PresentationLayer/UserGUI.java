@@ -49,8 +49,6 @@ public class UserGUI extends TableGUI {
 
     private void searchProperties() throws IOException {
         String result = listener.actionPerformed("SEARCH" + "/" + getCriteria());
-//        test
-//        result = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
         if (result.equals("null")) {
             JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
         } else {
