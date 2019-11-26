@@ -69,6 +69,7 @@ public class RentalPropertyManagementSystem implements Runnable{
                         }
                     }
 
+                    System.out.println(user.username);
                     user.communicate(socketIn, socketOut, database);
 
 //                    System.out.println(info[1]);
@@ -150,8 +151,7 @@ public class RentalPropertyManagementSystem implements Runnable{
                 System.out.println("Read line");
                 if(input.equals("DISPLAY")) {
                     refreshProperties();
-                    String allProperties = propertiesToString();
-                    String[] response = allProperties.split(";");
+                    ArrayList<String> response = propertiesToString();
                     for(String p : response) {
                         sendString(p);
                     }
@@ -159,9 +159,9 @@ public class RentalPropertyManagementSystem implements Runnable{
 
                 } else if(input.startsWith("SEARCH/")) {
                     refreshProperties();
-                    String criteria = searchCriteria(input);
-                    String[] response = criteria.split(";");
-                    for(String p : response) {
+                    ArrayList<String> criteria = searchCriteria(input);
+                    for(String p : criteria) {
+                        System.out.println(p);
                         sendString(p);
                     }
                     sendString("END");
@@ -178,40 +178,26 @@ public class RentalPropertyManagementSystem implements Runnable{
     }
 
     //FOR UNREGISTERED RENTER
-    public String searchCriteria(String s) {
-        String str = "";
+    public ArrayList<String> searchCriteria(String s) {
         String[] criteria = s.split("/");
         SearchCriteria sc = new SearchCriteria(criteria[1], Integer.parseInt(criteria[2]), Integer.parseInt(criteria[3]),
                 Boolean.parseBoolean(criteria[4]), criteria[5], Double.parseDouble(criteria[6]));
+        ArrayList<String> allProperties= new ArrayList<String>();
         for(Property p : properties) {
-            if (p.getType().equals(sc.getType()) && p.getNoBedrooms() == sc.getNoBedrooms() && p.getNoBathrooms() == sc.getNoBathrooms()
+            if (p.getType().equals(sc.getType().toLowerCase()) && p.getNoBedrooms() == sc.getNoBedrooms() && p.getNoBathrooms() == sc.getNoBathrooms()
                     && p.getIsFurnished() == sc.getIsFurnished() && p.getCityQuadrant().equals(sc.getCityQuadrant()) && p.getRent() <= sc.getPriceRange()) {
-                str += p.toString();
-                str += ";";
+                allProperties.add(p.toString());
             }
         }
-//        for(Property p : properties) {
-//            if(criteria[0].equals(p.getType()) && criteria[1].equals(p.getNoBedrooms()) && criteria[2].equals(p.getNoBathrooms()) && criteria[3].equals(p.getIsFurnished())
-//                    && criteria[4].equals(p.getCityQuadrant())) {
-//                if(Double.parseDouble(criteria[5]) <= p.getRent()) {
-//                    str += p.toString();
-//                    str += ";";
-//                }
-//            }
-//        }
-        return str;
+        return allProperties;
     }
 
-    public String propertiesToString() {
-        String str = "";
+    public ArrayList<String> propertiesToString() {
+        ArrayList<String> s = new ArrayList<String>();
         for (Property p: properties) {
-            System.out.println("in loop");
-            System.out.println(p.toString());
-            str += p.toString();
-            str += ";";
+            s.add(p.toString());
         }
-        System.out.println(str);
-        return str;
+        return s;
     }
 
     public void refreshProperties() {

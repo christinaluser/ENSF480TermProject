@@ -36,9 +36,8 @@ public class Landlord extends User {
                     sendString("Done");
                 } else if (input.equals("DISPLAY")) {
                     refreshProperties();
-                    String allProperties = propertiesToString();
-                    String[] response = allProperties.split(";");
-                    for (String p : response) {
+                    ArrayList<String> response = propertiesToString();
+                    for(String p : response) {
                         sendString(p);
                     }
                     sendString("END");
@@ -87,12 +86,12 @@ public class Landlord extends User {
         return null;
     }
 
-    private String propertiesToString() {
-        String str = "";
-        for (Property p : ownedProperties) {
-            str += p.toString();
+    public ArrayList<String> propertiesToString() {
+        ArrayList<String> s = new ArrayList<String>();
+        for (Property p: properties) {
+            s.add(p.toString());
         }
-        return str;
+        return s;
     }
 
     public void sendString(String s) {
@@ -101,18 +100,16 @@ public class Landlord extends User {
     }
 
     public String searchProperties(String address) {
+        System.out.println(address);
         String str = "";
         for (Property p : ownedProperties) {
             if (address.equals(p.getAddressParts())) {
-                str += p.toString();
-                str += ";";
+                str = p.toString();
+                break;
             }
+            System.out.println("here");
         }
-        if (str.equals("")) {
-            return null;
-        } else {
-            return str;
-        }
+        return str;
     }
 
     public void removeProperty(Property p) {

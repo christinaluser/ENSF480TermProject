@@ -1,3 +1,0 @@
-Make the GUI's work together
-Database
-Finish Client
