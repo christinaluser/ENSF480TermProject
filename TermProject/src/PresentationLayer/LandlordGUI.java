@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import Controller.LandlordListener;
+import Controller.LoginListener;
 import Controller.UserListener;
 
 import javax.swing.*;
@@ -81,7 +82,7 @@ public class LandlordGUI extends TableGUI {
         if (result.equals("null")) {
             JOptionPane.showMessageDialog(new JFrame(), "Logout unsuccessful.");
         } else {
-            listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+            listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient())));
             JOptionPane.showMessageDialog(new JFrame(), "Logged out!");
         }
 

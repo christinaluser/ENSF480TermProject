@@ -12,6 +12,15 @@ public class Landlord extends User {
 
     public Landlord(Name name, String email, String username, String password, int accessID) {
         super(name, email, username, password, accessID);
+        listings = new ArrayList<>();
+    }
+
+    private void fillOwnedProperties() {
+        ownedProperties = new ArrayList<>();
+        ArrayList<Property> allProperties = database.loadProperties();
+        for(Property p : allProperties) {
+            //todo
+        }
     }
 
     @Override
@@ -25,14 +34,15 @@ public class Landlord extends User {
         this.socketOut = socketOut;
         this.socketIn = socketIn;
         this.database = database;
+        fillOwnedProperties();
         String input = "";
         try {
             while (true) {
                 input = socketIn.readLine();
+                System.out.println(input);
                 if (input.startsWith("REGISTERPROPERTY/")) {
                     refreshProperties();
-                    String criteria = input.replace("REGISTER/", "");
-                    this.addProperty(criteria);
+                    this.addProperty(input);
                     sendString("Done");
                 } else if (input.equals("DISPLAY")) {
                     refreshProperties();
@@ -53,7 +63,12 @@ public class Landlord extends User {
                 } else if (input.startsWith("PAY/")) {
                     refreshProperties();
                     sendString(payFees(input));
+
+                } else if(input.equals("LOGOUT")) {
+                    sendString("Done");
+                    return;
                 }
+
                 //READ STRINGS HERE
             }
         } catch (Exception e) {
@@ -87,7 +102,7 @@ public class Landlord extends User {
     }
 
     public ArrayList<String> propertiesToString() {
-        ArrayList<String> s = new ArrayList<String>();
+        ArrayList<String> s = new ArrayList<>();
         for (Property p: properties) {
             s.add(p.toString());
         }
@@ -102,12 +117,13 @@ public class Landlord extends User {
     public String searchProperties(String address) {
         System.out.println(address);
         String str = "";
-        for (Property p : ownedProperties) {
-            if (address.equals(p.getAddressParts())) {
-                str = p.toString();
-                break;
+        if(!ownedProperties.isEmpty()) {
+            for (Property p : ownedProperties) {
+                if (address.equals(p.getAddressParts())) {
+                    str = p.toString();
+                    break;
+                }
             }
-            System.out.println("here");
         }
         return str;
     }
@@ -120,8 +136,18 @@ public class Landlord extends User {
     public void addProperty(String s) {
         String[] criteria = s.split("/");
         //construct the property
-        Property p = new Property(criteria[0], Integer.parseInt(criteria[1]), criteria[2], criteria[3], criteria[4],
-                Integer.parseInt(criteria[5]), Integer.parseInt(criteria[6]), Boolean.parseBoolean(criteria[7]), Double.parseDouble(criteria[8]));
+        String type = criteria[1];
+        int houseNumber = Integer.parseInt(criteria[2]);
+        String street = criteria[3];
+        String postalCode = criteria[4];
+        String quadrant = criteria[5];
+        int noBedrooms = Integer.parseInt(criteria[6]);
+        int noBathrooms = Integer.parseInt(criteria[7]);
+        boolean furnished = (criteria[7].equals("furnished"));
+        double rent = Double.parseDouble(criteria[8]);
+        Property p = new Property(type, houseNumber, street, postalCode, quadrant, noBedrooms, noBathrooms, furnished, rent);
+//        Property p = new Property(criteria[1], Integer.parseInt(criteria[2]), criteria[3], criteria[4], criteria[5],
+//                Integer.parseInt(criteria[6]), Integer.parseInt(criteria[7]), furnished, Double.parseDouble(criteria[8]));
         database.addProperty(p);
         ownedProperties.add(p);
         refreshProperties();
