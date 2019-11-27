@@ -18,7 +18,7 @@ public abstract class TableGUI implements GUI {
     }
 
     void showTable(String [] headers, String response, JPanel panel) {
-        
+
         String[] temp = response.split(";");
         String[][] data = new String[temp.length][headers.length];
         for (int i = 0; i < temp.length; i++) {
