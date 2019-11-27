@@ -48,6 +48,17 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             return null;
     }
 
+    public Property searchPropertyLM(SearchCriteria sc) {
+        ArrayList<Property> searchProperties = loadProperties();
+
+        for (Property psearch : searchProperties) {
+            if (psearch.getType().equals(sc.getType()) && psearch.getNoBedrooms() == sc.getNoBedrooms() && psearch.getNoBathrooms() == sc.getNoBathrooms()
+                    && psearch.getIsFurnished() == sc.getIsFurnished() && psearch.getCityQuadrant().equals(sc.getCityQuadrant()) && psearch.getRent() <= sc.getPriceRange())
+                return psearch;
+        }
+        return null;
+    }
+
     public ArrayList<Property> loadProperties() {
         String strSelect = "SELECT * FROM properties";
 
