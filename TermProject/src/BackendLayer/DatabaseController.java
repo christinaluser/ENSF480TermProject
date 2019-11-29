@@ -15,7 +15,9 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
     private ArrayList<Property> properties = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
 
-    public DatabaseController() {
+    private static DatabaseController database;
+
+    private DatabaseController() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
@@ -30,6 +32,13 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static DatabaseController getDatabase(){
+        if (database == null){
+            database = new DatabaseController();
+        }
+        return database;
     }
 
     public ArrayList<Property> searchProperty(SearchCriteria sc) {

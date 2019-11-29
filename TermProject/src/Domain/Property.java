@@ -16,7 +16,6 @@ public class Property {
     private Date datePosted;
     private Fee fee;
     private Address address;
-    public static int counter = 0;
 
     public Property(int propertyId, String type, Address address, int noBedrooms, int noBathrooms, boolean isFurnished,
                     String cityQuadrant, String listingState, double rent, Date datePosted) {
@@ -34,8 +33,7 @@ public class Property {
 
     public Property(String type, int houseNumber, String street, String postalCode, String cityQuadrant,
                     int noBedrooms, int noBathrooms, boolean isFurnished, double rent) {
-        this.propertyId = counter;
-        counter++;
+        this.propertyId = 5 + (int)(Math.random() * ((1000000 - 5) + 1));
         this.type = type;
         this.address = new Address(houseNumber, street, postalCode);
         this.cityQuadrant = cityQuadrant;

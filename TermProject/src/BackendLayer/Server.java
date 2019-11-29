@@ -19,7 +19,7 @@ public class Server {
         try {
             serverSocket = new ServerSocket(portNum);
             pool = Executors.newCachedThreadPool();
-            database = new DatabaseController();
+            database = DatabaseController.getDatabase();
         } catch (IOException e) {
             e.printStackTrace();
         }
