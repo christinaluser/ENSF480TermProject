@@ -164,14 +164,20 @@ public class ManagerGUI extends TableGUI {
 
     @Override
     public void tableButtonClicked(String propertyId, String colName) {
-        EditPropertyState dialog = new EditPropertyState(false);
+        EditPropertyState dialog = new EditPropertyState();
         dialog.setTitle(colName + " Property ID: " + propertyId);
         dialog.pack();
         dialog.setVisible(true);
+        String result = "null";
         try {
-            listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
+             result = listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+        if (result.equals(null)){
+            JOptionPane.showMessageDialog(new JFrame(), "State update unsuccessful");
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "State successfully updated");
         }
     }
 

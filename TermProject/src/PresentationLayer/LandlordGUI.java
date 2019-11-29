@@ -131,7 +131,7 @@ public class LandlordGUI extends TableGUI {
     @Override
     public void tableButtonClicked(String propertyId, String colName) {
         if (colName.equals("Edit")) {
-            EditPropertyState dialog = new EditPropertyState(true);
+            EditPropertyState dialog = new EditPropertyState();
             dialog.setTitle(colName + " Property ID: " + propertyId);
             dialog.pack();
             dialog.setVisible(true);

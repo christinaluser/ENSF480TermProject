@@ -9,22 +9,12 @@ public class EditPropertyState extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JComboBox newState;
-    private boolean isForLandlord;
 
     String getNewState() {
         return (String) newState.getSelectedItem();
     }
 
-    EditPropertyState(boolean b) {
-        isForLandlord = b;
-        if (!b) {
-            final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
-            defaultComboBoxModel1.addElement("Suspended");
-            defaultComboBoxModel1.addElement("Active");
-            defaultComboBoxModel1.addElement("Cancelled");
-            defaultComboBoxModel1.addElement("Rented");
-            newState.setModel(defaultComboBoxModel1);
-        }
+    EditPropertyState() {
 
         $$$setupUI$$$();
         setContentPane(contentPane);
@@ -54,7 +44,6 @@ public class EditPropertyState extends JDialog {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        createUIComponents();
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(0, 0));
         contentPane.setMinimumSize(new Dimension(200, 200));
@@ -75,9 +64,12 @@ public class EditPropertyState extends JDialog {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
         panel3.add(spacer1, gbc);
+        newState = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
-        defaultComboBoxModel1.addElement("Cancelled");
-        defaultComboBoxModel1.addElement("Rented");
+        defaultComboBoxModel1.addElement("cancelled");
+        defaultComboBoxModel1.addElement("rented");
+        defaultComboBoxModel1.addElement("suspended");
+        defaultComboBoxModel1.addElement("active");
         newState.setModel(defaultComboBoxModel1);
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
@@ -111,13 +103,4 @@ public class EditPropertyState extends JDialog {
         return contentPane;
     }
 
-    private void createUIComponents() {
-        if (isForLandlord) {
-            final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
-            defaultComboBoxModel1.addElement("Suspended");
-            defaultComboBoxModel1.addElement("Cancelled");
-            defaultComboBoxModel1.addElement("Rented");
-            newState.setModel(defaultComboBoxModel1);
-        }
-    }
 }
