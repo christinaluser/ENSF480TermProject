@@ -2,7 +2,6 @@ package Domain;
 
 import java.util.Calendar;
 import java.sql.Date;
-//import java.util.Date;
 
 public class Property {
     private int propertyId;
