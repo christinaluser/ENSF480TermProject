@@ -29,33 +29,9 @@ public class Property {
         this.datePosted = datePosted;
     }
 
-    public Property(String type, int houseNumber, String street, String postalCode, String cityQuadrant,
-                    int noBedrooms, int noBathrooms, boolean isFurnished, double rent) {
-        this.type = type;
-        this.address = new Address(houseNumber, street, postalCode);
-        this.cityQuadrant = cityQuadrant;
-        this.noBedrooms = noBedrooms;
-        this.noBathrooms = noBathrooms;
-        this.isFurnished = isFurnished;
-        this.rent = rent;
-    }
-
     public int getPropertyId()
     {
         return propertyId;
-    }
-
-    public Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
-                    String cityQuadrant, String listingState, double rent) {
-        this.type = type;
-        this.noBedrooms = noBedrooms;
-        this.noBathrooms = noBathrooms;
-        this.isFurnished = isFurnished;
-        this.cityQuadrant = cityQuadrant;
-        this.listingState = listingState;
-        this.rent = rent;
-        //this.datePosted = datePosted;
-        // REMOVED DATE POSTED
     }
 
     public String toString() {
