@@ -77,14 +77,15 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         return properties;
     }
 
-    /*public ArrayList<Property> loadLandlordProperties()
+    public ArrayList<Property> loadLandlordProperties(String landlordEmail)
     {
         try {
+            String strSelect = "SELECT * from users where email = '" + landlordEmail + "')";
             ResultSet rset = stmt.executeQuery(strSelect);
 
             while (rset.next()) {
                 Property p = new Property(rset.getInt("propertyID"), rset.getString("type"), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
-                        rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"), rset.getDate("datePosted"), rset.getString("email"));
+                        rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"), rset.getDate("datePosted"));
                 properties.add(p);
             }
 
@@ -92,7 +93,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             e.printStackTrace();
         }
         return properties;
-    }*/
+    }
 
     public User validateLogin(String username, String password) {
         for (int i = 0; i < users.size(); i++) {
