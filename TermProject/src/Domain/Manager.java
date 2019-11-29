@@ -33,22 +33,18 @@ public class Manager extends User{
             while(true) {
                 input = socketIn.readLine();
                if(input.equals("DISPLAY")) {
-                    refreshProperties();
-                    String allProperties = propertiesToString();
-                    String[] response = allProperties.split(";");
-                    for(String p : response) {
-                        sendString(p);
-                    }
-                    sendString("END");
+                   refreshProperties();
+                   ArrayList<String> response = propertiesToString();
+                   for(String p : response) {
+                       sendString(p);
+                   }
+                   sendString("END");
 
                 } else if(input.startsWith("SEARCHADDRESS/")) {
-                    refreshProperties();
-                    String address = input.replace("SEARCHADDRESS/", "");
-                    String[] response = searchProperties(address).split(";");
-                    for(String p : response) {
-                        sendString(p);
-                    }
-                    sendString("END");
+                   refreshProperties();
+                   String address = input.replace("SEARCHADDRESS/", "");
+                   String response = searchProperties(address);
+                   sendString(response);
 
                 } else if(input.startsWith("EDITFEE/")) {
                     refreshProperties();
@@ -61,7 +57,12 @@ public class Manager extends User{
                } else if (input.startsWith("PAY/")) {
                    refreshProperties();
                    sendString(payFees(input));
+
+               } else if (input.equals("LOGOUT")) {
+                   sendString("done");
+                   return;
                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,12 +104,12 @@ public class Manager extends User{
     private void updateDatabase() {
     }
 
-    private String propertiesToString() {
-        String str = "";
+    public ArrayList<String> propertiesToString() {
+        ArrayList<String> s = new ArrayList<>();
         for (Property p: properties) {
-            str += p.toString();
+            s.add(p.toStringManager());
         }
-        return str;
+        return s;
     }
 
     public void sendString(String s) {

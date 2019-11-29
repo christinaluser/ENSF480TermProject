@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PresentationLayer.LandlordGUI">
   <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="533" height="400"/>
     </constraints>
     <properties>
       <enabled value="true"/>
@@ -17,20 +17,42 @@
         </properties>
         <border type="none"/>
         <children>
+          <component id="50ad9" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Property Number  "/>
+            </properties>
+          </component>
           <component id="be1d2" class="javax.swing.JSpinner" binding="propertyNumber" custom-create="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <preferredSize width="100" height="30"/>
+            </properties>
+          </component>
+          <component id="94c66" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="   Street  "/>
+            </properties>
           </component>
           <component id="ae72b" class="javax.swing.JTextField" binding="streetName">
             <constraints/>
             <properties>
-              <text value="Street"/>
+              <preferredSize width="300" height="30"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="4143c" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="   Postal Code  "/>
             </properties>
           </component>
           <component id="e32a4" class="javax.swing.JFormattedTextField" binding="postalCode" custom-create="true">
             <constraints/>
             <properties>
-              <text value="Postal Code"/>
+              <preferredSize width="200" height="30"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="fc3d" class="javax.swing.JButton" binding="searchButton" default-binding="true">

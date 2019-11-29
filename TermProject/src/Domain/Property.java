@@ -1,5 +1,6 @@
 package Domain;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Property {
@@ -14,6 +15,7 @@ public class Property {
     private Date datePosted;
     private Fee fee;
     private Address address;
+    public static int counter = 0;
 
     public Property(int propertyId, String type, Address address, int noBedrooms, int noBathrooms, boolean isFurnished,
                     String cityQuadrant, String listingState, double rent, Date datePosted) {
@@ -31,6 +33,8 @@ public class Property {
 
     public Property(String type, int houseNumber, String street, String postalCode, String cityQuadrant,
                     int noBedrooms, int noBathrooms, boolean isFurnished, double rent) {
+        this.propertyId = counter;
+        counter++;
         this.type = type;
         this.address = new Address(houseNumber, street, postalCode);
         this.cityQuadrant = cityQuadrant;
@@ -38,6 +42,8 @@ public class Property {
         this.noBathrooms = noBathrooms;
         this.isFurnished = isFurnished;
         this.rent = rent;
+        this.listingState = "suspended";
+        this.datePosted = Calendar.getInstance().getTime();
     }
 
     public int getPropertyId()
@@ -61,6 +67,11 @@ public class Property {
     public String toString() {
         return propertyId + "/" + type + "/" + rent + "/" + address.getPropertyNumber() + "/" + address.getStreetName()
                 + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished ;
+    }
+
+    public String toStringManager() {
+        return propertyId + "/" + type + "/" + rent + "/" + address.getPropertyNumber() + "/" + address.getStreetName()
+                + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished + "/" + listingState;
     }
 
     public String getType()

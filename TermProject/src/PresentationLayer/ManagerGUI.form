@@ -2,31 +2,55 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PresentationLayer.ManagerGUI">
   <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="530" height="400"/>
     </constraints>
     <properties>
-      <preferredSize width="750" height="750"/>
+      <preferredSize width="1100" height="900"/>
     </properties>
     <border type="none"/>
     <children>
       <toolbar id="46e50">
         <constraints border-constraint="North"/>
-        <properties/>
+        <properties>
+          <floatable value="false"/>
+        </properties>
         <border type="none"/>
         <children>
+          <component id="a34a0" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="    Property Number"/>
+            </properties>
+          </component>
           <component id="2abfa" class="javax.swing.JSpinner" binding="propertyNumber" custom-create="true">
             <constraints/>
             <properties>
-              <preferredSize width="150" height="30"/>
+              <preferredSize width="100" height="30"/>
+            </properties>
+          </component>
+          <component id="f895d" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="   Street"/>
             </properties>
           </component>
           <component id="3b8b" class="javax.swing.JTextField" binding="streetName">
             <constraints/>
-            <properties/>
+            <properties>
+              <preferredSize width="300" height="30"/>
+            </properties>
+          </component>
+          <component id="60229" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="    Postal Code"/>
+            </properties>
           </component>
           <component id="a2daf" class="javax.swing.JFormattedTextField" binding="postalCode" custom-create="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <preferredSize width="200" height="30"/>
+            </properties>
           </component>
           <component id="619f7" class="javax.swing.JButton" binding="searchButton">
             <constraints/>

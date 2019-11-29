@@ -39,8 +39,6 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value="Suspended"/>
-                    <item value="Active"/>
                     <item value="Cancelled"/>
                     <item value="Rented"/>
                   </model>

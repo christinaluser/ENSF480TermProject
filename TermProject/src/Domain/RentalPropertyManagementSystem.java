@@ -148,7 +148,7 @@ public class RentalPropertyManagementSystem implements Runnable{
         try {
             while(true) {
                 input = socketIn.readLine();
-                System.out.println("Read line");
+//                System.out.println("Read line");
                 if(input.equals("DISPLAY")) {
                     refreshProperties();
                     ArrayList<String> response = propertiesToString();
@@ -165,6 +165,9 @@ public class RentalPropertyManagementSystem implements Runnable{
                         sendString(p);
                     }
                     sendString("END");
+                } else if(input.equals("LOGOUT")) {
+                    sendString("done");
+                    return;
                 }
             }
         } catch (Exception e) {
@@ -196,7 +199,7 @@ public class RentalPropertyManagementSystem implements Runnable{
         ArrayList<String> s = new ArrayList<String>();
         for (Property p: properties) {
             s.add(p.toString());
-            System.out.println(p.toString());
+//            System.out.println(p.toString());
         }
 
 //        for(int i = 0; i < s.size(); i++){

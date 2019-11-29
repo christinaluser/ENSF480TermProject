@@ -12,19 +12,25 @@ public class RegisterProperty extends JDialog {
     private JButton buttonCancel;
     protected JSpinner number;
     protected JTextField street;
-    private JTextField postalCode;
+    private JFormattedTextField postalCode;
     protected JComboBox quadrant;
     protected JSpinner bedrooms;
     protected JSpinner bathrooms;
     protected JComboBox isFurnished;
     protected JSpinner rent;
     protected JComboBox type;
-    private JFormattedTextField formattedTextField1;
 
     String getPropertyInfo() {
         return type.getSelectedItem() + "/" + number.getValue() + "/" + street.getText() + "/"
                 + postalCode.getText() + "/" + quadrant.getSelectedItem() + "/" + bedrooms.getValue() +
                 "/" + bathrooms.getValue() + "/" + isFurnished.getSelectedItem() + "/" + rent.getValue();
+    }
+
+    boolean checkValid() {
+        if (street.getText().equals("") || postalCode.getText().equals("")) {
+            return false;
+        }
+        return true;
     }
 
     RegisterProperty() {
@@ -233,13 +239,12 @@ public class RegisterProperty extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(type, gbc);
-        formattedTextField1 = new JFormattedTextField();
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel1.add(formattedTextField1, gbc);
+        panel1.add(postalCode, gbc);
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         contentPane.add(toolBar1, BorderLayout.SOUTH);

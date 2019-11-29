@@ -17,6 +17,15 @@ public class EditPropertyState extends JDialog {
 
     EditPropertyState(boolean b) {
         isForLandlord = b;
+        if (!b) {
+            final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+            defaultComboBoxModel1.addElement("Suspended");
+            defaultComboBoxModel1.addElement("Active");
+            defaultComboBoxModel1.addElement("Cancelled");
+            defaultComboBoxModel1.addElement("Rented");
+            newState.setModel(defaultComboBoxModel1);
+        }
+
         $$$setupUI$$$();
         setContentPane(contentPane);
         setModal(true);
@@ -67,8 +76,6 @@ public class EditPropertyState extends JDialog {
         gbc.fill = GridBagConstraints.VERTICAL;
         panel3.add(spacer1, gbc);
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
-        defaultComboBoxModel1.addElement("Suspended");
-        defaultComboBoxModel1.addElement("Active");
         defaultComboBoxModel1.addElement("Cancelled");
         defaultComboBoxModel1.addElement("Rented");
         newState.setModel(defaultComboBoxModel1);

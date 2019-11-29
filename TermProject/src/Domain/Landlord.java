@@ -39,7 +39,7 @@ public class Landlord extends User {
         try {
             while (true) {
                 input = socketIn.readLine();
-                System.out.println(input);
+                System.out.println(input + "in landlord");
                 if (input.startsWith("REGISTERPROPERTY/")) {
                     refreshProperties();
                     this.addProperty(input);
@@ -143,12 +143,12 @@ public class Landlord extends User {
         String quadrant = criteria[5];
         int noBedrooms = Integer.parseInt(criteria[6]);
         int noBathrooms = Integer.parseInt(criteria[7]);
-        boolean furnished = (criteria[7].equals("furnished"));
-        double rent = Double.parseDouble(criteria[8]);
+        boolean furnished = (criteria[8].equals("furnished"));
+        double rent = Double.parseDouble(criteria[9]);
         Property p = new Property(type, houseNumber, street, postalCode, quadrant, noBedrooms, noBathrooms, furnished, rent);
 //        Property p = new Property(criteria[1], Integer.parseInt(criteria[2]), criteria[3], criteria[4], criteria[5],
 //                Integer.parseInt(criteria[6]), Integer.parseInt(criteria[7]), furnished, Double.parseDouble(criteria[8]));
-        database.addProperty(p);
+        database.addProperty(p,email);
         ownedProperties.add(p);
         refreshProperties();
     }

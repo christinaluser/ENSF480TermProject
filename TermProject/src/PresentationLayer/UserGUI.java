@@ -65,12 +65,30 @@ public class UserGUI extends TableGUI {
         }
     }
 
+    private void login() throws IOException {
+        String result = listener.actionPerformed("LOGOUT");
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Logout unsuccessful.");
+        } else {
+            listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient())));
+            JOptionPane.showMessageDialog(new JFrame(), "Logged out!");
+        }
+    }
+
     public void activateButtons() {
         showAllButton.addActionListener(e -> {
             try {
                 showAllProperties();
             } catch (IOException ex) {
                 ex.printStackTrace();
+            }
+        });
+
+        loginButton.addActionListener(e -> {
+            try {
+                login();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
             }
         });
 
