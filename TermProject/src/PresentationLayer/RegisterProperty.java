@@ -23,8 +23,8 @@ public class RegisterProperty extends JDialog {
 
     String getPropertyInfo() {
         return type.getSelectedItem() + "/" + number.getValue() + "/" + street.getText() + "/"
-                + postalCode.getText() + "/" + quadrant.getSelectedItem() + "/" + bedrooms.getValue()
-                + bathrooms.getValue() + "/" + isFurnished.getSelectedItem() + "/" + rent.getValue();
+                + postalCode.getText() + "/" + quadrant.getSelectedItem() + "/" + bedrooms.getValue() +
+                "/" + bathrooms.getValue() + "/" + isFurnished.getSelectedItem() + "/" + rent.getValue();
     }
 
     RegisterProperty() {

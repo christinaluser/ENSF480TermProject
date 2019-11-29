@@ -61,8 +61,26 @@ public class RentalPropertyManagementSystem implements Runnable{
                     sendString("done");
                     communicateRegularUser();
                 } else {
-                    user = database.validateLogin(info[2],info[3]); // create new user
+                    ArrayList<User> allUsers = database.loadUsers();
+                    for (User u: allUsers) {
+                        if (u.username.equals(info[2]) && u.password.equals(info[3])) {
+                            user = u;
+                            break;
+                        }
+                    }
+
+                    System.out.println(user.username);
                     user.communicate(socketIn, socketOut, database);
+
+//                    System.out.println(info[1]);
+//                    if(info[1].equals("Renter")) {
+//                        user.communicate(socketIn, socketOut, database);
+//                        //communicateRenter(user);
+//                    } else if(info[1].equals("Manager")) {
+//                        communicateManager();
+//                    } else if(info[1].equals("Landlord")) {
+//                        communicateLandlord();
+//                    }
                 }
 
                 userFound = false;
@@ -72,15 +90,26 @@ public class RentalPropertyManagementSystem implements Runnable{
         }
     }
 
+    //TODO validate function doesnt work
     private boolean verifyLogin(String s) {
         String[] info = s.split("/");
-        if(database.validateLogin(info[2],info[3]) != null) {
-            sendString(info[1]);
-            return true;
+        int access = -1;
+        if (info[1].equals("Manager")) {
+            access = 1;
+        } else if (info[1].equals("Landlord")){
+            access = 2;
+        } else if (info[1].equals("Renter")) {
+            access = 3;
+        }
+        ArrayList<User> allUsers = database.loadUsers();
+        for (User u: allUsers) {
+            if (u.username.equals(info[2]) && u.password.equals(info[3]) && u.accessID == access) {
+                sendString(info[1]);
+                return true;
+            }
         }
         sendString("null");
         return false;
-
     }
 
     private void signUpNewUser(String s) {
@@ -100,11 +129,11 @@ public class RentalPropertyManagementSystem implements Runnable{
             database.addUser(newUser);
             sendString("success");
         } else if (info[1].equals("Landlord")){
-            User newUser = new Manager(new Name(info[2], info[3]), info[4] , info[5], info[6], 2);
+            User newUser = new Landlord(new Name(info[2], info[3]), info[4] , info[5], info[6], 2);
             database.addUser(newUser);
             sendString("success");
         } else if (info[1].equals("Renter")){
-            User newUser = new Manager(new Name(info[2], info[3]), info[4] , info[5], info[6], 1);
+            User newUser = new Renter(new Name(info[2], info[3]), info[4] , info[5], info[6], 1);
             database.addUser(newUser);
             sendString("success");
         } else {
@@ -119,9 +148,10 @@ public class RentalPropertyManagementSystem implements Runnable{
         try {
             while(true) {
                 input = socketIn.readLine();
+                System.out.println("Read line");
                 if(input.equals("DISPLAY")) {
-                    String allProperties = propertiesToString();
-                    String[] response = allProperties.split(";");
+                    refreshProperties();
+                    ArrayList<String> response = propertiesToString();
                     for(String p : response) {
                         sendString(p);
                     }
@@ -129,9 +159,9 @@ public class RentalPropertyManagementSystem implements Runnable{
 
                 } else if(input.startsWith("SEARCH/")) {
                     refreshProperties();
-                    String criteria = input.replace("SEARCH/", "");
-                    String[] response = searchCriteria(criteria).split(";");
-                    for(String p : response) {
+                    ArrayList<String> criteria = searchCriteria(input);
+                    for(String p : criteria) {
+                        System.out.println(p);
                         sendString(p);
                     }
                     sendString("END");
@@ -148,35 +178,36 @@ public class RentalPropertyManagementSystem implements Runnable{
     }
 
     //FOR UNREGISTERED RENTER
-    public String searchCriteria(String s) {
-        String str = "";
+    public ArrayList<String> searchCriteria(String s) {
         String[] criteria = s.split("/");
+        SearchCriteria sc = new SearchCriteria(criteria[1], Integer.parseInt(criteria[2]), Integer.parseInt(criteria[3]),
+                Boolean.parseBoolean(criteria[4]), criteria[5], Double.parseDouble(criteria[6]));
+        ArrayList<String> allProperties= new ArrayList<String>();
         for(Property p : properties) {
-            if(criteria[0].equals(p.getType()) && criteria[1].equals(p.getNoBedrooms()) && criteria[2].equals(p.getNoBathrooms()) && criteria[3].equals(p.getIsFurnished())
-                    && criteria[4].equals(p.getCityQuadrant())) {
-                if(Double.parseDouble(criteria[5]) <= p.getRent()) {
-                    str += p.toString();
-                    str += ";";
-                }
+            if (p.getType().equals(sc.getType().toLowerCase()) && p.getNoBedrooms() == sc.getNoBedrooms() && p.getNoBathrooms() == sc.getNoBathrooms()
+                    && p.getIsFurnished() == sc.getIsFurnished() && p.getCityQuadrant().equals(sc.getCityQuadrant()) && p.getRent() <= sc.getPriceRange()) {
+                allProperties.add(p.toString());
             }
         }
-        if(str.equals("")) {
-            return null;
-        } else {
-            return str;
-        }
+        return allProperties;
     }
 
-    public String propertiesToString() {
-        String str = "";
+    public ArrayList<String> propertiesToString() {
+        ArrayList<String> s = new ArrayList<String>();
         for (Property p: properties) {
-            str += p.toString();
+            s.add(p.toString());
+            System.out.println(p.toString());
         }
-        return str;
+
+//        for(int i = 0; i < s.size(); i++){
+//            System.out.println(s.get(i));
+//        }
+
+        return s;
     }
 
     public void refreshProperties() {
-        //Refresh arraylist properties to match database
+        properties = database.loadProperties();
     }
 
     public void setDbController(DatabaseController database) {

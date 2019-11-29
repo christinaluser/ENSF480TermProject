@@ -50,6 +50,19 @@ public class Client {
         return socketIn.readLine();
     }
 
+    public String search(String action) throws IOException {
+        socketOut.println(action);
+        socketOut.flush();
+        String response = socketIn.readLine();
+        StringBuilder data = new StringBuilder();
+        while (!response.equals("END")) {
+            data.append(response);
+            data.append(";");
+            response = socketIn.readLine();
+        }
+        return data.toString();
+    }
+
     public String display() throws IOException {
         socketOut.println("DISPLAY");
         socketOut.flush();
@@ -59,6 +72,7 @@ public class Client {
             data.append(response);
             data.append(";");
             response = socketIn.readLine();
+            System.out.println("line read");
         }
         return data.toString();
     }

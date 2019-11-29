@@ -36,12 +36,6 @@ public class LoginGUI implements GUI {
 
     private String getPassword() {
         String s = new String(this.password.getPassword());
-        System.out.println(s);
-//        s.replace("[", "");
-//        s.replace("]", "");
-//        s.replace(", ", "");
-
-
         return s;
     }
 

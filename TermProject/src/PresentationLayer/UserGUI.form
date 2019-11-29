@@ -79,13 +79,13 @@
             <constraints/>
             <properties>
               <model>
-                <item value="$0"/>
-                <item value="$400"/>
-                <item value="$600"/>
-                <item value="$800"/>
-                <item value="$1000"/>
-                <item value="$1200"/>
-                <item value="$1400"/>
+                <item value="0"/>
+                <item value="400"/>
+                <item value="600"/>
+                <item value="800"/>
+                <item value="1000"/>
+                <item value="1200"/>
+                <item value="1400"/>
               </model>
             </properties>
           </component>
