@@ -1,6 +1,8 @@
 package Domain;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.sql.Date;
+//import java.util.Date;
 
 public class Property {
     private int propertyId;
@@ -14,6 +16,7 @@ public class Property {
     private Date datePosted;
     private Fee fee;
     private Address address;
+    public static int counter = 0;
 
     public Property(int propertyId, String type, Address address, int noBedrooms, int noBathrooms, boolean isFurnished,
                     String cityQuadrant, String listingState, double rent, Date datePosted) {
@@ -31,6 +34,8 @@ public class Property {
 
     public Property(String type, int houseNumber, String street, String postalCode, String cityQuadrant,
                     int noBedrooms, int noBathrooms, boolean isFurnished, double rent) {
+        this.propertyId = counter;
+        counter++;
         this.type = type;
         this.address = new Address(houseNumber, street, postalCode);
         this.cityQuadrant = cityQuadrant;
@@ -38,6 +43,10 @@ public class Property {
         this.noBathrooms = noBathrooms;
         this.isFurnished = isFurnished;
         this.rent = rent;
+        this.listingState = "suspended";
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        datePosted = sqlDate;
     }
 
     public int getPropertyId()
@@ -45,22 +54,14 @@ public class Property {
         return propertyId;
     }
 
-    public Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
-                    String cityQuadrant, String listingState, double rent) {
-        this.type = type;
-        this.noBedrooms = noBedrooms;
-        this.noBathrooms = noBathrooms;
-        this.isFurnished = isFurnished;
-        this.cityQuadrant = cityQuadrant;
-        this.listingState = listingState;
-        this.rent = rent;
-        //this.datePosted = datePosted;
-        // REMOVED DATE POSTED
-    }
-
     public String toString() {
         return propertyId + "/" + type + "/" + rent + "/" + address.getPropertyNumber() + "/" + address.getStreetName()
-                + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished + "\n" ;
+                + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished ;
+    }
+
+    public String toStringManager() {
+        return propertyId + "/" + type + "/" + rent + "/" + address.getPropertyNumber() + "/" + address.getStreetName()
+                + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished + "/" + listingState;
     }
 
     public String getType()

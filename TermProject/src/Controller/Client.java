@@ -72,6 +72,7 @@ public class Client {
             data.append(response);
             data.append(";");
             response = socketIn.readLine();
+            System.out.println("line read");
         }
         return data.toString();
     }

@@ -28,11 +28,18 @@ public class Renter extends User {
         try {
             while(true) {
                 input = socketIn.readLine();
+                System.out.println(input);
                 if(input.equals("DISPLAY")) {
                     refreshProperties();
-                    String allProperties = propertiesToString();
-                    String[] response = allProperties.split(";");
+                    ArrayList<String> response = propertiesToString();
                     for(String p : response) {
+                        sendString(p);
+                    }
+                    sendString("END");
+                } else if(input.startsWith("SEARCH/")) {
+                    refreshProperties();
+                    ArrayList<String> criteria = searchCriteria(input);
+                    for(String p : criteria) {
                         sendString(p);
                     }
                     sendString("END");
@@ -49,12 +56,30 @@ public class Renter extends User {
         socketOut.flush();
     }
 
-    public String propertiesToString() {
-        String str = "";
+    public ArrayList<String> propertiesToString() {
+        ArrayList<String> s = new ArrayList<String>();
         for (Property p: properties) {
-            str += p.toString();
+            s.add(p.toString());
         }
-        return str;
+        return s;
+    }
+
+    public ArrayList<String> searchCriteria(String s) {
+        String[] criteria = s.split("/");
+        SearchCriteria sc = new SearchCriteria(criteria[1], Integer.parseInt(criteria[2]), Integer.parseInt(criteria[3]),
+                Boolean.parseBoolean(criteria[4]), criteria[5], Double.parseDouble(criteria[6]));
+        System.out.println(sc.getType() + " " + sc.getNoBedrooms() + " " + sc.getNoBathrooms() + " " + sc.getIsFurnished() + " " +
+                sc.getCityQuadrant() + " " + sc.getPriceRange());
+        ArrayList<String> allProperties= new ArrayList<String>();
+        for(Property p : properties) {
+            System.out.println(p.getType() + " " + p.getNoBedrooms() + " " + p.getNoBathrooms() + " " + p.getIsFurnished() + " " +
+                    p.getCityQuadrant() + " " + p.getRent());
+            if (p.getType().equals(sc.getType().toLowerCase()) && p.getNoBedrooms() == sc.getNoBedrooms() && p.getNoBathrooms() == sc.getNoBathrooms()
+                    && p.getIsFurnished() == sc.getIsFurnished() && p.getCityQuadrant().equals(sc.getCityQuadrant()) && p.getRent() <= sc.getPriceRange()) {
+                allProperties.add(p.toString());
+            }
+        }
+        return allProperties;
     }
 
     public void sendListingEmail() {

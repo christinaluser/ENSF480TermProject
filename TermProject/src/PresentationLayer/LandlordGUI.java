@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import Controller.LandlordListener;
+import Controller.LoginListener;
 import Controller.UserListener;
 
 import javax.swing.*;
@@ -37,27 +38,33 @@ public class LandlordGUI extends TableGUI {
     }
 
     private void registerProperty() throws IOException {
-        String result = listener.actionPerformed("REGISTERPROPERTY/" + displayRegisterPropertyDialog());
-        if (result.equals("null")) {
-            JOptionPane.showMessageDialog(new JFrame(), "Failed to register property");
-        } else {
-            JOptionPane.showMessageDialog(new JFrame(), "Successfully registered property");
-            showTable(headers, result, panel);
+        String dialogInfo = displayRegisterPropertyDialog();
+        if (!dialogInfo.equals("null")) {
+            String result = listener.actionPerformed("REGISTERPROPERTY/" + dialogInfo);
+            if (result.equals("null")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Failed to register property");
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "Successfully registered property");
+//            showTable(headers, result, panel);
+            }
         }
-
     }
 
     private String displayRegisterPropertyDialog() {
         RegisterProperty dialog = new RegisterProperty();
         dialog.pack();
         dialog.setVisible(true);
-        return dialog.getPropertyInfo();
+        if (!dialog.checkValid()) {
+            return "null";
+        } else {
+            return dialog.getPropertyInfo();
+        }
     }
 
     private void searchProperties() throws IOException {
-//        String result = listener.actionPerformed("SEARCHADDRESS" + "/" + getAddress());
+        String result = listener.actionPerformed("SEARCHADDRESS" + "/" + getAddress());
 //        test
-        String result = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
+//        String result = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished/suspended;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished/active";
         if (result.equals("null")) {
             JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
         } else {
@@ -66,9 +73,9 @@ public class LandlordGUI extends TableGUI {
     }
 
     private void showAllProperties() throws IOException {
-//        String result = listener.actionPerformed("DISPLAY");
+        String result = listener.actionPerformed("DISPLAY");
 //        test
-        String result = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
+//        String result = "1/house/100/ne/3/2/furnished/suspended;2/apt/200/se/4/3/unfurnished/active";
         if (result.equals("null")) {
             JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
         } else {
@@ -81,7 +88,7 @@ public class LandlordGUI extends TableGUI {
         if (result.equals("null")) {
             JOptionPane.showMessageDialog(new JFrame(), "Logout unsuccessful.");
         } else {
-            listener.changeGUI(new UserGUI(new UserListener(listener.getClient())));
+            listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient())));
             JOptionPane.showMessageDialog(new JFrame(), "Logged out!");
         }
 
@@ -124,7 +131,7 @@ public class LandlordGUI extends TableGUI {
     @Override
     public void tableButtonClicked(String propertyId, String colName) {
         if (colName.equals("Edit")) {
-            EditPropertyState dialog = new EditPropertyState(true);
+            EditPropertyState dialog = new EditPropertyState();
             dialog.setTitle(colName + " Property ID: " + propertyId);
             dialog.pack();
             dialog.setVisible(true);
@@ -204,11 +211,23 @@ public class LandlordGUI extends TableGUI {
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.NORTH);
+        final JLabel label1 = new JLabel();
+        label1.setText("Property Number  ");
+        toolBar1.add(label1);
+        propertyNumber.setPreferredSize(new Dimension(100, 30));
         toolBar1.add(propertyNumber);
+        final JLabel label2 = new JLabel();
+        label2.setText("   Street  ");
+        toolBar1.add(label2);
         streetName = new JTextField();
-        streetName.setText("Street");
+        streetName.setPreferredSize(new Dimension(300, 30));
+        streetName.setText("");
         toolBar1.add(streetName);
-        postalCode.setText("Postal Code");
+        final JLabel label3 = new JLabel();
+        label3.setText("   Postal Code  ");
+        toolBar1.add(label3);
+        postalCode.setPreferredSize(new Dimension(200, 30));
+        postalCode.setText("");
         toolBar1.add(postalCode);
         searchButton = new JButton();
         searchButton.setText("Search");
