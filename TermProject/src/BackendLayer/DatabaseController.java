@@ -153,22 +153,30 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
             e.printStackTrace();
         }
     }
-}
-/*
-
-    void updateProperty()
-    {
-
-    }
-
-    void getProperty()
-    {
-
-    }
 
     void updateFee()
     {
 
     }
 
-}*/
+    void updateState(String state, int propertyID)
+    {
+        String strUpdate = "UPDATE properties SET listingState = '" + state + "' WHERE propertyID = " + propertyID;
+        System.out.println("statement is" + strUpdate);
+        try {
+            stmt.executeUpdate(strUpdate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+
+ /*   void updateProperty()
+    {
+
+    }
+
+*/
+
