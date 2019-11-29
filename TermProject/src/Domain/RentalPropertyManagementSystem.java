@@ -196,7 +196,13 @@ public class RentalPropertyManagementSystem implements Runnable{
         ArrayList<String> s = new ArrayList<String>();
         for (Property p: properties) {
             s.add(p.toString());
+            System.out.println(p.toString());
         }
+
+//        for(int i = 0; i < s.size(); i++){
+//            System.out.println(s.get(i));
+//        }
+
         return s;
     }
 

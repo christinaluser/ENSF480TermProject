@@ -50,7 +50,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
     public ArrayList<Property> loadProperties() {
         String strSelect = "SELECT * FROM properties";
-
+        ArrayList<Property> properties = new ArrayList<>();
         try {
             ResultSet rset = stmt.executeQuery(strSelect);
 
