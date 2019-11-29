@@ -1,7 +1,8 @@
 package Domain;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
+//import java.util.Date;
 
 public class Property {
     private int propertyId;
@@ -43,7 +44,9 @@ public class Property {
         this.isFurnished = isFurnished;
         this.rent = rent;
         this.listingState = "suspended";
-        this.datePosted = Calendar.getInstance().getTime();
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        datePosted = sqlDate;
     }
 
     public int getPropertyId()

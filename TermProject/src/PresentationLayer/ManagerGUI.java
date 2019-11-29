@@ -170,11 +170,11 @@ public class ManagerGUI extends TableGUI {
         dialog.setVisible(true);
         String result = "null";
         try {
-             result = listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
+            result = listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        if (result.equals(null)){
+        if (result.equals("null")) {
             JOptionPane.showMessageDialog(new JFrame(), "State update unsuccessful");
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "State successfully updated");

@@ -3,6 +3,7 @@ package Domain;
 import BackendLayer.DatabaseController;
 import Domain.Property;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -124,16 +125,12 @@ public class RentalPropertyManagementSystem implements Runnable{
             }
         }
 
-        if (info[1].equals("Manager")){
-            User newUser = new Manager(new Name(info[2], info[3]), info[4] , info[5], info[6], 1);
-            database.addUser(newUser);
-            sendString("success");
-        } else if (info[1].equals("Landlord")){
+        if (info[1].equals("Landlord")){
             User newUser = new Landlord(new Name(info[2], info[3]), info[4] , info[5], info[6], 2);
             database.addUser(newUser);
             sendString("success");
         } else if (info[1].equals("Renter")){
-            User newUser = new Renter(new Name(info[2], info[3]), info[4] , info[5], info[6], 1);
+            User newUser = new Renter(new Name(info[2], info[3]), info[4] , info[5], info[6], 3);
             database.addUser(newUser);
             sendString("success");
         } else {

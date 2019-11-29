@@ -32,6 +32,7 @@ public class Manager extends User{
         try {
             while(true) {
                 input = socketIn.readLine();
+                System.out.println(input);
                if(input.equals("DISPLAY")) {
                    refreshProperties();
                    ArrayList<String> response = propertiesToString();
@@ -51,7 +52,7 @@ public class Manager extends User{
                     String fee = input.replace("EDITFEE/", "");
                     editFee(fee);
                     sendString("Done");
-               } else if (input.startsWith("EDITSTATE/")) {
+               } else if (input.startsWith("EDIT/")) {
                    refreshProperties();
                    sendString(editState(input));
                } else if (input.startsWith("PAY/")) {
@@ -91,7 +92,7 @@ public class Manager extends User{
                 }
             }
         }
-        return null;
+        return "null";
     }
 
     private void editFee(String amt) {

@@ -104,7 +104,7 @@ public class Landlord extends User {
     public ArrayList<String> propertiesToString() {
         ArrayList<String> s = new ArrayList<>();
         for (Property p: properties) {
-            s.add(p.toString());
+            s.add(p.toStringManager());
         }
         return s;
     }
