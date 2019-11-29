@@ -10,7 +10,7 @@ public class EditFee extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JFormattedTextField value;
+    JTextField value;
 
     public String getValue() {
         return value.getText();
@@ -45,7 +45,6 @@ public class EditFee extends JDialog {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        createUIComponents();
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
@@ -88,8 +87,8 @@ public class EditFee extends JDialog {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
         panel3.add(spacer2, gbc);
-        value.setEnabled(true);
-        value.setPreferredSize(new Dimension(300, 30));
+        value = new JTextField();
+        value.setPreferredSize(new Dimension(100, 30));
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 0;
@@ -114,17 +113,4 @@ public class EditFee extends JDialog {
         return contentPane;
     }
 
-    private void createUIComponents() {
-        value = new JFormattedTextField(createFormatter("$######"));
-    }
-
-    private MaskFormatter createFormatter(String s) {
-        MaskFormatter formatter = null;
-        try {
-            formatter = new MaskFormatter(s);
-        } catch (ParseException exc) {
-            System.err.println("formatter is bad: " + exc.getMessage());
-        }
-        return formatter;
-    }
 }

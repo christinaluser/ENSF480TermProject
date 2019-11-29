@@ -168,7 +168,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
     }
 
-    void updateState(String state, int propertyID)
+    public void updateState(String state, int propertyID)
     {
         String strUpdate = "UPDATE properties SET listingState = '" + state + "' WHERE propertyID = " + propertyID;
         System.out.println("statement is" + strUpdate);

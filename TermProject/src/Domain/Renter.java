@@ -11,6 +11,7 @@ public class Renter extends User {
 
     public Renter(Name name, String email, String username, String password, int accessID) {
         super(name, email, username, password, accessID);
+        matchedProperties = new ArrayList<>();
     }
 
     @Override
@@ -43,6 +44,12 @@ public class Renter extends User {
                         sendString(p);
                     }
                     sendString("END");
+                } else if(input.equals("DISPLAYNOTIFIED")) {
+                    ArrayList<String> response = matchedToString();
+                    for(String p : response) {
+                        sendString(p);
+                    }
+                    sendString("END");
                 }
 
             }
@@ -64,19 +71,29 @@ public class Renter extends User {
         return s;
     }
 
+    private ArrayList<String> matchedToString() {
+        ArrayList<String> s = new ArrayList<String>();
+        for (Property p: matchedProperties) {
+            s.add(p.toString());
+        }
+        return s;
+    }
+
     public ArrayList<String> searchCriteria(String s) {
         String[] criteria = s.split("/");
         SearchCriteria sc = new SearchCriteria(criteria[1], Integer.parseInt(criteria[2]), Integer.parseInt(criteria[3]),
                 Boolean.parseBoolean(criteria[4]), criteria[5], Double.parseDouble(criteria[6]));
-        System.out.println(sc.getType() + " " + sc.getNoBedrooms() + " " + sc.getNoBathrooms() + " " + sc.getIsFurnished() + " " +
-                sc.getCityQuadrant() + " " + sc.getPriceRange());
+//        System.out.println(sc.getType() + " " + sc.getNoBedrooms() + " " + sc.getNoBathrooms() + " " + sc.getIsFurnished() + " " +
+//                sc.getCityQuadrant() + " " + sc.getPriceRange());
         ArrayList<String> allProperties= new ArrayList<String>();
         for(Property p : properties) {
-            System.out.println(p.getType() + " " + p.getNoBedrooms() + " " + p.getNoBathrooms() + " " + p.getIsFurnished() + " " +
-                    p.getCityQuadrant() + " " + p.getRent());
+//            System.out.println(p.getType() + " " + p.getNoBedrooms() + " " + p.getNoBathrooms() + " " + p.getIsFurnished() + " " +
+//                    p.getCityQuadrant() + " " + p.getRent());
             if (p.getType().equals(sc.getType().toLowerCase()) && p.getNoBedrooms() == sc.getNoBedrooms() && p.getNoBathrooms() == sc.getNoBathrooms()
-                    && p.getIsFurnished() == sc.getIsFurnished() && p.getCityQuadrant().equals(sc.getCityQuadrant()) && p.getRent() <= sc.getPriceRange()) {
+                    && p.getIsFurnished() == sc.getIsFurnished() && p.getCityQuadrant().equals(sc.getCityQuadrant()) && p.getRent() <= sc.getPriceRange() &&
+                    p.getListingState().equals("active")) {
                 allProperties.add(p.toString());
+                matchedProperties.add(p);
             }
         }
         return allProperties;

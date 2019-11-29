@@ -172,6 +172,8 @@ public class RentalPropertyManagementSystem implements Runnable{
         }
     }
 
+
+
     public void sendString(String s) {
         socketOut.println(s);
         socketOut.flush();

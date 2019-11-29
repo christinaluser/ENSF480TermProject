@@ -85,11 +85,10 @@ public class Manager extends User{
         String[] split = input.split("/");
         for (Property p : properties) {
             if (p.getPropertyId() == Integer.parseInt(split[1])) {
-                if(!p.getListingState().equals("suspended")) {
-                    p.setState(split[2]);
-                    refreshProperties();
-                    return "Done";
-                }
+                database.updateState(split[2], p.getPropertyId());
+                p.setState(split[2]);
+                refreshProperties();
+                return "Done";
             }
         }
         return "null";
@@ -99,10 +98,6 @@ public class Manager extends User{
         for(Property p : properties) {
             p.setFee(new Fee(Double.parseDouble(amt)));
         }
-        updateDatabase();
-    }
-
-    private void updateDatabase() {
     }
 
     public ArrayList<String> propertiesToString() {

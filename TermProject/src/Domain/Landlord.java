@@ -19,7 +19,9 @@ public class Landlord extends User {
         ownedProperties = new ArrayList<>();
         ArrayList<Property> allProperties = database.loadProperties();
         for(Property p : allProperties) {
-            //todo
+            if(p.getEmail().equals(email)) {
+                ownedProperties.add(p);
+            }
         }
     }
 
@@ -41,11 +43,11 @@ public class Landlord extends User {
                 input = socketIn.readLine();
                 System.out.println(input + "in landlord");
                 if (input.startsWith("REGISTERPROPERTY/")) {
-                    refreshProperties();
+                    refreshOwnedProperties();
                     this.addProperty(input);
                     sendString("Done");
                 } else if (input.equals("DISPLAY")) {
-                    refreshProperties();
+                    refreshOwnedProperties();
                     ArrayList<String> response = propertiesToString();
                     for(String p : response) {
                         sendString(p);
@@ -53,15 +55,15 @@ public class Landlord extends User {
                     sendString("END");
 
                 } else if (input.startsWith("SEARCHADDRESS/")) {
-                    refreshProperties();
+                    refreshOwnedProperties();
                     String address = input.replace("SEARCHADDRESS/", "");
                     String response = searchProperties(address);
                     sendString(response);
                 } else if (input.startsWith("EDITSTATE/")) {
-                    refreshProperties();
+                    refreshOwnedProperties();
                     sendString(editState(input));
                 } else if (input.startsWith("PAY/")) {
-                    refreshProperties();
+                    refreshOwnedProperties();
                     sendString(payFees(input));
 
                 } else if(input.equals("LOGOUT")) {
@@ -80,6 +82,7 @@ public class Landlord extends User {
         String[] split = input.split("/");
         for(Property p : ownedProperties) {
             if(p.getPropertyId() == Integer.parseInt(split[1])) {
+                database.updateState("active",p.getPropertyId());
                 p.setState("active");
                 return "Done";
             }
@@ -92,8 +95,9 @@ public class Landlord extends User {
         for (Property p : ownedProperties) {
             if (p.getPropertyId() == Integer.parseInt(split[1])) {
                 if(!p.getListingState().equals("suspended")) {
+                    database.updateState(split[2],p.getPropertyId());
                     p.setState(split[2]);
-                    refreshProperties();
+                    refreshOwnedProperties();
                     return "Done";
                 }
             }
@@ -103,7 +107,7 @@ public class Landlord extends User {
 
     public ArrayList<String> propertiesToString() {
         ArrayList<String> s = new ArrayList<>();
-        for (Property p: properties) {
+        for (Property p: ownedProperties) {
             s.add(p.toStringManager());
         }
         return s;
@@ -132,6 +136,16 @@ public class Landlord extends User {
 
     }
 
+    public void refreshOwnedProperties() {
+        properties = database.loadProperties();
+        ownedProperties.clear();
+        for(Property p : properties) {
+            if(p.getEmail().equals(email)) {
+                ownedProperties.add(p);
+            }
+        }
+    }
+
 
     public void addProperty(String s) {
         String[] criteria = s.split("/");
@@ -150,6 +164,6 @@ public class Landlord extends User {
 //                Integer.parseInt(criteria[6]), Integer.parseInt(criteria[7]), furnished, Double.parseDouble(criteria[8]));
         database.addProperty(p,email);
         ownedProperties.add(p);
-        refreshProperties();
+        refreshOwnedProperties();
     }
 }
