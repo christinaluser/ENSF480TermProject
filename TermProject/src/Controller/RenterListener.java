@@ -12,6 +12,10 @@ public class RenterListener {
         this.client = client;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
     public String actionPerformed(String action) throws IOException {
         if(action.startsWith("DISPLAY")){
             return client.display();

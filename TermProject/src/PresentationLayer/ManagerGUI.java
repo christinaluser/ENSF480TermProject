@@ -1,11 +1,14 @@
 package PresentationLayer;
 
+import Controller.LoginListener;
 import Controller.ManagerListener;
 import Controller.UserListener;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -142,11 +145,18 @@ public class ManagerGUI extends TableGUI {
             }
         });
 
-        logoutButton.addActionListener(e -> {
-            try {
-                logout();
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result = null;
+                try {
+                    result = listener.actionPerformed("LOGOUT");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                if (result.equals("done")) {
+                    listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient())));
+                }
             }
         });
 
@@ -154,14 +164,20 @@ public class ManagerGUI extends TableGUI {
 
     @Override
     public void tableButtonClicked(String propertyId, String colName) {
-        EditPropertyState dialog = new EditPropertyState(false);
+        EditPropertyState dialog = new EditPropertyState();
         dialog.setTitle(colName + " Property ID: " + propertyId);
         dialog.pack();
         dialog.setVisible(true);
+        String result = "null";
         try {
-            listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
+            result = listener.actionPerformed("EDIT/" + propertyId + "/" + dialog.getNewState());
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "State update unsuccessful");
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "State successfully updated");
         }
     }
 
@@ -219,13 +235,25 @@ public class ManagerGUI extends TableGUI {
         createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
-        panel.setPreferredSize(new Dimension(750, 750));
+        panel.setPreferredSize(new Dimension(1100, 900));
         final JToolBar toolBar1 = new JToolBar();
+        toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.NORTH);
-        propertyNumber.setPreferredSize(new Dimension(150, 30));
+        final JLabel label1 = new JLabel();
+        label1.setText("    Property Number");
+        toolBar1.add(label1);
+        propertyNumber.setPreferredSize(new Dimension(100, 30));
         toolBar1.add(propertyNumber);
+        final JLabel label2 = new JLabel();
+        label2.setText("   Street");
+        toolBar1.add(label2);
         streetName = new JTextField();
+        streetName.setPreferredSize(new Dimension(300, 30));
         toolBar1.add(streetName);
+        final JLabel label3 = new JLabel();
+        label3.setText("    Postal Code");
+        toolBar1.add(label3);
+        postalCode.setPreferredSize(new Dimension(200, 30));
         toolBar1.add(postalCode);
         searchButton = new JButton();
         searchButton.setText("Search");

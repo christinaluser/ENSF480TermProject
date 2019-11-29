@@ -32,36 +32,38 @@ public class Manager extends User{
         try {
             while(true) {
                 input = socketIn.readLine();
+                System.out.println(input);
                if(input.equals("DISPLAY")) {
-                    refreshProperties();
-                    String allProperties = propertiesToString();
-                    String[] response = allProperties.split(";");
-                    for(String p : response) {
-                        sendString(p);
-                    }
-                    sendString("END");
+                   refreshProperties();
+                   ArrayList<String> response = propertiesToString();
+                   for(String p : response) {
+                       sendString(p);
+                   }
+                   sendString("END");
 
                 } else if(input.startsWith("SEARCHADDRESS/")) {
-                    refreshProperties();
-                    String address = input.replace("SEARCHADDRESS/", "");
-                    String[] response = searchProperties(address).split(";");
-                    for(String p : response) {
-                        sendString(p);
-                    }
-                    sendString("END");
+                   refreshProperties();
+                   String address = input.replace("SEARCHADDRESS/", "");
+                   String response = searchProperties(address);
+                   sendString(response);
 
                 } else if(input.startsWith("EDITFEE/")) {
                     refreshProperties();
                     String fee = input.replace("EDITFEE/", "");
                     editFee(fee);
                     sendString("Done");
-               } else if (input.startsWith("EDITSTATE/")) {
+               } else if (input.startsWith("EDIT/")) {
                    refreshProperties();
                    sendString(editState(input));
                } else if (input.startsWith("PAY/")) {
                    refreshProperties();
                    sendString(payFees(input));
+
+               } else if (input.equals("LOGOUT")) {
+                   sendString("done");
+                   return;
                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,7 +92,7 @@ public class Manager extends User{
                 }
             }
         }
-        return null;
+        return "null";
     }
 
     private void editFee(String amt) {
@@ -103,12 +105,12 @@ public class Manager extends User{
     private void updateDatabase() {
     }
 
-    private String propertiesToString() {
-        String str = "";
+    public ArrayList<String> propertiesToString() {
+        ArrayList<String> s = new ArrayList<>();
         for (Property p: properties) {
-            str += p.toString();
+            s.add(p.toStringManager());
         }
-        return str;
+        return s;
     }
 
     public void sendString(String s) {

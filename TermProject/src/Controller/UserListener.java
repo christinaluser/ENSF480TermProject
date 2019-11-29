@@ -18,6 +18,8 @@ public class UserListener {
     public String actionPerformed(String action) throws IOException {
         if (action.startsWith("DISPLAY")){
             return client.display();
+        } else if (action.startsWith("SEARCH")){
+            return client.search(action);
         } else {
             return client.communicate(action);
         }

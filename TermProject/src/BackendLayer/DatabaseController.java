@@ -15,7 +15,9 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
     private ArrayList<Property> properties = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
 
-    public DatabaseController() {
+    private static DatabaseController database;
+
+    private DatabaseController() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
@@ -32,12 +34,19 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         }
     }
 
+    public static DatabaseController getDatabase(){
+        if (database == null){
+            database = new DatabaseController();
+        }
+        return database;
+    }
+
     public ArrayList<Property> searchProperty(SearchCriteria sc) {
         ArrayList<Property> searchProperties = loadProperties();
         ArrayList<Property> matchedProperties = new ArrayList<>();
 
         for (Property psearch : searchProperties) {
-            if (psearch.getType().equals(sc.getType()) && psearch.getNoBedrooms() == sc.getNoBedrooms() && psearch.getNoBathrooms() == sc.getNoBathrooms()
+            if (psearch.getType().equals(sc.getType().toLowerCase()) && psearch.getNoBedrooms() == sc.getNoBedrooms() && psearch.getNoBathrooms() == sc.getNoBathrooms()
                     && psearch.getIsFurnished() == sc.getIsFurnished() && psearch.getCityQuadrant().equals(sc.getCityQuadrant()) && psearch.getRent() <= sc.getPriceRange())
                 matchedProperties.add(psearch);
         }
@@ -61,7 +70,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
     public ArrayList<Property> loadProperties() {
         String strSelect = "SELECT * FROM properties";
-
+        ArrayList<Property> properties = new ArrayList<>();
         try {
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -134,7 +143,7 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         String strInsert = "INSERT INTO properties VALUES (" + p.getPropertyId() + ", '" + p.getType() + "', "
                 + p.getAddress().getPropertyNumber() + ", '" + p.getAddress().getStreetName() + "', '" + p.getAddress().getPostalCode() + "', " +
                 +p.getNoBedrooms() + ", " + p.getNoBathrooms() + ", " + p.getIsFurnished() + ", '" + p.getCityQuadrant() + "', '" + p.getListingState() + "', "
-                + p.getRent() + ", " + p.getDatePosted() + ", '" + email + "')";
+                + p.getRent() + ", '" + p.getDatePosted() + "', '" + email + "')";
         System.out.println("the addProperty query is: " + strInsert);
         try {
             stmt.executeUpdate(strInsert);

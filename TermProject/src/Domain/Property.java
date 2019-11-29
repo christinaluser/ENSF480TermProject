@@ -1,6 +1,8 @@
 package Domain;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.sql.Date;
+//import java.util.Date;
 
 public class Property {
     private int propertyId;
@@ -31,13 +33,35 @@ public class Property {
         this.email = email;
     }
 
+    public Property(String type, int houseNumber, String street, String postalCode, String cityQuadrant,
+                    int noBedrooms, int noBathrooms, boolean isFurnished, double rent) {
+        this.propertyId = 5 + (int)(Math.random() * ((1000000 - 5) + 1));
+        this.type = type;
+        this.address = new Address(houseNumber, street, postalCode);
+        this.cityQuadrant = cityQuadrant;
+        this.noBedrooms = noBedrooms;
+        this.noBathrooms = noBathrooms;
+        this.isFurnished = isFurnished;
+        this.rent = rent;
+        this.listingState = "suspended";
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        datePosted = sqlDate;
+    }
+
     public int getPropertyId()
     {
         return propertyId;
     }
 
     public String toString() {
-        return "ID: " + propertyId + "\tType: " + type + "\tno. Bedrooms: " + noBedrooms + "\t no. Bathrooms: " + noBathrooms + "\n";
+        return propertyId + "/" + type + "/" + rent + "/" + address.getPropertyNumber() + "/" + address.getStreetName()
+                + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished ;
+    }
+
+    public String toStringManager() {
+        return propertyId + "/" + type + "/" + rent + "/" + address.getPropertyNumber() + "/" + address.getStreetName()
+                + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished + "/" + listingState;
     }
 
     public String getType()

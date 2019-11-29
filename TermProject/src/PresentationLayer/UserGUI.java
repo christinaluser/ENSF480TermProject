@@ -49,8 +49,6 @@ public class UserGUI extends TableGUI {
 
     private void searchProperties() throws IOException {
         String result = listener.actionPerformed("SEARCH" + "/" + getCriteria());
-//        test
-//        result = "1/house/$100/44/street1/g3h 4t3/ne/3/2/furnished;2/apt/200/44/street1/g3h 4t3/se/4/3/unfurnished";
         if (result.equals("null")) {
             JOptionPane.showMessageDialog(new JFrame(), "No properties found!");
         } else {
@@ -67,12 +65,30 @@ public class UserGUI extends TableGUI {
         }
     }
 
+    private void login() throws IOException {
+        String result = listener.actionPerformed("LOGOUT");
+        if (result.equals("null")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Logout unsuccessful.");
+        } else {
+            listener.changeGUI(new LoginGUI(new LoginListener(listener.getClient())));
+            JOptionPane.showMessageDialog(new JFrame(), "Logged out!");
+        }
+    }
+
     public void activateButtons() {
         showAllButton.addActionListener(e -> {
             try {
                 showAllProperties();
             } catch (IOException ex) {
                 ex.printStackTrace();
+            }
+        });
+
+        loginButton.addActionListener(e -> {
+            try {
+                login();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
             }
         });
 
@@ -175,13 +191,13 @@ public class UserGUI extends TableGUI {
         toolBar1.add(cityQuadrant);
         priceRange = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel4 = new DefaultComboBoxModel();
-        defaultComboBoxModel4.addElement("$0");
-        defaultComboBoxModel4.addElement("$400");
-        defaultComboBoxModel4.addElement("$600");
-        defaultComboBoxModel4.addElement("$800");
-        defaultComboBoxModel4.addElement("$1000");
-        defaultComboBoxModel4.addElement("$1200");
-        defaultComboBoxModel4.addElement("$1400");
+        defaultComboBoxModel4.addElement("0");
+        defaultComboBoxModel4.addElement("400");
+        defaultComboBoxModel4.addElement("600");
+        defaultComboBoxModel4.addElement("800");
+        defaultComboBoxModel4.addElement("1000");
+        defaultComboBoxModel4.addElement("1200");
+        defaultComboBoxModel4.addElement("1400");
         priceRange.setModel(defaultComboBoxModel4);
         toolBar1.add(priceRange);
         searchButton = new JButton();
