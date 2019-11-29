@@ -51,19 +51,6 @@ public class Property {
         return propertyId;
     }
 
-    public Property(String type, int noBedrooms, int noBathrooms, boolean isFurnished,
-                    String cityQuadrant, String listingState, double rent) {
-        this.type = type;
-        this.noBedrooms = noBedrooms;
-        this.noBathrooms = noBathrooms;
-        this.isFurnished = isFurnished;
-        this.cityQuadrant = cityQuadrant;
-        this.listingState = listingState;
-        this.rent = rent;
-        //this.datePosted = datePosted;
-        // REMOVED DATE POSTED
-    }
-
     public String toString() {
         return propertyId + "/" + type + "/" + rent + "/" + address.getPropertyNumber() + "/" + address.getStreetName()
                 + "/" + address.getPostalCode() + "/" + cityQuadrant + "/" + noBedrooms + "/" + noBathrooms + "/" + isFurnished ;

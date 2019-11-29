@@ -77,6 +77,24 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
         return properties;
     }
 
+    public ArrayList<Property> loadLandlordProperties(String landlordEmail)
+    {
+        try {
+            String strSelect = "SELECT * from users where email = '" + landlordEmail + "')";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            while (rset.next()) {
+                Property p = new Property(rset.getInt("propertyID"), rset.getString("type"), new Address(rset.getInt("propertyNumber"), rset.getString("streetName"), rset.getString("postalCode")), rset.getInt("noBedrooms"), rset.getInt("noBathrooms"),
+                        rset.getBoolean("isFurnished"), rset.getString("cityQuadrant"), rset.getString("listingState"), rset.getDouble("rent"), rset.getDate("datePosted"));
+                properties.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
+
     public User validateLogin(String username, String password) {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUsername().equals(username) && users.get(i).getPassword().equals(password))
@@ -114,10 +132,10 @@ public class DatabaseController {   // Save as "JdbcSelectTest.java"
 
     public void addProperty(Property p, String email) {
         String strInsert = "INSERT INTO properties VALUES (" + p.getPropertyId() + ", '" + p.getType() + "', "
-                + p.getAddress().getPropertyNumber() + ", '" + p.getAddress().getStreetName() + "', '"
-                + p.getAddress().getPostalCode() + "', " +p.getNoBedrooms() + ", " + p.getNoBathrooms() + ", "
-                + p.getIsFurnished() + ", '" + p.getCityQuadrant() + "', '" + p.getListingState() + "', " + p.getRent()
-                + ", " + p.getDatePosted() + ", '" + email + "')";
+                + p.getAddress().getPropertyNumber() + ", '" + p.getAddress().getStreetName() + "', '" + p.getAddress().getPostalCode() + "', " +
+                +p.getNoBedrooms() + ", " + p.getNoBathrooms() + ", " + p.getIsFurnished() + ", '" + p.getCityQuadrant() + "', '" + p.getListingState() + "', "
+                + p.getRent() + ", " + p.getDatePosted() + ", '" + email + "')";
+        System.out.println("the addProperty query is: " + strInsert);
         try {
             stmt.executeUpdate(strInsert);
         } catch (SQLException e) {
