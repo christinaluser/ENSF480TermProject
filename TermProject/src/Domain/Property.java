@@ -14,9 +14,10 @@ public class Property {
     private Date datePosted;
     private Fee fee;
     private Address address;
+    private String email;
 
     public Property(int propertyId, String type, Address address, int noBedrooms, int noBathrooms, boolean isFurnished,
-                    String cityQuadrant, String listingState, double rent, Date datePosted) {
+                    String cityQuadrant, String listingState, double rent, Date datePosted, String email) {
         this.propertyId = propertyId;
         this.type = type;
         this.address = address;
@@ -27,6 +28,7 @@ public class Property {
         this.listingState = listingState;
         this.rent = rent;
         this.datePosted = datePosted;
+        this.email = email;
     }
 
     public int getPropertyId()
@@ -91,6 +93,10 @@ public class Property {
         return datePosted;
     }
 
+    public String getEmail()
+    {
+        return email;
+    }
 
     public void setState(String newState) {
         listingState = newState;
